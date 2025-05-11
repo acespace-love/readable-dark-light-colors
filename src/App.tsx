@@ -1,6 +1,5 @@
 import { useLocalStorage } from '@uidotdev/usehooks';
 import clsx from 'clsx';
-import { getAdaptedColor, adaptGradientColors } from './utils/colorUtils';
 
 // Import components
 import ThemeToggle from './components/ThemeToggle';
@@ -8,6 +7,7 @@ import UsernameInput from './components/UsernameInput';
 import ThemePreview from './components/ThemePreview';
 import GradientControls from './components/GradientControls';
 import GradientBuilder from './components/GradientBuilder';
+import GradientBuilderScroll from './components/GradientBuilderScroll';
 import ColorPresets from './components/ColorPresets';
 
 function App() {
@@ -43,6 +43,7 @@ function App() {
           />
 
           <GradientBuilder gradientColors={gradientColors} setGradientColors={setGradientColors} />
+          <GradientBuilderScroll gradientColors={gradientColors} setGradientColors={setGradientColors} />
           <ColorPresets setUserColor={setUserColor} setGradientColors={setGradientColors} />
         </div>
       </div>
