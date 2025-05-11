@@ -27,13 +27,12 @@ export const displayNameThemes: Record<string, readonly string[]> = {
 
 function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUserColor }: GradientBuilderWithPresetsProps) {
   const [activeColorIndex, setActiveColorIndex] = useState<number | null>(null);
-  const [showColorPicker, setShowColorPicker] = useState(false);
   const colorPickerRef = useRef<HTMLInputElement>(null);
 
   // Handle clicking on a color pill
   const handleColorClick = (index: number) => {
     setActiveColorIndex(index);
-    setShowColorPicker(true);
+    showColourPicker();
   };
 
   // Handle adding a new color
@@ -43,7 +42,7 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
       const newColor = gradientColors[gradientColors.length - 1];
       setGradientColors([...gradientColors, newColor]);
       setActiveColorIndex(gradientColors.length);
-      setShowColorPicker(true);
+      showColourPicker();
     }
   };
 
@@ -54,7 +53,6 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
       newColors.pop(); // Remove the last color
       setGradientColors(newColors);
       setActiveColorIndex(null);
-      setShowColorPicker(false);
     }
   };
 
@@ -67,15 +65,9 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
     }
   };
 
-  // Trigger color picker when activeColorIndex changes
-  useEffect(() => {
-    if (showColorPicker && colorPickerRef.current && activeColorIndex !== null) {
-      colorPickerRef.current.click();
-    }
-  }, [showColorPicker, activeColorIndex]);
-
-  // Create the gradient background for preview
-  const gradientBackground = gradientColors.length > 1 ? `linear-gradient(to right, ${gradientColors.join(', ')})` : gradientColors[0];
+  function showColourPicker() {
+    if (colorPickerRef.current) colorPickerRef.current.click();
+  }
 
   return (
     <div className="bg-white dark:bg-zinc-800 p-5 rounded-lg my-4 border border-zinc-200 dark:border-zinc-700 shadow-md">
@@ -126,7 +118,7 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
         type="color"
         value={activeColorIndex !== null ? gradientColors[activeColorIndex] : '#ffffff'}
         onChange={handleColorChange}
-        onBlur={() => setShowColorPicker(false)}
+        onBlur={handleRemoveLastColor}
         className="sr-only"
       />
 

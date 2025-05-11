@@ -15,7 +15,6 @@ function App() {
   const [userColor, setUserColor] = useLocalStorage<string>('theme-user-color', '#646cff');
   const [username, setUsername] = useLocalStorage<string>('theme-username', 'GradientUser123');
   const [gradientColors, setGradientColors] = useLocalStorage<string[]>('theme-gradient-colors', ['#646cff']);
-
   const mode = isDarkMode ? 'dark' : 'light';
 
   return (
