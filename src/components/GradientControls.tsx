@@ -46,19 +46,19 @@ const GradientControls: React.FC<GradientControlsProps> = ({
           {userColor}
         </code>
         <div className="flex ml-2 text-xs gap-1 items-center">
-          <span className="text-[var(--text-secondary)]">Light:</span>
+          <span className="text-gray-700 dark:text-gray-300">Light:</span>
           <div
             className="w-4 h-4 rounded-full border border-black/10"
             style={{ backgroundColor: lightModeColor }}
           ></div>
-          <span className="text-[var(--text-secondary)]">Dark:</span>
+          <span className="text-gray-700 dark:text-gray-300">Dark:</span>
           <div
             className="w-4 h-4 rounded-full border border-black/10"
             style={{ backgroundColor: darkModeColor }}
           ></div>
         </div>
         <button
-          className="ml-2 px-2 py-1 bg-[var(--accent-color)] text-white border-none rounded text-sm cursor-pointer font-medium transition-all duration-200 hover:opacity-90 disabled:bg-gray-400 disabled:opacity-70 disabled:cursor-not-allowed"
+          className="ml-2 px-2 py-1 bg-blue-600 dark:bg-blue-500 text-white border-none rounded text-sm cursor-pointer font-medium transition-all duration-200 hover:opacity-90 disabled:bg-gray-400 disabled:opacity-70 disabled:cursor-not-allowed"
           onClick={addColorToGradient}
           disabled={gradientColors.length >= 6}
         >
@@ -92,7 +92,7 @@ const GradientControls: React.FC<GradientControlsProps> = ({
                   <span
                     className={`inline-block w-2 h-2 rounded-full ${isWcagCompliant ? 'bg-green-500' : 'bg-red-500'}`}
                   ></span>
-                  <span className="text-[var(--text-secondary)] text-[10px]">
+                  <span className="text-gray-700 dark:text-gray-300 text-[10px]">
                     {contrast.toFixed(1)}
                   </span>
                 </div>
