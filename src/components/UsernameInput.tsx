@@ -17,7 +17,7 @@ const UsernameInput: React.FC<UsernameInputProps> = ({ username, setUsername }) 
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         maxLength={20}
-        className="px-2 py-1 text-sm border border-[var(--border-color)] rounded bg-[var(--background)] text-[var(--text-primary)] w-[180px] transition-colors duration-300 focus:outline-none focus:border-[var(--accent-color)] focus:shadow"
+        className="px-2 py-1 text-sm border border-zinc-200 dark:border-zinc-700 rounded bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 w-[180px] transition-colors duration-300 focus:outline-none focus:border-blue-500 focus:shadow"
       />
     </div>
   );

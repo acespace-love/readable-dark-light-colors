@@ -15,7 +15,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
 }) => {
   return (
     <div className="flex items-center justify-end w-full gap-2 mb-4">
-      <span className="text-xs font-medium text-[var(--text-secondary)]">
+      <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
         {isDarkMode ? 'Dark' : 'Light'}
       </span>
       <button

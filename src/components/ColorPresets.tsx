@@ -36,12 +36,12 @@ const ColorPresets: React.FC<ColorPresetsProps> = ({
   };
 
   return (
-    <div className="mt-4 p-3 rounded-lg bg-[var(--card-bg)] border border-[var(--border-color)]">
+    <div className="mt-4 p-5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 shadow-md">
       <div className="flex items-center justify-between mb-3">
-        <div className="text-xs text-[var(--text-secondary)]">Try preset colors:</div>
+        <div className="text-xs text-gray-700 dark:text-gray-300">Try preset colors:</div>
         <div className="flex gap-1">
           <button
-            className="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-[var(--text-primary)] rounded hover:opacity-90"
+            className="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded hover:opacity-90"
             onClick={resetToDefaults}
           >
             Reset
@@ -62,7 +62,7 @@ const ColorPresets: React.FC<ColorPresetsProps> = ({
         ))}
       </div>
 
-      <div className="text-xs text-center text-[var(--text-secondary)]">
+      <div className="text-xs text-center text-gray-700 dark:text-gray-300">
         <span className="mx-1">
           <span
             className={`inline-block w-2 h-2 rounded-full ${isLightModeWCAGCompliant ? 'bg-green-500' : 'bg-red-500'}`}

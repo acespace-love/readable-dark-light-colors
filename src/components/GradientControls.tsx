@@ -29,7 +29,7 @@ const GradientControls: React.FC<GradientControlsProps> = ({
   lightModeGradientColors,
 }) => {
   return (
-    <div className="bg-[var(--card-bg)] p-3 rounded-lg my-4 border border-[var(--border-color)]">
+    <div className="bg-white dark:bg-zinc-800 p-5 rounded-lg my-4 border border-zinc-200 dark:border-zinc-700 shadow-md">
       <h3 className="text-lg font-semibold mb-2">Gradient Colors (1-6)</h3>
       <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
         <label htmlFor="color-picker" className="text-sm">
