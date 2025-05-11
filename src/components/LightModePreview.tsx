@@ -61,10 +61,7 @@ const LightModePreview: React.FC<PreviewProps> = ({
           </div>
         </div>
 
-        <div
-          className="w-full h-10 rounded mb-1.5 border border-black/10"
-          style={{ backgroundColor: lightModeColor }}
-        ></div>
+        <div className="w-full h-10 rounded mb-1.5 border border-black/10" style={{ backgroundColor: lightModeColor }}></div>
         <p style={{ color: lightModeColor }}>Text in your selected color</p>
         <button
           className="border-none py-2 px-4 rounded font-medium cursor-pointer transition-opacity duration-200 hover:opacity-90"

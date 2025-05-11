@@ -42,20 +42,12 @@ const GradientControls: React.FC<GradientControlsProps> = ({
           onChange={(e) => setUserColor(e.target.value)}
           className="w-[40px] h-[30px] border-none rounded cursor-pointer bg-transparent"
         />
-        <code className="font-mono text-xs bg-black/5 dark:bg-white/5 px-1.5 py-0.5 rounded text-dual-darkest">
-          {userColor}
-        </code>
+        <code className="font-mono text-xs bg-black/5 dark:bg-white/5 px-1.5 py-0.5 rounded text-dual-darkest">{userColor}</code>
         <div className="flex ml-2 text-xs gap-1 items-center">
           <span className="text-dual-dark">Light:</span>
-          <div
-            className="w-4 h-4 rounded-full border border-black/10"
-            style={{ backgroundColor: lightModeColor }}
-          ></div>
+          <div className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: lightModeColor }}></div>
           <span className="text-dual-dark">Dark:</span>
-          <div
-            className="w-4 h-4 rounded-full border border-black/10"
-            style={{ backgroundColor: darkModeColor }}
-          ></div>
+          <div className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: darkModeColor }}></div>
         </div>
         <button
           className="ml-2 px-2 py-1 bg-blue-600 dark:bg-blue-500 text-white border-none rounded text-sm cursor-pointer font-medium transition-all duration-200 hover:opacity-90 disabled:bg-gray-400 disabled:opacity-70 disabled:cursor-not-allowed"
@@ -72,14 +64,8 @@ const GradientControls: React.FC<GradientControlsProps> = ({
           const isWcagCompliant = isWCAGCompliant(color, getTextColor(color));
 
           return (
-            <div
-              key={index}
-              className="flex items-center gap-1.5 bg-black/[0.03] dark:bg-white/[0.03] p-2 rounded relative text-xs"
-            >
-              <div
-                className="w-4 h-4 rounded-full border border-black/10"
-                style={{ backgroundColor: color }}
-              ></div>
+            <div key={index} className="flex items-center gap-1.5 bg-black/[0.03] dark:bg-white/[0.03] p-2 rounded relative text-xs">
+              <div className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: color }}></div>
               <input
                 type="color"
                 value={color}
@@ -89,12 +75,8 @@ const GradientControls: React.FC<GradientControlsProps> = ({
               <div className="flex flex-col">
                 <code className="font-mono text-xs text-dual-darkest">{color}</code>
                 <div className="flex items-center gap-1">
-                  <span
-                    className={`inline-block w-2 h-2 rounded-full ${isWcagCompliant ? 'bg-green-500' : 'bg-red-500'}`}
-                  ></span>
-                  <span className="text-dual-dark text-[10px]">
-                    {contrast.toFixed(1)}
-                  </span>
+                  <span className={`inline-block w-2 h-2 rounded-full ${isWcagCompliant ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                  <span className="text-dual-dark text-[10px]">{contrast.toFixed(1)}</span>
                 </div>
               </div>
               {gradientColors.length > 1 && (
@@ -121,9 +103,7 @@ const GradientControls: React.FC<GradientControlsProps> = ({
                     : `linear-gradient(to right, ${lightModeGradientColors.join(', ')})`,
                 }
               : {
-                  backgroundColor: isDarkMode
-                    ? darkModeGradientColors[0]
-                    : lightModeGradientColors[0],
+                  backgroundColor: isDarkMode ? darkModeGradientColors[0] : lightModeGradientColors[0],
                 }
           }
         ></div>

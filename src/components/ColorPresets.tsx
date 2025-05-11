@@ -49,10 +49,7 @@ const ColorPresets: React.FC<ColorPresetsProps> = ({
       <div className="flex items-center justify-between mb-3">
         <div className="text-xs text-dual-dark">Try preset colors:</div>
         <div className="flex gap-1">
-          <button
-            className="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-dual-darkest rounded hover:opacity-90"
-            onClick={resetToDefaults}
-          >
+          <button className="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-dual-darkest rounded hover:opacity-90" onClick={resetToDefaults}>
             Reset
           </button>
         </div>
@@ -80,7 +77,7 @@ const ColorPresets: React.FC<ColorPresetsProps> = ({
                     <div
                       className="w-full h-full"
                       style={{
-                        background: `linear-gradient(to right, ${colors.join(', ')})`
+                        background: `linear-gradient(to right, ${colors.join(', ')})`,
                       }}
                     ></div>
                   ) : (
@@ -95,15 +92,11 @@ const ColorPresets: React.FC<ColorPresetsProps> = ({
 
       <div className="text-xs text-center text-dual-dark">
         <span className="mx-1">
-          <span
-            className={`inline-block w-2 h-2 rounded-full ${isLightModeWCAGCompliant ? 'bg-green-500' : 'bg-red-500'}`}
-          ></span>
+          <span className={`inline-block w-2 h-2 rounded-full ${isLightModeWCAGCompliant ? 'bg-green-500' : 'bg-red-500'}`}></span>
           <span className="ml-1">Light: {lightModeContrast.toFixed(1)}</span>
         </span>
         <span className="mx-1">
-          <span
-            className={`inline-block w-2 h-2 rounded-full ${isDarkModeWCAGCompliant ? 'bg-green-500' : 'bg-red-500'}`}
-          ></span>
+          <span className={`inline-block w-2 h-2 rounded-full ${isDarkModeWCAGCompliant ? 'bg-green-500' : 'bg-red-500'}`}></span>
           <span className="ml-1">Dark: {darkModeContrast.toFixed(1)}</span>
         </span>
         <span className="text-[10px] ml-1">(WCAG ≥ 4.5)</span>

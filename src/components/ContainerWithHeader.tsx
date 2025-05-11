@@ -8,22 +8,13 @@ interface ContainerWithHeaderProps {
   theme?: 'dark' | 'light';
 }
 
-const ContainerWithHeader: React.FC<ContainerWithHeaderProps> = ({
-  gradientColors,
-  isDarkMode,
-  title = 'Container Title',
-  children,
-  theme,
-}) => {
+const ContainerWithHeader: React.FC<ContainerWithHeaderProps> = ({ gradientColors, isDarkMode, title = 'Container Title', children, theme }) => {
   // Set text color based on the theme mode (use theme prop if provided, otherwise fall back to isDarkMode)
   const effectiveTheme = theme || (isDarkMode ? 'dark' : 'light');
   const textColor = effectiveTheme === 'dark' ? '#FFFFFF' : '#000000';
 
   // Create gradient or solid background
-  const headerBackground =
-    gradientColors.length > 1
-      ? `linear-gradient(to right, ${gradientColors.join(', ')})`
-      : gradientColors[0];
+  const headerBackground = gradientColors.length > 1 ? `linear-gradient(to right, ${gradientColors.join(', ')})` : gradientColors[0];
 
   // Container styles that can't be easily done with CSS variables
   const containerContentStyle = {
@@ -32,9 +23,7 @@ const ContainerWithHeader: React.FC<ContainerWithHeaderProps> = ({
   };
 
   return (
-    <div
-      className={`w-full rounded-md overflow-hidden shadow-md ${effectiveTheme === 'dark' ? 'shadow-black/40' : 'shadow-black/10'}`}
-    >
+    <div className={`w-full rounded-md overflow-hidden shadow-md ${effectiveTheme === 'dark' ? 'shadow-black/40' : 'shadow-black/10'}`}>
       <div
         className="py-3 px-4 font-semibold text-base tracking-wide"
         style={{
