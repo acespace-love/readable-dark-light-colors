@@ -2,6 +2,59 @@ import { useState, useEffect } from 'react'
 import tinycolor from 'tinycolor2'
 import './App.css'
 
+// Component to display a container with gradient header
+const ContainerWithHeader = ({
+  gradientColors,
+  isDarkMode,
+  title = "Container Title",
+  children
+}: {
+  gradientColors: string[],
+  isDarkMode: boolean,
+  title?: string,
+  children?: React.ReactNode
+}) => {
+  // Calculate if a gradient is too dark or too light for text
+  const isGradientDark = (colors: string[]): boolean => {
+    // For multiple colors, check the average brightness
+    if (colors.length > 1) {
+      const avgBrightness = colors.reduce((sum, color) => {
+        return sum + tinycolor(color).getBrightness();
+      }, 0) / colors.length;
+
+      return avgBrightness < 128;
+    }
+
+    // For a single color, just check its brightness
+    return tinycolor(colors[0]).getBrightness() < 128;
+  }
+
+  // Decide text color based on background gradient darkness
+  const textColor = isGradientDark(gradientColors) ? '#FFFFFF' : '#000000';
+
+  // Create gradient or solid background
+  const headerBackground = gradientColors.length > 1
+    ? `linear-gradient(to right, ${gradientColors.join(', ')})`
+    : gradientColors[0];
+
+  return (
+    <div className="demo-container">
+      <div
+        className="demo-container-header"
+        style={{
+          background: headerBackground,
+          color: textColor
+        }}
+      >
+        {title}
+      </div>
+      <div className="demo-container-content">
+        {children || "Container content goes here"}
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [userColor, setUserColor] = useState('#646cff') // Default color
@@ -191,6 +244,18 @@ function App() {
                 {username}
               </span>
             </div>
+
+            <div className="preview-section">
+              <h4>Container with Gradient Header:</h4>
+              <ContainerWithHeader
+                gradientColors={lightModeGradientColors}
+                isDarkMode={false}
+                title="Light Mode Header"
+              >
+                <p>Container with a gradient header in light mode</p>
+              </ContainerWithHeader>
+            </div>
+
             <div className="color-swatch" style={{ backgroundColor: lightModeColor }}></div>
             <p style={{ color: lightModeColor }}>Text in your selected color</p>
             <button style={{ backgroundColor: lightModeColor, color: lightModeTextColor }}>
@@ -220,6 +285,18 @@ function App() {
                 {username}
               </span>
             </div>
+
+            <div className="preview-section">
+              <h4>Container with Gradient Header:</h4>
+              <ContainerWithHeader
+                gradientColors={darkModeGradientColors}
+                isDarkMode={true}
+                title="Dark Mode Header"
+              >
+                <p>Container with a gradient header in dark mode</p>
+              </ContainerWithHeader>
+            </div>
+
             <div className="color-swatch" style={{ backgroundColor: darkModeColor }}></div>
             <p style={{ color: darkModeColor }}>Text in your selected color</p>
             <button style={{ backgroundColor: darkModeColor, color: darkModeTextColor }}>
