@@ -70,12 +70,59 @@ body {
   transform: translateY(-1px);
 }
 
+/* Username input styling */
+.username-input {
+  margin: 25px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.username-input input {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--background);
+  color: var(--text-primary);
+  width: 200px;
+  transition: border-color 0.3s ease;
+}
+
+.username-input input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.2);
+}
+
+/* Gradient username styling */
+.username-preview {
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme='dark'] .username-preview {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.gradient-username {
+  font-size: 1.8rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
 .color-picker-container {
   margin: 25px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .color-picker-container input[type="color"] {
@@ -93,6 +140,111 @@ body {
   background-color: var(--card-bg);
   border-radius: 4px;
   color: var(--text-primary);
+}
+
+.add-color-btn {
+  padding: 8px 12px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.add-color-btn:hover {
+  opacity: 0.9;
+}
+
+.add-color-btn:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Gradient colors list styling */
+.gradient-controls {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 30px 0;
+  border: 1px solid var(--border-color);
+}
+
+.gradient-colors-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+.gradient-color-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 8px 12px;
+  border-radius: 4px;
+  position: relative;
+}
+
+[data-theme='dark'] .gradient-color-item {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.color-preview {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.gradient-color-item input[type="color"] {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.gradient-color-item code {
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.remove-color-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background-color: #ef4444;
+  color: white;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 5px;
+  transition: all 0.2s ease;
+}
+
+.remove-color-btn:hover {
+  background-color: #dc2626;
+  transform: scale(1.1);
+}
+
+.gradient-preview {
+  margin: 20px 0;
+}
+
+.gradient-bar {
+  height: 40px;
+  border-radius: 4px;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .preview-container {
@@ -300,5 +452,9 @@ body {
   
   .color-suggestions button {
     margin: 5px;
+  }
+  
+  .gradient-color-item {
+    width: 100%;
   }
 }

@@ -5,6 +5,8 @@ import './App.css'
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [userColor, setUserColor] = useState('#646cff') // Default color
+  const [username, setUsername] = useState('GradientUser123')
+  const [gradientColors, setGradientColors] = useState<string[]>(['#646cff'])
 
   useEffect(() => {
     // Apply theme to root element
@@ -62,7 +64,26 @@ function App() {
     }
   }
 
-  // Calculate colors for both modes
+  // Adapt all gradient colors for the current mode
+  const adaptGradientColors = (colors: string[], forDarkMode: boolean): string[] => {
+    return colors.map(color => getAdaptedColor(color, forDarkMode))
+  }
+
+  // Create a CSS gradient string from colors
+  const createGradientString = (colors: string[]): string => {
+    if (colors.length === 1) {
+      return colors[0]
+    }
+    
+    const colorStops = colors.map((color, index) => {
+      const percentage = (index / (colors.length - 1)) * 100
+      return `${color} ${percentage}%`
+    }).join(', ')
+    
+    return `linear-gradient(to right, ${colorStops})`
+  }
+
+  // Calculate adapted colors for both modes
   const darkModeColor = getAdaptedColor(userColor, true)
   const lightModeColor = getAdaptedColor(userColor, false)
   
@@ -92,6 +113,35 @@ function App() {
   const isLightModeWCAGCompliant = lightModeContrast >= 4.5
   const isDarkModeWCAGCompliant = darkModeContrast >= 4.5
 
+  // Adapted gradient colors for both modes
+  const darkModeGradientColors = adaptGradientColors(gradientColors, true)
+  const lightModeGradientColors = adaptGradientColors(gradientColors, false)
+  
+  // Create gradient strings for both modes
+  const darkModeGradient = createGradientString(darkModeGradientColors)
+  const lightModeGradient = createGradientString(lightModeGradientColors)
+
+  // Add color to gradient
+  const addColorToGradient = () => {
+    if (gradientColors.length < 6) {
+      setGradientColors([...gradientColors, userColor])
+    }
+  }
+
+  // Remove color from gradient
+  const removeColorFromGradient = (indexToRemove: number) => {
+    if (gradientColors.length > 1) {
+      setGradientColors(gradientColors.filter((_, index) => index !== indexToRemove))
+    }
+  }
+
+  // Update a specific color in the gradient
+  const updateGradientColor = (index: number, newColor: string) => {
+    const newColors = [...gradientColors]
+    newColors[index] = newColor
+    setGradientColors(newColors)
+  }
+
   return (
     <div className="app-container">
       <h1>Theme Color Tester</h1>
@@ -107,44 +157,119 @@ function App() {
         <div className="current-mode">Current Mode: {isDarkMode ? 'Dark' : 'Light'}</div>
       </div>
       
-      <div className="color-picker-container">
-        <label htmlFor="color-picker">Choose Theme Color: </label>
+      <div className="username-input">
+        <label htmlFor="username">Username: </label>
         <input
-          type="color"
-          id="color-picker"
-          value={userColor}
-          onChange={(e) => setUserColor(e.target.value)}
+          type="text"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          maxLength={20}
         />
-        <div className="color-value">{userColor}</div>
       </div>
       
       <div className="preview-container">
         <div className="preview-box light-preview">
           <h3>Light Mode Preview</h3>
           <div className="content-preview">
+            <div className="username-preview">
+              <span 
+                className="gradient-username"
+                style={{ 
+                  backgroundImage: lightModeGradient,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  color: 'transparent'
+                }}
+              >
+                {username}
+              </span>
+            </div>
             <div className="color-swatch" style={{ backgroundColor: lightModeColor }}></div>
             <p style={{ color: lightModeColor }}>Text in your selected color</p>
             <button style={{ backgroundColor: lightModeColor, color: lightModeTextColor }}>
               Button with your color
             </button>
-            <div className="demo-box" style={{ backgroundColor: lightModeColor, color: lightModeTextColor }}>
-              Content Box
-            </div>
           </div>
         </div>
         
         <div className="preview-box dark-preview">
           <h3>Dark Mode Preview</h3>
           <div className="content-preview">
+            <div className="username-preview">
+              <span 
+                className="gradient-username"
+                style={{ 
+                  backgroundImage: darkModeGradient,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  color: 'transparent'
+                }}
+              >
+                {username}
+              </span>
+            </div>
             <div className="color-swatch" style={{ backgroundColor: darkModeColor }}></div>
             <p style={{ color: darkModeColor }}>Text in your selected color</p>
             <button style={{ backgroundColor: darkModeColor, color: darkModeTextColor }}>
               Button with your color
             </button>
-            <div className="demo-box" style={{ backgroundColor: darkModeColor, color: darkModeTextColor }}>
-              Content Box
-            </div>
           </div>
+        </div>
+      </div>
+      
+      <div className="gradient-controls">
+        <h3>Gradient Colors (1-6)</h3>
+        <div className="color-picker-container">
+          <label htmlFor="color-picker">Choose Color: </label>
+          <input
+            type="color"
+            id="color-picker"
+            value={userColor}
+            onChange={(e) => setUserColor(e.target.value)}
+          />
+          <div className="color-value">{userColor}</div>
+          <button 
+            className="add-color-btn"
+            onClick={addColorToGradient}
+            disabled={gradientColors.length >= 6}
+          >
+            Add to Gradient
+          </button>
+        </div>
+        
+        <div className="gradient-colors-list">
+          {gradientColors.map((color, index) => (
+            <div key={index} className="gradient-color-item">
+              <div 
+                className="color-preview" 
+                style={{ backgroundColor: color }}
+              ></div>
+              <input
+                type="color"
+                value={color}
+                onChange={(e) => updateGradientColor(index, e.target.value)}
+              />
+              <code>{color}</code>
+              {gradientColors.length > 1 && (
+                <button 
+                  className="remove-color-btn"
+                  onClick={() => removeColorFromGradient(index)}
+                >
+                  ×
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+        
+        <div className="gradient-preview">
+          <div 
+            className="gradient-bar"
+            style={{ backgroundImage: isDarkMode ? darkModeGradient : lightModeGradient }}
+          ></div>
         </div>
       </div>
       
@@ -190,17 +315,14 @@ function App() {
           Try these colors to see how the algorithm adapts them:
         </p>
         <div className="color-suggestions">
-          <button onClick={() => setUserColor('#ffffff')} style={{backgroundColor: '#ffffff', color: '#000000', margin: '0 5px'}}>White</button>
-          <button onClick={() => setUserColor('#000000')} style={{backgroundColor: '#000000', color: '#ffffff', margin: '0 5px'}}>Black</button>
-          <button onClick={() => setUserColor('#ff0000')} style={{backgroundColor: '#ff0000', color: '#ffffff', margin: '0 5px'}}>Red</button>
-          <button onClick={() => setUserColor('#00ff00')} style={{backgroundColor: '#00ff00', color: '#000000', margin: '0 5px'}}>Green</button>
-          <button onClick={() => setUserColor('#0000ff')} style={{backgroundColor: '#0000ff', color: '#ffffff', margin: '0 5px'}}>Blue</button>
+          <button onClick={() => setUserColor('#ffffff')} style={{backgroundColor: '#ffffff', color: '#000000'}}>White</button>
+          <button onClick={() => setUserColor('#000000')} style={{backgroundColor: '#000000', color: '#ffffff'}}>Black</button>
+          <button onClick={() => setUserColor('#ff0000')} style={{backgroundColor: '#ff0000', color: '#ffffff'}}>Red</button>
+          <button onClick={() => setUserColor('#00ff00')} style={{backgroundColor: '#00ff00', color: '#000000'}}>Green</button>
+          <button onClick={() => setUserColor('#0000ff')} style={{backgroundColor: '#0000ff', color: '#ffffff'}}>Blue</button>
+          <button onClick={() => setUserColor('#ff00ff')} style={{backgroundColor: '#ff00ff', color: '#ffffff'}}>Pink</button>
+          <button onClick={() => setUserColor('#ffff00')} style={{backgroundColor: '#ffff00', color: '#000000'}}>Yellow</button>
         </div>
-        <p className="hint">
-          Colors are automatically adapted for optimal visibility based on brightness, saturation, 
-          and contrast with background. Try extreme colors like white, black, or bright red to 
-          see the adaptation in action.
-        </p>
       </div>
     </div>
   )
