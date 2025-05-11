@@ -2,14 +2,16 @@ import { useState, useEffect } from 'react'
 import tinycolor from 'tinycolor2'
 import './App.css'
 import { LightModePreview, DarkModePreview } from './GradientPreview'
+import { useLocalStorage } from '@uidotdev/usehooks'
 
 // ContainerWithHeader component has been moved to GradientPreview.tsx
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false)
-  const [userColor, setUserColor] = useState('#646cff') // Default color
-  const [username, setUsername] = useState('GradientUser123')
-  const [gradientColors, setGradientColors] = useState<string[]>(['#646cff'])
+  // Use localStorage to persist user preferences
+  const [isDarkMode, setIsDarkMode] = useLocalStorage<boolean>('theme-dark-mode', false)
+  const [userColor, setUserColor] = useLocalStorage<string>('theme-user-color', '#646cff')
+  const [username, setUsername] = useLocalStorage<string>('theme-username', 'GradientUser123')
+  const [gradientColors, setGradientColors] = useLocalStorage<string[]>('theme-gradient-colors', ['#646cff'])
 
   useEffect(() => {
     // Apply theme to root element
@@ -322,6 +324,21 @@ function App() {
           <button onClick={() => setUserColor('#0000ff')} style={{backgroundColor: '#0000ff', color: '#ffffff'}}>Blue</button>
           <button onClick={() => setUserColor('#ff00ff')} style={{backgroundColor: '#ff00ff', color: '#ffffff'}}>Pink</button>
           <button onClick={() => setUserColor('#ffff00')} style={{backgroundColor: '#ffff00', color: '#000000'}}>Yellow</button>
+        </div>
+
+        <div className="settings-actions">
+          <button
+            className="reset-button"
+            onClick={() => {
+              // Reset all settings to defaults
+              setUserColor('#646cff');
+              setGradientColors(['#646cff']);
+              setUsername('GradientUser123');
+              // Keep the current theme to avoid jarring changes
+            }}
+          >
+            Reset to Default Colors
+          </button>
         </div>
       </div>
     </div>
