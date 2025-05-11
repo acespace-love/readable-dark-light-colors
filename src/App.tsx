@@ -17,13 +17,7 @@ function App() {
   const [username, setUsername] = useLocalStorage<string>('theme-username', 'GradientUser123');
   const [gradientColors, setGradientColors] = useLocalStorage<string[]>('theme-gradient-colors', ['#646cff']);
 
-  // Calculate adapted colors for both modes
-  const darkModeColor = getAdaptedColor(userColor, 'dark');
-  const lightModeColor = getAdaptedColor(userColor, 'light');
-
-  // Adapted gradient colors for both modes
-  const darkModeGradientColors = adaptGradientColors(gradientColors, 'dark');
-  const lightModeGradientColors = adaptGradientColors(gradientColors, 'light');
+  const mode = isDarkMode ? 'dark' : 'light';
 
   return (
     <div className={`${isDarkMode ? 'dark' : ''} min-h-screen`}>
@@ -43,20 +37,12 @@ function App() {
           <GradientControls
             userColor={userColor}
             setUserColor={setUserColor}
-            setGradientColors={setGradientColors}
-            gradientColors={gradientColors}
-            lightModeColor={lightModeColor}
-            darkModeColor={darkModeColor}
-            isDarkMode={isDarkMode}
-            darkModeGradientColors={darkModeGradientColors}
-            lightModeGradientColors={lightModeGradientColors}
-          />
-
-          <GradientBuilder
             gradientColors={gradientColors}
             setGradientColors={setGradientColors}
+            mode={mode}
           />
 
+          <GradientBuilder gradientColors={gradientColors} setGradientColors={setGradientColors} />
           <ColorPresets setUserColor={setUserColor} setGradientColors={setGradientColors} />
         </div>
       </div>
