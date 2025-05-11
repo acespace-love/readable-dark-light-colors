@@ -8,7 +8,9 @@ interface UsernameInputProps {
 const UsernameInput: React.FC<UsernameInputProps> = ({ username, setUsername }) => {
   return (
     <div className="flex items-center justify-center gap-2 my-3">
-      <label htmlFor="username" className="text-sm">Username: </label>
+      <label htmlFor="username" className="text-sm">
+        Username:{' '}
+      </label>
       <input
         type="text"
         id="username"

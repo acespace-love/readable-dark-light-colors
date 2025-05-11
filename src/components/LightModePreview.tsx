@@ -18,11 +18,11 @@ const LightModePreview: React.FC<PreviewProps> = ({
   adaptedLightModeColors,
   adaptedDarkModeColors,
   lightModeColor,
-  lightModeTextColor
+  lightModeTextColor,
 }) => {
   // Force light mode styles regardless of app theme
   const isDarkMode = false;
-  
+
   return (
     <div className="flex-1 min-w-[280px] max-w-[400px] p-5 rounded-lg shadow-md bg-white text-[#213547] border border-[#e2e8f0] transition-all duration-300">
       <h3 className="mt-0 mb-5 text-xl">Light Mode Preview</h3>
@@ -32,14 +32,14 @@ const LightModePreview: React.FC<PreviewProps> = ({
             className="text-3xl font-bold py-1 px-3 rounded tracking-wide inline-block"
             style={
               gradientColors.length > 1
-              ? {
-                  backgroundImage: `linear-gradient(to right, ${adaptedLightModeColors.join(', ')})`,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  color: 'transparent'
-                }
-              : { color: adaptedLightModeColors[0] }
+                ? {
+                    backgroundImage: `linear-gradient(to right, ${adaptedLightModeColors.join(', ')})`,
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    color: 'transparent',
+                  }
+                : { color: adaptedLightModeColors[0] }
             }
           >
             {username}
@@ -61,9 +61,12 @@ const LightModePreview: React.FC<PreviewProps> = ({
           </div>
         </div>
 
-        <div className="w-full h-10 rounded mb-1.5 border border-black/10" style={{ backgroundColor: lightModeColor }}></div>
+        <div
+          className="w-full h-10 rounded mb-1.5 border border-black/10"
+          style={{ backgroundColor: lightModeColor }}
+        ></div>
         <p style={{ color: lightModeColor }}>Text in your selected color</p>
-        <button 
+        <button
           className="border-none py-2 px-4 rounded font-medium cursor-pointer transition-opacity duration-200 hover:opacity-90"
           style={{ backgroundColor: lightModeColor, color: lightModeTextColor }}
         >

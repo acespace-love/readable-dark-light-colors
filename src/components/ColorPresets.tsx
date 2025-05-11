@@ -17,7 +17,7 @@ const PRESET_COLORS = [
   { color: '#00ff00', name: 'Green' },
   { color: '#0000ff', name: 'Blue' },
   { color: '#ff00ff', name: 'Pink' },
-  { color: '#ffff00', name: 'Yellow' }
+  { color: '#ffff00', name: 'Yellow' },
 ];
 
 const ColorPresets: React.FC<ColorPresetsProps> = ({
@@ -27,7 +27,7 @@ const ColorPresets: React.FC<ColorPresetsProps> = ({
   lightModeContrast,
   darkModeContrast,
   isLightModeWCAGCompliant,
-  isDarkModeWCAGCompliant
+  isDarkModeWCAGCompliant,
 }) => {
   const resetToDefaults = () => {
     setUserColor('#646cff');
@@ -51,24 +51,28 @@ const ColorPresets: React.FC<ColorPresetsProps> = ({
 
       <div className="flex flex-wrap justify-center gap-1 mb-2">
         {PRESET_COLORS.map((preset) => (
-          <button 
+          <button
             key={preset.color}
-            onClick={() => setUserColor(preset.color)} 
-            className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center overflow-hidden shadow-sm" 
+            onClick={() => setUserColor(preset.color)}
+            className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center overflow-hidden shadow-sm"
             title={preset.name}
           >
-            <div className="w-6 h-6 rounded-full" style={{backgroundColor: preset.color}}></div>
+            <div className="w-6 h-6 rounded-full" style={{ backgroundColor: preset.color }}></div>
           </button>
         ))}
       </div>
 
       <div className="text-xs text-center text-[var(--text-secondary)]">
         <span className="mx-1">
-          <span className={`inline-block w-2 h-2 rounded-full ${isLightModeWCAGCompliant ? 'bg-green-500' : 'bg-red-500'}`}></span>
+          <span
+            className={`inline-block w-2 h-2 rounded-full ${isLightModeWCAGCompliant ? 'bg-green-500' : 'bg-red-500'}`}
+          ></span>
           <span className="ml-1">Light: {lightModeContrast.toFixed(1)}</span>
         </span>
         <span className="mx-1">
-          <span className={`inline-block w-2 h-2 rounded-full ${isDarkModeWCAGCompliant ? 'bg-green-500' : 'bg-red-500'}`}></span>
+          <span
+            className={`inline-block w-2 h-2 rounded-full ${isDarkModeWCAGCompliant ? 'bg-green-500' : 'bg-red-500'}`}
+          ></span>
           <span className="ml-1">Dark: {darkModeContrast.toFixed(1)}</span>
         </span>
         <span className="text-[10px] ml-1">(WCAG ≥ 4.5)</span>
