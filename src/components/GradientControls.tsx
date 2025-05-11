@@ -30,9 +30,9 @@ const GradientControls: React.FC<GradientControlsProps> = ({
 }) => {
   return (
     <div className="bg-white dark:bg-zinc-800 p-5 rounded-lg my-4 border border-zinc-200 dark:border-zinc-700 shadow-md">
-      <h3 className="text-lg font-semibold mb-2">Gradient Colors (1-6)</h3>
+      <h3 className="text-lg font-semibold mb-2 text-dual-darkest">Gradient Colors (1-6)</h3>
       <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
-        <label htmlFor="color-picker" className="text-sm">
+        <label htmlFor="color-picker" className="text-sm text-dual-dark">
           Color:{' '}
         </label>
         <input
@@ -42,16 +42,16 @@ const GradientControls: React.FC<GradientControlsProps> = ({
           onChange={(e) => setUserColor(e.target.value)}
           className="w-[40px] h-[30px] border-none rounded cursor-pointer bg-transparent"
         />
-        <code className="font-mono text-xs bg-black/5 dark:bg-white/5 px-1.5 py-0.5 rounded">
+        <code className="font-mono text-xs bg-black/5 dark:bg-white/5 px-1.5 py-0.5 rounded text-dual-darkest">
           {userColor}
         </code>
         <div className="flex ml-2 text-xs gap-1 items-center">
-          <span className="text-gray-700 dark:text-gray-300">Light:</span>
+          <span className="text-dual-dark">Light:</span>
           <div
             className="w-4 h-4 rounded-full border border-black/10"
             style={{ backgroundColor: lightModeColor }}
           ></div>
-          <span className="text-gray-700 dark:text-gray-300">Dark:</span>
+          <span className="text-dual-dark">Dark:</span>
           <div
             className="w-4 h-4 rounded-full border border-black/10"
             style={{ backgroundColor: darkModeColor }}
@@ -87,12 +87,12 @@ const GradientControls: React.FC<GradientControlsProps> = ({
                 className="w-[24px] h-[24px] border-none bg-transparent cursor-pointer p-0"
               />
               <div className="flex flex-col">
-                <code className="font-mono text-xs">{color}</code>
+                <code className="font-mono text-xs text-dual-darkest">{color}</code>
                 <div className="flex items-center gap-1">
                   <span
                     className={`inline-block w-2 h-2 rounded-full ${isWcagCompliant ? 'bg-green-500' : 'bg-red-500'}`}
                   ></span>
-                  <span className="text-gray-700 dark:text-gray-300 text-[10px]">
+                  <span className="text-dual-dark text-[10px]">
                     {contrast.toFixed(1)}
                   </span>
                 </div>
