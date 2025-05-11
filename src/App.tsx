@@ -3,53 +3,7 @@ import tinycolor from 'tinycolor2'
 import './App.css'
 import { LightModePreview, DarkModePreview } from './GradientPreview'
 
-// Component to display a container with gradient header
-const ContainerWithHeader = ({
-  gradientColors,
-  isDarkMode,
-  title = "Container Title",
-  children
-}: {
-  gradientColors: string[],
-  isDarkMode: boolean,
-  title?: string,
-  children?: React.ReactNode
-}) => {
-  // No longer determining text color based on gradient brightness
-
-  // Set text color based on the theme mode
-  // Light mode uses black text, dark mode uses white text
-  const textColor = isDarkMode ? '#FFFFFF' : '#000000';
-
-  // Create gradient or solid background
-  const headerBackground = gradientColors.length > 1
-    ? `linear-gradient(to right, ${gradientColors.join(', ')})`
-    : gradientColors[0];
-
-  // Set background and text colors for the container content based on theme
-  const containerStyle = {
-    backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
-    color: isDarkMode ? '#e0e0e0' : '#333333',
-    border: `1px solid ${isDarkMode ? '#333333' : '#e0e0e0'}`
-  };
-
-  return (
-    <div className={`demo-container ${isDarkMode ? 'dark-container' : 'light-container'}`}>
-      <div
-        className="demo-container-header"
-        style={{
-          background: headerBackground,
-          color: textColor
-        }}
-      >
-        {title}
-      </div>
-      <div className="demo-container-content" style={containerStyle}>
-        {children || "Container content goes here"}
-      </div>
-    </div>
-  );
-}
+// ContainerWithHeader component has been moved to GradientPreview.tsx
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false)
@@ -195,18 +149,23 @@ function App() {
   return (
     <div className="app-container">
       <h1>Theme Color Tester</h1>
-      
+
       <div className="theme-toggle">
-        <button 
+        <button
           onClick={() => setIsDarkMode(!isDarkMode)}
           className="theme-toggle-button"
-          style={{ backgroundColor: currentThemeColor, color: isDarkMode ? darkModeTextColor : lightModeTextColor }}
+          style={{
+            backgroundColor: currentThemeColor,
+            color: isDarkMode ? darkModeTextColor : lightModeTextColor
+          }}
         >
           {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
         </button>
-        <div className="current-mode">Current Mode: {isDarkMode ? 'Dark' : 'Light'}</div>
+        <div className="current-mode">
+          Current Mode: {isDarkMode ? 'Dark' : 'Light'}
+        </div>
       </div>
-      
+
       <div className="username-input">
         <label htmlFor="username">Username: </label>
         <input
@@ -241,7 +200,7 @@ function App() {
           darkModeTextColor={darkModeTextColor}
         />
       </div>
-      
+
       <div className="gradient-controls">
         <h3>Gradient Colors (1-6)</h3>
         <div className="color-picker-container">
@@ -253,7 +212,7 @@ function App() {
             onChange={(e) => setUserColor(e.target.value)}
           />
           <div className="color-value">{userColor}</div>
-          <button 
+          <button
             className="add-color-btn"
             onClick={addColorToGradient}
             disabled={gradientColors.length >= 6}
@@ -265,8 +224,8 @@ function App() {
         <div className="gradient-colors-list">
           {gradientColors.map((color, index) => (
             <div key={index} className="gradient-color-item">
-              <div 
-                className="color-preview" 
+              <div
+                className="color-preview"
                 style={{ backgroundColor: color }}
               ></div>
               <input
@@ -276,7 +235,7 @@ function App() {
               />
               <code>{color}</code>
               {gradientColors.length > 1 && (
-                <button 
+                <button
                   className="remove-color-btn"
                   onClick={() => removeColorFromGradient(index)}
                 >
@@ -286,7 +245,7 @@ function App() {
             </div>
           ))}
         </div>
-        
+
         <div className="gradient-preview">
           <div
             className="gradient-bar"
@@ -310,17 +269,26 @@ function App() {
         <div className="color-info-grid">
           <div>
             <p><strong>Original Color:</strong></p>
-            <div className="color-sample" style={{ backgroundColor: userColor }}></div>
+            <div
+              className="color-sample"
+              style={{ backgroundColor: userColor }}
+            ></div>
             <code>{userColor}</code>
           </div>
           <div>
             <p><strong>Light Mode:</strong></p>
-            <div className="color-sample" style={{ backgroundColor: lightModeColor }}></div>
+            <div
+              className="color-sample"
+              style={{ backgroundColor: lightModeColor }}
+            ></div>
             <code>{lightModeColor}</code>
           </div>
           <div>
             <p><strong>Dark Mode:</strong></p>
-            <div className="color-sample" style={{ backgroundColor: darkModeColor }}></div>
+            <div
+              className="color-sample"
+              style={{ backgroundColor: darkModeColor }}
+            ></div>
             <code>{darkModeColor}</code>
           </div>
         </div>

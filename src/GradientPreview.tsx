@@ -24,11 +24,10 @@ export const ContainerWithHeader: React.FC<ContainerWithHeaderProps> = ({
     ? `linear-gradient(to right, ${gradientColors.join(', ')})`
     : gradientColors[0];
     
-  // Set background and text colors for the container content based on theme
-  const containerStyle = {
+  // Container styles that can't be easily done with CSS variables
+  const containerContentStyle = {
     backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
     color: isDarkMode ? '#e0e0e0' : '#333333',
-    border: `1px solid ${isDarkMode ? '#333333' : '#e0e0e0'}`
   };
     
   return (
@@ -42,7 +41,10 @@ export const ContainerWithHeader: React.FC<ContainerWithHeaderProps> = ({
       >
         {title}
       </div>
-      <div className="demo-container-content" style={containerStyle}>
+      <div 
+        className="demo-container-content"
+        style={containerContentStyle}
+      >
         {children || "Container content goes here"}
       </div>
     </div>
@@ -123,7 +125,10 @@ export const LightModePreview: React.FC<GradientPreviewProps> = ({
 
         <div className="color-swatch" style={{ backgroundColor: lightModeColor }}></div>
         <p style={{ color: lightModeColor }}>Text in your selected color</p>
-        <button style={{ backgroundColor: lightModeColor, color: lightModeTextColor }}>
+        <button 
+          className="content-preview button"
+          style={{ backgroundColor: lightModeColor, color: lightModeTextColor }}
+        >
           Button with your color
         </button>
       </div>
@@ -194,7 +199,10 @@ export const DarkModePreview: React.FC<GradientPreviewProps> = ({
 
         <div className="color-swatch" style={{ backgroundColor: darkModeColor }}></div>
         <p style={{ color: darkModeColor }}>Text in your selected color</p>
-        <button style={{ backgroundColor: darkModeColor, color: darkModeTextColor }}>
+        <button 
+          className="content-preview button"
+          style={{ backgroundColor: darkModeColor, color: darkModeTextColor }}
+        >
           Button with your color
         </button>
       </div>
