@@ -25,8 +25,15 @@ const ContainerWithHeader = ({
     ? `linear-gradient(to right, ${gradientColors.join(', ')})`
     : gradientColors[0];
 
+  // Set background and text colors for the container content based on theme
+  const containerStyle = {
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
+    color: isDarkMode ? '#e0e0e0' : '#333333',
+    border: `1px solid ${isDarkMode ? '#333333' : '#e0e0e0'}`
+  };
+
   return (
-    <div className="demo-container">
+    <div className={`demo-container ${isDarkMode ? 'dark-container' : 'light-container'}`}>
       <div
         className="demo-container-header"
         style={{
@@ -36,7 +43,7 @@ const ContainerWithHeader = ({
       >
         {title}
       </div>
-      <div className="demo-container-content">
+      <div className="demo-container-content" style={containerStyle}>
         {children || "Container content goes here"}
       </div>
     </div>

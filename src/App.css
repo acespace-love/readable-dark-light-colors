@@ -327,7 +327,14 @@ body {
   border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.light-container {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dark-container {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .demo-container-header {
@@ -339,9 +346,8 @@ body {
 
 .demo-container-content {
   padding: 15px;
-  background-color: var(--background);
-  color: var(--text-primary);
   font-size: 0.95rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Header examples layout */
