@@ -27,11 +27,12 @@ function GradientBuilder({ gradientColors, setGradientColors }: GradientBuilderP
     }
   };
 
-  // Handle removing a color
-  const handleRemoveColor = (index: number, e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent the pill click event
+  // Handle removing the last color
+  const handleRemoveLastColor = () => {
     if (gradientColors.length > 1) {
-      setGradientColors(gradientColors.filter((_, i) => i !== index));
+      const newColors = [...gradientColors];
+      newColors.pop(); // Remove the last color
+      setGradientColors(newColors);
       setActiveColorIndex(null);
       setShowColorPicker(false);
     }
@@ -77,53 +78,44 @@ function GradientBuilder({ gradientColors, setGradientColors }: GradientBuilderP
       />
 
       {/* Color pills list */}
-      <div className="flex flex-wrap gap-2 items-center">
-        {gradientColors.map((color, index) => (
-          <div
-            key={index}
-            onClick={() => handleColorClick(index)}
-            className="h-8 pl-6 pr-2 rounded-full flex items-center gap-2 cursor-pointer border border-zinc-200 dark:border-zinc-600 hover:shadow-md transition-shadow duration-200 group"
-            style={{ background: color }}
-          >
-            {gradientColors.length > 1 && (
-              <button
-                className="w-5 h-5 rounded-full bg-white/80 text-gray-600 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                onClick={(e) => handleRemoveColor(index, e)}
-                title="Remove color"
-              >
-                ×
-              </button>
-            )}
-          </div>
-        ))}
+      <div className="flex flex-wrap items-center">
+        <div className="flex flex-wrap gap-2 flex-grow mb-2">
+          {gradientColors.map((color, index) => (
+            <div
+              key={index}
+              onClick={() => handleColorClick(index)}
+              className="h-8 w-8 rounded-xl flex items-center gap-2 cursor-pointer hover:shadow-md transition-shadow duration-200"
+              style={{ background: color }}
+            ></div>
+          ))}
+        </div>
 
-        {/* Add button */}
-        {gradientColors.length < 6 && (
+        {/* Control buttons */}
+        <div className="flex gap-2 ml-2">
+          {/* Remove button */}
           <button
-            onClick={handleAddColor}
-            className="h-8 w-8 rounded-full bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center text-dual-dark hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-colors"
-            title="Add color"
+            onClick={handleRemoveLastColor}
+            className="h-8 w-8 rounded-full bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center text-dual-dark hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            title="Remove last color"
+            disabled={gradientColors.length <= 1}
           >
-            +
+            −
           </button>
-        )}
+
+          {/* Add button */}
+          {gradientColors.length < 6 && (
+            <button
+              onClick={handleAddColor}
+              className="h-8 w-8 rounded-full bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center text-dual-dark hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-colors"
+              title="Add color"
+            >
+              +
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
-}
-
-// Helper function to determine if text should be black or white based on background color
-function getContrastColor(hexColor: string): string {
-  // Convert hex to RGB
-  const r = parseInt(hexColor.substring(1, 3), 16);
-  const g = parseInt(hexColor.substring(3, 5), 16);
-  const b = parseInt(hexColor.substring(5, 7), 16);
-
-  // Calculate relative luminance
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-  // Return black for light colors, white for dark colors
-  return luminance > 0.5 ? '#000000' : '#ffffff';
 }
 
 export default GradientBuilder;
