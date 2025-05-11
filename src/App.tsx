@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocalStorage } from '@uidotdev/usehooks';
 import clsx from 'clsx';
 import {
@@ -84,14 +84,6 @@ function App() {
       <UsernameInput username={username} setUsername={setUsername} />
 
       <div className="flex flex-wrap justify-center gap-3 my-3">
-        {isDarkMode ? "darkmode" : "lightmode"}
-              <h3 className="mt-0 mb-5 text-xl inline dark:hidden">
-        LIGHT LOL
-      </h3>
-              <h3 className="mt-0 mb-5 text-xl hidden dark:inline text-red-500 dark:text-green-500">
-        DARK LOL
-      </h3>
-
         <ThemePreview
           username={username}
           selectedColor={userColor}
