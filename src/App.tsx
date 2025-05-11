@@ -72,14 +72,19 @@ function App() {
   // Create a CSS gradient string from colors
   const createGradientString = (colors: string[]): string => {
     if (colors.length === 1) {
-      return colors[0]
+      // For a single color, create a subtle gradient of the same color
+      const color = colors[0];
+      const colorObj = tinycolor(color);
+      const slightlyLighter = colorObj.clone().lighten(5).toString();
+      const slightlyDarker = colorObj.clone().darken(5).toString();
+      return `linear-gradient(to right, ${slightlyDarker}, ${color}, ${slightlyLighter})`;
     }
-    
+
     const colorStops = colors.map((color, index) => {
       const percentage = (index / (colors.length - 1)) * 100
       return `${color} ${percentage}%`
     }).join(', ')
-    
+
     return `linear-gradient(to right, ${colorStops})`
   }
 
