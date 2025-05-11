@@ -62,8 +62,13 @@ function GradientControls({
         <div className="flex ml-2 text-xs gap-1 items-center">
           <span className="text-dual-dark">Light:</span>
           <div className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: lightModeColor }}></div>
-          <span className="text-dual-dark">Dark:</span>
+          <span className={`inline-block w-2 h-2 mx-0.5 rounded-full ${isWCAGCompliant(lightModeColor, getTextColor(lightModeColor)) ? 'bg-green-500' : 'bg-red-500'}`} title={`Contrast: ${getContrastRatio(lightModeColor, getTextColor(lightModeColor)).toFixed(1)}`}></span>
+          <span className="text-[10px] text-dual-dark" title="Contrast ratio">{getContrastRatio(lightModeColor, getTextColor(lightModeColor)).toFixed(1)}</span>
+
+          <span className="text-dual-dark ml-2">Dark:</span>
           <div className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: darkModeColor }}></div>
+          <span className={`inline-block w-2 h-2 mx-0.5 rounded-full ${isWCAGCompliant(darkModeColor, getTextColor(darkModeColor)) ? 'bg-green-500' : 'bg-red-500'}`} title={`Contrast: ${getContrastRatio(darkModeColor, getTextColor(darkModeColor)).toFixed(1)}`}></span>
+          <span className="text-[10px] text-dual-dark" title="Contrast ratio">{getContrastRatio(darkModeColor, getTextColor(darkModeColor)).toFixed(1)}</span>
         </div>
         <button
           className="ml-2 px-2 py-1 bg-blue-600 dark:bg-blue-500 text-white border-none rounded text-sm cursor-pointer font-medium transition-all duration-200 hover:opacity-90 disabled:bg-gray-400 disabled:opacity-70 disabled:cursor-not-allowed"
@@ -123,6 +128,14 @@ function GradientControls({
                 }
           }
         ></div>
+
+        {/* Small WCAG explainer */}
+        <div className="text-[10px] text-center text-dual-dark mt-1">
+          <span title="Web Content Accessibility Guidelines">WCAG AA</span>:
+          <span className="ml-1 text-green-500">●</span> Pass
+          <span className="ml-1 text-red-500">●</span> Fail
+          <span className="ml-1">(contrast ratio ≥ 4.5:1)</span>
+        </div>
       </div>
     </div>
   );

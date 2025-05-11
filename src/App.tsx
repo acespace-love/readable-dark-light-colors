@@ -1,6 +1,6 @@
 import { useLocalStorage } from '@uidotdev/usehooks';
 import clsx from 'clsx';
-import { getAdaptedColor, adaptGradientColors, getTextColor, getContrastRatio, isWCAGCompliant } from './utils/colorUtils';
+import { getAdaptedColor, adaptGradientColors } from './utils/colorUtils';
 
 // Import components
 import ThemeToggle from './components/ThemeToggle';
@@ -16,22 +16,9 @@ function App() {
   const [username, setUsername] = useLocalStorage<string>('theme-username', 'GradientUser123');
   const [gradientColors, setGradientColors] = useLocalStorage<string[]>('theme-gradient-colors', ['#646cff']);
 
-  // Current theme mode
-  const themeMode = isDarkMode ? 'dark' : 'light';
-
   // Calculate adapted colors for both modes
   const darkModeColor = getAdaptedColor(userColor, 'dark');
   const lightModeColor = getAdaptedColor(userColor, 'light');
-
-  // Calculate text colors
-  const darkModeTextColor = getTextColor(darkModeColor);
-  const lightModeTextColor = getTextColor(lightModeColor);
-
-  // Calculate contrast ratios and WCAG compliance
-  const lightModeContrast = getContrastRatio(lightModeColor, lightModeTextColor);
-  const darkModeContrast = getContrastRatio(darkModeColor, darkModeTextColor);
-  const isLightModeWCAGCompliant = isWCAGCompliant(lightModeColor, lightModeTextColor);
-  const isDarkModeWCAGCompliant = isWCAGCompliant(darkModeColor, darkModeTextColor);
 
   // Adapted gradient colors for both modes
   const darkModeGradientColors = adaptGradientColors(gradientColors, 'dark');
@@ -64,15 +51,7 @@ function App() {
             lightModeGradientColors={lightModeGradientColors}
           />
 
-          <ColorPresets
-            setUserColor={setUserColor}
-            setGradientColors={setGradientColors}
-            setUsername={setUsername}
-            lightModeContrast={lightModeContrast}
-            darkModeContrast={darkModeContrast}
-            isLightModeWCAGCompliant={isLightModeWCAGCompliant}
-            isDarkModeWCAGCompliant={isDarkModeWCAGCompliant}
-          />
+          <ColorPresets setUserColor={setUserColor} setGradientColors={setGradientColors} />
         </div>
       </div>
     </div>

@@ -1,11 +1,6 @@
 interface ColorPresetsProps {
   setUserColor: (color: string) => void;
   setGradientColors: (colors: string[]) => void;
-  setUsername: (username: string) => void;
-  lightModeContrast: number;
-  darkModeContrast: number;
-  isLightModeWCAGCompliant: boolean;
-  isDarkModeWCAGCompliant: boolean;
 }
 
 export const displayNameThemes: Record<string, readonly [string, string, ...string[]] | null> = {
@@ -26,22 +21,13 @@ export const displayNameThemes: Record<string, readonly [string, string, ...stri
   DEFAULT: null,
 };
 
-function ColorPresets({
-  setUserColor,
-  setGradientColors,
-  setUsername,
-  lightModeContrast,
-  darkModeContrast,
-  isLightModeWCAGCompliant,
-  isDarkModeWCAGCompliant,
-}: ColorPresetsProps) {
+function ColorPresets({ setUserColor, setGradientColors }: ColorPresetsProps) {
   // Add event handler type declaration for TypeScript
   type MouseMoveHandler = (e: MouseEvent) => void;
   const resetToDefaults = () => {
     const defaultTheme = ['#646cff', '#646cff'];
     setUserColor(defaultTheme[0]);
     setGradientColors(defaultTheme);
-    setUsername('GradientUser123');
   };
 
   return (
@@ -72,7 +58,11 @@ function ColorPresets({
           aria-label="Scroll left"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-dual-darkest" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+            <path
+              fillRule="evenodd"
+              d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+              clipRule="evenodd"
+            />
           </svg>
         </button>
 
@@ -87,7 +77,11 @@ function ColorPresets({
           aria-label="Scroll right"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-dual-darkest" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+            <path
+              fillRule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clipRule="evenodd"
+            />
           </svg>
         </button>
 
@@ -106,7 +100,7 @@ function ColorPresets({
 
             const handleMouseMove: MouseMoveHandler = (e) => {
               const x = e.pageX - slider.offsetLeft;
-              const walk = (x - startX);
+              const walk = x - startX;
               slider.scrollLeft = scrollLeft - walk;
             };
 
@@ -155,20 +149,8 @@ function ColorPresets({
           </div>
         </div>
       </div>
-
-      <div className="text-xs text-center text-dual-dark">
-        <span className="mx-1">
-          <span className={`inline-block w-2 h-2 rounded-full ${isLightModeWCAGCompliant ? 'bg-green-500' : 'bg-red-500'}`}></span>
-          <span className="ml-1">Light: {lightModeContrast.toFixed(1)}</span>
-        </span>
-        <span className="mx-1">
-          <span className={`inline-block w-2 h-2 rounded-full ${isDarkModeWCAGCompliant ? 'bg-green-500' : 'bg-red-500'}`}></span>
-          <span className="ml-1">Dark: {darkModeContrast.toFixed(1)}</span>
-        </span>
-        <span className="text-[10px] ml-1">(WCAG ≥ 4.5)</span>
-      </div>
     </div>
   );
-};
+}
 
 export default ColorPresets;
