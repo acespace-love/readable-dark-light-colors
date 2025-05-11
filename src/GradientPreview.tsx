@@ -30,9 +30,9 @@ export const ContainerWithHeader: React.FC<ContainerWithHeaderProps> = ({
   };
     
   return (
-    <div className={`demo-container ${isDarkMode ? 'dark-container' : 'light-container'}`}>
+    <div className={`w-full rounded-md overflow-hidden shadow-md ${isDarkMode ? 'shadow-black/40' : 'shadow-black/10'}`}>
       <div
-        className="demo-container-header"
+        className="py-3 px-4 font-semibold text-base tracking-wide"
         style={{
           background: headerBackground,
           color: textColor
@@ -40,8 +40,8 @@ export const ContainerWithHeader: React.FC<ContainerWithHeaderProps> = ({
       >
         {title}
       </div>
-      <div 
-        className="demo-container-content"
+      <div
+        className="p-4 text-[15px] transition-colors duration-300"
         style={containerContentStyle}
       >
         {children || "Container content goes here"}
@@ -73,12 +73,12 @@ export const LightModePreview: React.FC<GradientPreviewProps> = ({
   const isDarkMode = false;
   
   return (
-    <div className="preview-box light-preview">
-      <h3>Light Mode Preview</h3>
-      <div className="content-preview">
-        <div className="username-preview">
+    <div className="flex-1 min-w-[280px] max-w-[400px] p-5 rounded-lg shadow-md bg-white text-[#213547] border border-[#e2e8f0] transition-all duration-300">
+      <h3 className="mt-0 mb-5 text-xl">Light Mode Preview</h3>
+      <div className="flex flex-col gap-4 items-center p-4 rounded">
+        <div className="mb-5 p-4 rounded-md bg-black/[0.03]">
           <span
-            className="gradient-username"
+            className="text-3xl font-bold py-1 px-3 rounded tracking-wide inline-block"
             style={
               gradientColors.length > 1
               ? {
@@ -95,11 +95,11 @@ export const LightModePreview: React.FC<GradientPreviewProps> = ({
           </span>
         </div>
 
-        <div className="preview-section">
-          <h4>Container with Gradient Header:</h4>
-          <div className="header-examples">
-            <div className="header-option">
-              <p className="option-label">Option 1: Swapped Colors</p>
+        <div className="w-full my-5">
+          <h4 className="mb-2.5 text-base font-medium">Container with Gradient Header:</h4>
+          <div className="flex flex-col gap-5">
+            <div className="flex-1">
+              <p className="text-sm font-semibold mb-2 text-left text-[#4a5568]">Option 1: Swapped Colors</p>
               <ContainerWithHeader
                 gradientColors={adaptedDarkModeColors} /* Use dark mode colors in light mode */
                 isDarkMode={isDarkMode}
@@ -109,8 +109,8 @@ export const LightModePreview: React.FC<GradientPreviewProps> = ({
               </ContainerWithHeader>
             </div>
 
-            <div className="header-option">
-              <p className="option-label">Option 2: Matching Colors</p>
+            <div className="flex-1">
+              <p className="text-sm font-semibold mb-2 text-left text-[#4a5568]">Option 2: Matching Colors</p>
               <ContainerWithHeader
                 gradientColors={adaptedLightModeColors}
                 isDarkMode={isDarkMode}
@@ -122,10 +122,10 @@ export const LightModePreview: React.FC<GradientPreviewProps> = ({
           </div>
         </div>
 
-        <div className="color-swatch" style={{ backgroundColor: lightModeColor }}></div>
+        <div className="w-full h-10 rounded mb-1.5 border border-black/10" style={{ backgroundColor: lightModeColor }}></div>
         <p style={{ color: lightModeColor }}>Text in your selected color</p>
-        <button 
-          className="content-preview button"
+        <button
+          className="border-none py-2 px-4 rounded font-medium cursor-pointer transition-opacity duration-200 hover:opacity-90"
           style={{ backgroundColor: lightModeColor, color: lightModeTextColor }}
         >
           Button with your color
@@ -147,12 +147,12 @@ export const DarkModePreview: React.FC<GradientPreviewProps> = ({
   const isDarkMode = true;
   
   return (
-    <div className="preview-box dark-preview">
-      <h3>Dark Mode Preview</h3>
-      <div className="content-preview">
-        <div className="username-preview">
+    <div className="flex-1 min-w-[280px] max-w-[400px] p-5 rounded-lg shadow-md bg-[#242424] text-[rgba(255,255,255,0.87)] border border-[#4a5568] transition-all duration-300">
+      <h3 className="mt-0 mb-5 text-xl">Dark Mode Preview</h3>
+      <div className="flex flex-col gap-4 items-center p-4 rounded">
+        <div className="mb-5 p-4 rounded-md bg-white/[0.03]">
           <span
-            className="gradient-username"
+            className="text-3xl font-bold py-1 px-3 rounded tracking-wide inline-block"
             style={
               gradientColors.length > 1
               ? {
@@ -169,11 +169,11 @@ export const DarkModePreview: React.FC<GradientPreviewProps> = ({
           </span>
         </div>
 
-        <div className="preview-section">
-          <h4>Container with Gradient Header:</h4>
-          <div className="header-examples">
-            <div className="header-option">
-              <p className="option-label">Option 1: Swapped Colors</p>
+        <div className="w-full my-5">
+          <h4 className="mb-2.5 text-base font-medium">Container with Gradient Header:</h4>
+          <div className="flex flex-col gap-5">
+            <div className="flex-1">
+              <p className="text-sm font-semibold mb-2 text-left text-[#a0aec0]">Option 1: Swapped Colors</p>
               <ContainerWithHeader
                 gradientColors={adaptedLightModeColors} /* Use light mode colors in dark mode */
                 isDarkMode={isDarkMode}
@@ -183,8 +183,8 @@ export const DarkModePreview: React.FC<GradientPreviewProps> = ({
               </ContainerWithHeader>
             </div>
 
-            <div className="header-option">
-              <p className="option-label">Option 2: Matching Colors</p>
+            <div className="flex-1">
+              <p className="text-sm font-semibold mb-2 text-left text-[#a0aec0]">Option 2: Matching Colors</p>
               <ContainerWithHeader
                 gradientColors={adaptedDarkModeColors}
                 isDarkMode={isDarkMode}
@@ -196,10 +196,10 @@ export const DarkModePreview: React.FC<GradientPreviewProps> = ({
           </div>
         </div>
 
-        <div className="color-swatch" style={{ backgroundColor: darkModeColor }}></div>
+        <div className="w-full h-10 rounded mb-1.5 border border-black/10" style={{ backgroundColor: darkModeColor }}></div>
         <p style={{ color: darkModeColor }}>Text in your selected color</p>
-        <button 
-          className="content-preview button"
+        <button
+          className="border-none py-2 px-4 rounded font-medium cursor-pointer transition-opacity duration-200 hover:opacity-90"
           style={{ backgroundColor: darkModeColor, color: darkModeTextColor }}
         >
           Button with your color

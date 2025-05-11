@@ -1,30 +1,28 @@
 @import "tailwindcss";
 
-/* Custom utilities that can't be easily expressed with Tailwind */
-@layer utilities {
-  .text-gradient {
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
+/* Base theme styles */
+:root {
+  --background: #ffffff;
+  --text-primary: #213547;
+  --text-secondary: #4a5568;
+  --accent-color: #646cff;
+  --card-bg: #f8f9fa;
+  --border-color: #e2e8f0;
 }
 
-/* Custom styles for components that would be awkward with just utilities */
-@layer components {
-  .gradient-username {
-    @apply text-3xl font-bold py-1 px-3 rounded tracking-wide inline-block;
-  }
+[data-theme='dark'] {
+  --background: #242424;
+  --text-primary: rgba(255, 255, 255, 0.87);
+  --text-secondary: #a0aec0;
+  --accent-color: #818cf8;
+  --card-bg: #333;
+  --border-color: #4a5568;
+}
 
-  .wcag-badge {
-    @apply inline-block px-2 py-0.5 rounded text-xs font-semibold ml-2;
-  }
-
-  .wcag-pass {
-    @apply bg-green-500 text-white;
-  }
-
-  .wcag-fail {
-    @apply bg-red-500 text-white;
-  }
+/* Custom utilities that can't be easily expressed with Tailwind */
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }

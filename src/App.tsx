@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import './App.css'
 import { LightModePreview, DarkModePreview } from './GradientPreview'
 import { useLocalStorage } from '@uidotdev/usehooks'
 import {
@@ -72,13 +71,13 @@ function App() {
   }
 
   return (
-    <div className="app-container">
-      <h1>Theme Color Tester</h1>
+    <div className="w-full max-w-[800px] mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Theme Color Tester</h1>
 
-      <div className="theme-toggle">
+      <div className="flex flex-col items-center gap-2.5 my-5">
         <button
           onClick={() => setIsDarkMode(!isDarkMode)}
-          className="theme-toggle-button"
+          className="px-5 py-2.5 text-base font-semibold border-none rounded cursor-pointer transition-all duration-300 ease-in-out hover:opacity-90 hover:-translate-y-0.5"
           style={{
             backgroundColor: currentThemeColor,
             color: isDarkMode ? darkModeTextColor : lightModeTextColor
@@ -86,12 +85,12 @@ function App() {
         >
           {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
         </button>
-        <div className="current-mode">
+        <div className="text-sm font-medium text-[var(--text-secondary)]">
           Current Mode: {isDarkMode ? 'Dark' : 'Light'}
         </div>
       </div>
 
-      <div className="username-input">
+      <div className="flex items-center justify-center gap-2.5 my-6">
         <label htmlFor="username">Username: </label>
         <input
           type="text"
@@ -99,10 +98,11 @@ function App() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           maxLength={20}
+          className="px-3 py-2 text-base border border-[var(--border-color)] rounded bg-[var(--background)] text-[var(--text-primary)] w-[200px] transition-colors duration-300 focus:outline-none focus:border-[var(--accent-color)] focus:shadow"
         />
       </div>
-      
-      <div className="preview-container">
+
+      <div className="flex flex-wrap justify-center gap-5 my-8">
         <LightModePreview
           username={username}
           gradientColors={gradientColors}
@@ -126,42 +126,44 @@ function App() {
         />
       </div>
 
-      <div className="gradient-controls">
-        <h3>Gradient Colors (1-6)</h3>
-        <div className="color-picker-container">
+      <div className="bg-[var(--card-bg)] p-5 rounded-lg my-8 border border-[var(--border-color)]">
+        <h3 className="text-xl font-semibold mb-3">Gradient Colors (1-6)</h3>
+        <div className="flex flex-wrap items-center justify-center gap-2.5 my-6">
           <label htmlFor="color-picker">Choose Color: </label>
           <input
             type="color"
             id="color-picker"
             value={userColor}
             onChange={(e) => setUserColor(e.target.value)}
+            className="w-[60px] h-[40px] border-none rounded cursor-pointer bg-transparent"
           />
-          <div className="color-value">{userColor}</div>
+          <div className="font-mono px-2 py-1 bg-[var(--card-bg)] rounded text-[var(--text-primary)]">{userColor}</div>
           <button
-            className="add-color-btn"
+            className="px-3 py-2 bg-[var(--accent-color)] text-white border-none rounded cursor-pointer font-medium transition-all duration-200 hover:opacity-90 disabled:bg-gray-400 disabled:opacity-70 disabled:cursor-not-allowed"
             onClick={addColorToGradient}
             disabled={gradientColors.length >= 6}
           >
             Add to Gradient
           </button>
         </div>
-        
-        <div className="gradient-colors-list">
+
+        <div className="flex flex-wrap justify-center gap-4 my-5">
           {gradientColors.map((color, index) => (
-            <div key={index} className="gradient-color-item">
+            <div key={index} className="flex items-center gap-2 bg-black/[0.03] dark:bg-white/[0.03] p-3 rounded relative">
               <div
-                className="color-preview"
+                className="w-5 h-5 rounded-full border border-black/10"
                 style={{ backgroundColor: color }}
               ></div>
               <input
                 type="color"
                 value={color}
                 onChange={(e) => updateGradientColor(index, e.target.value)}
+                className="w-[30px] h-[30px] border-none bg-transparent cursor-pointer"
               />
-              <code>{color}</code>
+              <code className="font-mono text-sm">{color}</code>
               {gradientColors.length > 1 && (
                 <button
-                  className="remove-color-btn"
+                  className="w-6 h-6 rounded-full border-none bg-red-500 text-white text-base flex items-center justify-center cursor-pointer ml-1.5 transition-all duration-200 hover:bg-red-600 hover:scale-110"
                   onClick={() => removeColorFromGradient(index)}
                 >
                   ×
@@ -171,9 +173,9 @@ function App() {
           ))}
         </div>
 
-        <div className="gradient-preview">
+        <div className="my-5">
           <div
-            className="gradient-bar"
+            className="h-10 rounded w-full border border-black/10"
             style={
               gradientColors.length > 1
               ? { backgroundImage: isDarkMode
@@ -188,70 +190,70 @@ function App() {
           ></div>
         </div>
       </div>
-      
-      <div className="color-explanation">
-        <h3>Color Information</h3>
-        <div className="color-info-grid">
-          <div>
+
+      <div className="mt-8 p-5 rounded-lg bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--border-color)]">
+        <h3 className="text-xl font-semibold mt-0">Color Information</h3>
+        <div className="flex flex-wrap justify-center gap-5 my-5">
+          <div className="flex-1 min-w-[120px] flex flex-col items-center">
             <p><strong>Original Color:</strong></p>
             <div
-              className="color-sample"
+              className="w-[60px] h-[60px] rounded my-2.5 border border-black/10"
               style={{ backgroundColor: userColor }}
             ></div>
-            <code>{userColor}</code>
+            <code className="font-mono bg-black/5 px-1.5 py-0.5 rounded text-sm">{userColor}</code>
           </div>
-          <div>
+          <div className="flex-1 min-w-[120px] flex flex-col items-center">
             <p><strong>Light Mode:</strong></p>
             <div
-              className="color-sample"
+              className="w-[60px] h-[60px] rounded my-2.5 border border-black/10"
               style={{ backgroundColor: lightModeColor }}
             ></div>
-            <code>{lightModeColor}</code>
+            <code className="font-mono bg-black/5 px-1.5 py-0.5 rounded text-sm">{lightModeColor}</code>
           </div>
-          <div>
+          <div className="flex-1 min-w-[120px] flex flex-col items-center">
             <p><strong>Dark Mode:</strong></p>
             <div
-              className="color-sample"
+              className="w-[60px] h-[60px] rounded my-2.5 border border-black/10"
               style={{ backgroundColor: darkModeColor }}
             ></div>
-            <code>{darkModeColor}</code>
+            <code className="font-mono bg-black/5 px-1.5 py-0.5 rounded text-sm">{darkModeColor}</code>
           </div>
         </div>
-        <div className="color-contrast-info">
+        <div className="mt-5 p-4 bg-black/[0.03] dark:bg-white/[0.05] rounded-md text-left">
           <p><strong>Contrast Check:</strong></p>
           <p>
             Light mode contrast: {lightModeContrast.toFixed(2)}
-            <span className={`wcag-badge ${isLightModeWCAGCompliant ? 'wcag-pass' : 'wcag-fail'}`}>
+            <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold ml-2 ${isLightModeWCAGCompliant ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
               {isLightModeWCAGCompliant ? 'PASS' : 'FAIL'}
             </span>
           </p>
           <p>
             Dark mode contrast: {darkModeContrast.toFixed(2)}
-            <span className={`wcag-badge ${isDarkModeWCAGCompliant ? 'wcag-pass' : 'wcag-fail'}`}>
+            <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold ml-2 ${isDarkModeWCAGCompliant ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
               {isDarkModeWCAGCompliant ? 'PASS' : 'FAIL'}
             </span>
           </p>
-          <p className="hint">
+          <p className="text-sm text-[var(--text-secondary)] mt-5">
             WCAG AA standard requires a minimum contrast ratio of 4.5:1 for normal text.
           </p>
         </div>
 
-        <p className="hint">
+        <p className="text-sm text-[var(--text-secondary)] mt-5">
           Try these colors to see how the algorithm adapts them:
         </p>
-        <div className="color-suggestions">
-          <button onClick={() => setUserColor('#ffffff')} style={{backgroundColor: '#ffffff', color: '#000000'}}>White</button>
-          <button onClick={() => setUserColor('#000000')} style={{backgroundColor: '#000000', color: '#ffffff'}}>Black</button>
-          <button onClick={() => setUserColor('#ff0000')} style={{backgroundColor: '#ff0000', color: '#ffffff'}}>Red</button>
-          <button onClick={() => setUserColor('#00ff00')} style={{backgroundColor: '#00ff00', color: '#000000'}}>Green</button>
-          <button onClick={() => setUserColor('#0000ff')} style={{backgroundColor: '#0000ff', color: '#ffffff'}}>Blue</button>
-          <button onClick={() => setUserColor('#ff00ff')} style={{backgroundColor: '#ff00ff', color: '#ffffff'}}>Pink</button>
-          <button onClick={() => setUserColor('#ffff00')} style={{backgroundColor: '#ffff00', color: '#000000'}}>Yellow</button>
+        <div className="flex flex-wrap justify-center gap-2.5 my-4">
+          <button onClick={() => setUserColor('#ffffff')} style={{backgroundColor: '#ffffff', color: '#000000'}} className="border-none rounded px-3 py-2 min-w-[70px] text-sm font-semibold cursor-pointer shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">White</button>
+          <button onClick={() => setUserColor('#000000')} style={{backgroundColor: '#000000', color: '#ffffff'}} className="border-none rounded px-3 py-2 min-w-[70px] text-sm font-semibold cursor-pointer shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">Black</button>
+          <button onClick={() => setUserColor('#ff0000')} style={{backgroundColor: '#ff0000', color: '#ffffff'}} className="border-none rounded px-3 py-2 min-w-[70px] text-sm font-semibold cursor-pointer shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">Red</button>
+          <button onClick={() => setUserColor('#00ff00')} style={{backgroundColor: '#00ff00', color: '#000000'}} className="border-none rounded px-3 py-2 min-w-[70px] text-sm font-semibold cursor-pointer shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">Green</button>
+          <button onClick={() => setUserColor('#0000ff')} style={{backgroundColor: '#0000ff', color: '#ffffff'}} className="border-none rounded px-3 py-2 min-w-[70px] text-sm font-semibold cursor-pointer shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">Blue</button>
+          <button onClick={() => setUserColor('#ff00ff')} style={{backgroundColor: '#ff00ff', color: '#ffffff'}} className="border-none rounded px-3 py-2 min-w-[70px] text-sm font-semibold cursor-pointer shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">Pink</button>
+          <button onClick={() => setUserColor('#ffff00')} style={{backgroundColor: '#ffff00', color: '#000000'}} className="border-none rounded px-3 py-2 min-w-[70px] text-sm font-semibold cursor-pointer shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">Yellow</button>
         </div>
 
-        <div className="settings-actions">
+        <div className="mt-4">
           <button
-            className="reset-button"
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-[var(--text-primary)] font-medium rounded cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
             onClick={() => {
               // Reset all settings to defaults
               setUserColor('#646cff');
