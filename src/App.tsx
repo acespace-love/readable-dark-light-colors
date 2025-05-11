@@ -8,6 +8,7 @@ import {
   getContrastRatio,
   isWCAGCompliant
 } from './utils/colorUtils'
+import clsx from 'clsx'
 
 // ContainerWithHeader component has been moved to GradientPreview.tsx
 
@@ -71,7 +72,7 @@ function App() {
   }
 
   return (
-    <div className="w-full max-w-[800px] mx-auto">
+    <div className={clsx("w-full max-w-[800px] mx-auto", isDarkMode && "dark")}>
       <h1 className="text-2xl font-bold mb-4">Theme Color Tester</h1>
 
       <div className="flex flex-col items-center gap-2.5 my-5">

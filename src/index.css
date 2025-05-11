@@ -19,6 +19,31 @@
   --border-color: #4a5568;
 }
 
+/* Apply theme variables to the entire page */
+html {
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  place-items: center;
+  background-color: var(--background);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
 /* Custom utilities that can't be easily expressed with Tailwind */
 .text-gradient {
   background-clip: text;
