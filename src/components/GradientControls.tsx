@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAdaptedColor, getTextColor, getContrastRatio, isWCAGCompliant } from '../utils/colorUtils';
+import { getTextColor, getContrastRatio, isWCAGCompliant } from '../utils/colorUtils';
 
 interface GradientControlsProps {
   userColor: string;
