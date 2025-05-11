@@ -1,4 +1,3 @@
-import React from 'react';
 import ContainerWithHeader from './ContainerWithHeader';
 
 interface PreviewProps {
@@ -12,14 +11,14 @@ interface PreviewProps {
   darkModeTextColor: string;
 }
 
-const LightModePreview: React.FC<PreviewProps> = ({
+function LightModePreview({
   username,
   gradientColors,
   adaptedLightModeColors,
   adaptedDarkModeColors,
   lightModeColor,
   lightModeTextColor,
-}) => {
+}: PreviewProps) {
   // Force light mode styles regardless of app theme
   const isDarkMode = false;
 

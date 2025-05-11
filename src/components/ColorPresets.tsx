@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ColorPresetsProps {
   setUserColor: (color: string) => void;
   setGradientColors: (colors: string[]) => void;
@@ -28,7 +26,7 @@ export const displayNameThemes: Record<string, readonly [string, string, ...stri
   DEFAULT: null,
 };
 
-const ColorPresets: React.FC<ColorPresetsProps> = ({
+function ColorPresets({
   setUserColor,
   setGradientColors,
   setUsername,
@@ -36,7 +34,7 @@ const ColorPresets: React.FC<ColorPresetsProps> = ({
   darkModeContrast,
   isLightModeWCAGCompliant,
   isDarkModeWCAGCompliant,
-}) => {
+}: ColorPresetsProps) {
   const resetToDefaults = () => {
     const defaultTheme = ['#646cff', '#646cff'];
     setUserColor(defaultTheme[0]);

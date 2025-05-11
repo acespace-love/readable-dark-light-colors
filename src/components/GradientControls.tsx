@@ -1,4 +1,3 @@
-import React from 'react';
 import { getTextColor, getContrastRatio, isWCAGCompliant } from '../utils/colorUtils';
 
 interface GradientControlsProps {
@@ -15,7 +14,7 @@ interface GradientControlsProps {
   lightModeGradientColors: string[];
 }
 
-const GradientControls: React.FC<GradientControlsProps> = ({
+function GradientControls({
   userColor,
   setUserColor,
   gradientColors,
@@ -27,7 +26,7 @@ const GradientControls: React.FC<GradientControlsProps> = ({
   isDarkMode,
   darkModeGradientColors,
   lightModeGradientColors,
-}) => {
+}: GradientControlsProps) {
   return (
     <div className="bg-white dark:bg-zinc-800 p-5 rounded-lg my-4 border border-zinc-200 dark:border-zinc-700 shadow-md">
       <h3 className="text-lg font-semibold mb-2 text-dual-darkest">Gradient Colors (1-6)</h3>

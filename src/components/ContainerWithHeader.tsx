@@ -1,14 +1,14 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
 interface ContainerWithHeaderProps {
   gradientColors: string[];
   isDarkMode: boolean;
   title?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   theme?: 'dark' | 'light';
 }
 
-const ContainerWithHeader: React.FC<ContainerWithHeaderProps> = ({ gradientColors, isDarkMode, title = 'Container Title', children, theme }) => {
+function ContainerWithHeader({ gradientColors, isDarkMode, title = 'Container Title', children, theme }: ContainerWithHeaderProps) {
   // Set text color based on the theme mode (use theme prop if provided, otherwise fall back to isDarkMode)
   const effectiveTheme = theme || (isDarkMode ? 'dark' : 'light');
   const textColor = effectiveTheme === 'dark' ? '#FFFFFF' : '#000000';

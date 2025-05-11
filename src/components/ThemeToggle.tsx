@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ThemeToggleProps {
   isDarkMode: boolean;
   setIsDarkMode: (value: boolean) => void;
@@ -7,7 +5,7 @@ interface ThemeToggleProps {
   textColor: string;
 }
 
-const ThemeToggle: React.FC<ThemeToggleProps> = ({ isDarkMode, setIsDarkMode, currentThemeColor, textColor }) => {
+function ThemeToggle({ isDarkMode, setIsDarkMode, currentThemeColor, textColor }: ThemeToggleProps) {
   return (
     <div className="flex items-center justify-end w-full gap-2 mb-4">
       <span className="text-xs font-medium text-dual-dark">{isDarkMode ? 'Dark' : 'Light'}</span>

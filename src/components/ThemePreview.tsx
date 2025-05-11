@@ -1,4 +1,3 @@
-import React from 'react';
 import ContainerWithHeader from './ContainerWithHeader';
 import { getAdaptedColor, adaptGradientColors, getTextColor } from '../utils/colorUtils';
 import clsx from 'clsx';
@@ -12,7 +11,7 @@ interface ThemePreviewProps {
   mode: ThemeMode;
 }
 
-const ThemePreview: React.FC<ThemePreviewProps> = ({ username, selectedColor, gradientColors, mode }) => {
+function ThemePreview({ username, selectedColor, gradientColors, mode }: ThemePreviewProps) {
   // Get adapted colors directly for the current theme mode
   const previewColor = getAdaptedColor(selectedColor, mode);
   const previewTextColor = getTextColor(previewColor);
@@ -76,6 +75,6 @@ const ThemePreview: React.FC<ThemePreviewProps> = ({ username, selectedColor, gr
       </div>
     </div>
   );
-};
+}
 
 export default ThemePreview;

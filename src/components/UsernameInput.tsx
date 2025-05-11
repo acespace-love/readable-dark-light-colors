@@ -1,11 +1,9 @@
-import React from 'react';
-
 interface UsernameInputProps {
   username: string;
   setUsername: (value: string) => void;
 }
 
-const UsernameInput: React.FC<UsernameInputProps> = ({ username, setUsername }) => {
+function UsernameInput({ username, setUsername }: UsernameInputProps) {
   return (
     <div className="flex items-center justify-center gap-2 my-3">
       <label htmlFor="username" className="text-sm text-dual-dark">
