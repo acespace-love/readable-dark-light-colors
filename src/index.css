@@ -3,23 +3,11 @@
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant light (&:where(.light, .light *));
 
-/* Theme Variables */
-:root {
-  --background: theme(colors.white);
-  --card-bg: theme(colors.white);
-  --text-primary: theme(colors.gray.900);
-  --text-secondary: theme(colors.gray.700);
-  --border-color: theme(colors.zinc.200);
-  --accent-color: theme(colors.blue.600);
-}
 
-.dark {
-  --background: theme(colors.zinc.900);
-  --card-bg: theme(colors.zinc.800);
-  --text-primary: theme(colors.gray.100);
-  --text-secondary: theme(colors.gray.300);
-  --border-color: theme(colors.zinc.700);
-  --accent-color: theme(colors.blue.500);
+@layer utilities {
+  .text-dual-dark {
+    @apply text-zinc-900 dark:text-zinc-100;
+  }
 }
 
 /* Global styles */
