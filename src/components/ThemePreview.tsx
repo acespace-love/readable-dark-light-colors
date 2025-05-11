@@ -1,60 +1,59 @@
 import React from 'react';
 import ContainerWithHeader from './ContainerWithHeader';
+import { 
+  getAdaptedColor, 
+  adaptGradientColors, 
+  getTextColor 
+} from '../utils/colorUtils';
+import clsx from "clsx";
 
 type ThemeMode = 'light' | 'dark';
 
 interface ThemePreviewProps {
   username: string;
+  selectedColor: string;
   gradientColors: string[];
-  adaptedLightModeColors: string[];
-  adaptedDarkModeColors: string[];
-  lightModeColor: string;
-  darkModeColor: string;
-  lightModeTextColor: string;
-  darkModeTextColor: string;
   mode: ThemeMode;
 }
 
 const ThemePreview: React.FC<ThemePreviewProps> = ({
   username,
+  selectedColor,
   gradientColors,
-  adaptedLightModeColors,
-  adaptedDarkModeColors,
-  lightModeColor,
-  darkModeColor,
-  lightModeTextColor,
-  darkModeTextColor,
   mode
 }) => {
   // Determine if we're in dark mode
   const isDarkMode = mode === 'dark';
   
-  // Select the appropriate colors based on the mode
+  // Calculate adapted colors based on the selected color
+  const darkModeColor = getAdaptedColor(selectedColor, true);
+  const lightModeColor = getAdaptedColor(selectedColor, false);
+  
+  // Get the color for this preview based on mode
   const previewColor = isDarkMode ? darkModeColor : lightModeColor;
-  const previewTextColor = isDarkMode ? darkModeTextColor : lightModeTextColor;
   
-  // Use opposing colors for contrast in the header
-  const headerColors = isDarkMode ? adaptedLightModeColors : adaptedDarkModeColors;
+  // Calculate text color for contrast
+  const previewTextColor = getTextColor(previewColor);
   
-  // Determine gradients for username display
-  const usernameColors = isDarkMode ? adaptedDarkModeColors : adaptedLightModeColors;
+  // Calculate adapted gradient colors for both modes
+  const darkModeGradientColors = adaptGradientColors(gradientColors, true);
+  const lightModeGradientColors = adaptGradientColors(gradientColors, false);
   
-  // Set background and text colors based on mode
-  const bgColor = isDarkMode ? '#242424' : '#ffffff';
-  const textColor = isDarkMode ? 'rgba(255,255,255,0.87)' : '#213547';
-  const borderColor = isDarkMode ? '#4a5568' : '#e2e8f0';
-  const bgShade = isDarkMode ? 'white/[0.03]' : 'black/[0.03]';
+  // Use the current mode's gradient colors for the username
+  const usernameColors = isDarkMode ? darkModeGradientColors : lightModeGradientColors;
   
+  // Use the opposing mode's gradient colors for the header (for contrast)
+  const headerColors = isDarkMode ? lightModeGradientColors : darkModeGradientColors;
+
   return (
-    <div className={`flex-1 min-w-[280px] max-w-[400px] p-5 rounded-lg shadow-md border transition-all duration-300`}
-         style={{
-           backgroundColor: bgColor,
-           color: textColor,
-           borderColor: borderColor
-         }}>
-      <h3 className="mt-0 mb-5 text-xl">{isDarkMode ? 'Dark' : 'Light'} Mode Preview</h3>
+      <div className={clsx(isDarkMode ? "dark" : "", "flex-1 min-w-[280px] max-w-[400px]")}>
+    <div className={`p-5 rounded-lg shadow-md border
+                   transition-all duration-300 dark:bg-zinc-900 dark:text-zinc-100 dark:border-zinc-700 bg-white text-zinc-800 border-zinc-200`}>
+      <h3 className="mt-0 mb-5 text-xl ">
+        {isDarkMode ? 'Dark' : 'Light'} Mode Preview
+      </h3>
       <div className="flex flex-col gap-4 items-center p-4 rounded">
-        <div className={`mb-5 p-4 rounded-md bg-${bgShade}`}>
+        <div className={`mb-5 p-4 rounded-md dark:bg-white/5 bg-black/5`}>
           <span
             className="text-3xl font-bold py-1 px-3 rounded tracking-wide inline-block"
             style={
@@ -98,6 +97,7 @@ const ThemePreview: React.FC<ThemePreviewProps> = ({
         </button>
       </div>
     </div>
+        </div>
   );
 };
 
