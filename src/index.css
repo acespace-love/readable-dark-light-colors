@@ -3,10 +3,21 @@
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant light (&:where(.light, .light *));
 
-
 @layer utilities {
-  .text-dual-dark {
+  .text-dual-darkest {
     @apply text-zinc-900 dark:text-zinc-100;
+  }
+  .text-dual-dark {
+    @apply text-zinc-700 dark:text-zinc-300;
+  }
+  .text-dual-normal {
+    @apply text-zinc-500 dark:text-zinc-500;
+  }
+  .text-dual-light {
+    @apply text-zinc-300 dark:text-zinc-700;
+  }
+  .text-dual-lightest {
+    @apply text-zinc-100 dark:text-zinc-900;
   }
 }
 
