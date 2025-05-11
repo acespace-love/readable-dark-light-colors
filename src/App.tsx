@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import tinycolor from 'tinycolor2'
 import './App.css'
+import { LightModePreview, DarkModePreview } from './GradientPreview'
 
 // Component to display a container with gradient header
 const ContainerWithHeader = ({
@@ -218,119 +219,27 @@ function App() {
       </div>
       
       <div className="preview-container">
-        <div className="preview-box light-preview">
-          <h3>Light Mode Preview</h3>
-          <div className="content-preview">
-            <div className="username-preview">
-              <span
-                className="gradient-username"
-                style={
-                  gradientColors.length > 1
-                  ? {
-                      backgroundImage: `linear-gradient(to right, ${lightModeGradientColors.join(', ')})`,
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                      color: 'transparent'
-                    }
-                  : { color: lightModeGradientColors[0] }
-                }
-              >
-                {username}
-              </span>
-            </div>
+        <LightModePreview
+          username={username}
+          gradientColors={gradientColors}
+          adaptedLightModeColors={lightModeGradientColors}
+          adaptedDarkModeColors={darkModeGradientColors}
+          lightModeColor={lightModeColor}
+          darkModeColor={darkModeColor}
+          lightModeTextColor={lightModeTextColor}
+          darkModeTextColor={darkModeTextColor}
+        />
 
-            <div className="preview-section">
-              <h4>Container with Gradient Header:</h4>
-              <div className="header-examples">
-                <div className="header-option">
-                  <p className="option-label">Option 1: Swapped Colors</p>
-                  <ContainerWithHeader
-                    gradientColors={darkModeGradientColors} /* Use dark mode colors in light mode */
-                    isDarkMode={false}
-                    title="Light Mode Header"
-                  >
-                    <p>Using dark mode colors in light mode with black text</p>
-                  </ContainerWithHeader>
-                </div>
-
-                <div className="header-option">
-                  <p className="option-label">Option 2: Matching Colors</p>
-                  <ContainerWithHeader
-                    gradientColors={lightModeGradientColors}
-                    isDarkMode={false}
-                    title="Light Mode Header"
-                  >
-                    <p>Using light mode colors in light mode with black text</p>
-                  </ContainerWithHeader>
-                </div>
-              </div>
-            </div>
-
-            <div className="color-swatch" style={{ backgroundColor: lightModeColor }}></div>
-            <p style={{ color: lightModeColor }}>Text in your selected color</p>
-            <button style={{ backgroundColor: lightModeColor, color: lightModeTextColor }}>
-              Button with your color
-            </button>
-          </div>
-        </div>
-        
-        <div className="preview-box dark-preview">
-          <h3>Dark Mode Preview</h3>
-          <div className="content-preview">
-            <div className="username-preview">
-              <span
-                className="gradient-username"
-                style={
-                  gradientColors.length > 1
-                  ? {
-                      backgroundImage: `linear-gradient(to right, ${darkModeGradientColors.join(', ')})`,
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                      color: 'transparent'
-                    }
-                  : { color: darkModeGradientColors[0] }
-                }
-              >
-                {username}
-              </span>
-            </div>
-
-            <div className="preview-section">
-              <h4>Container with Gradient Header:</h4>
-              <div className="header-examples">
-                <div className="header-option">
-                  <p className="option-label">Option 1: Swapped Colors</p>
-                  <ContainerWithHeader
-                    gradientColors={lightModeGradientColors} /* Use light mode colors in dark mode */
-                    isDarkMode={true}
-                    title="Dark Mode Header"
-                  >
-                    <p>Using light mode colors in dark mode with white text</p>
-                  </ContainerWithHeader>
-                </div>
-
-                <div className="header-option">
-                  <p className="option-label">Option 2: Matching Colors</p>
-                  <ContainerWithHeader
-                    gradientColors={darkModeGradientColors}
-                    isDarkMode={true}
-                    title="Dark Mode Header"
-                  >
-                    <p>Using dark mode colors in dark mode with white text</p>
-                  </ContainerWithHeader>
-                </div>
-              </div>
-            </div>
-
-            <div className="color-swatch" style={{ backgroundColor: darkModeColor }}></div>
-            <p style={{ color: darkModeColor }}>Text in your selected color</p>
-            <button style={{ backgroundColor: darkModeColor, color: darkModeTextColor }}>
-              Button with your color
-            </button>
-          </div>
-        </div>
+        <DarkModePreview
+          username={username}
+          gradientColors={gradientColors}
+          adaptedLightModeColors={lightModeGradientColors}
+          adaptedDarkModeColors={darkModeGradientColors}
+          lightModeColor={lightModeColor}
+          darkModeColor={darkModeColor}
+          lightModeTextColor={lightModeTextColor}
+          darkModeTextColor={darkModeTextColor}
+        />
       </div>
       
       <div className="gradient-controls">
