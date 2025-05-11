@@ -67,7 +67,7 @@ function App() {
   };
 
   return (
-    <div className={`${isDarkMode ? 'dark' : ''} min-h-screen transition-all duration-300`}>
+    <div className={`${isDarkMode ? 'dark' : ''} min-h-screen`}>
       <div className={'bg-white dark:bg-zinc-900 min-h-screen'}>
         <div className={clsx('w-full max-w-[800px] mx-auto py-8 px-4')}>
           <h1 className="text-3xl font-bold mb-6 text-center text-dual-darkest">

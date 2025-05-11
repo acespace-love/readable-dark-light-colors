@@ -46,7 +46,7 @@ const ThemePreview: React.FC<ThemePreviewProps> = ({
   return (
     <div className={clsx('flex-1 min-w-[280px] max-w-[400px]', isDarkMode ? 'dark' : 'light')}>
       <div
-        className="p-5 rounded-lg shadow-md border transition-all duration-300 
+        className="p-5 rounded-lg shadow-md border
                       light:bg-white light:text-zinc-800 light:border-zinc-200
                       dark:bg-zinc-900 dark:text-zinc-100 dark:border-zinc-700"
       >
