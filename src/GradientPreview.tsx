@@ -99,24 +99,12 @@ export const LightModePreview: React.FC<GradientPreviewProps> = ({
           <h4 className="mb-2.5 text-base font-medium">Container with Gradient Header:</h4>
           <div className="flex flex-col gap-5">
             <div className="flex-1">
-              <p className="text-sm font-semibold mb-2 text-left text-[#4a5568]">Option 1: Swapped Colors</p>
               <ContainerWithHeader
                 gradientColors={adaptedDarkModeColors} /* Use dark mode colors in light mode */
                 isDarkMode={isDarkMode}
-                title="Light Mode Header"
+                title="Gradient Header Preview"
               >
-                <p>Using dark mode colors in light mode with black text</p>
-              </ContainerWithHeader>
-            </div>
-
-            <div className="flex-1">
-              <p className="text-sm font-semibold mb-2 text-left text-[#4a5568]">Option 2: Matching Colors</p>
-              <ContainerWithHeader
-                gradientColors={adaptedLightModeColors}
-                isDarkMode={isDarkMode}
-                title="Light Mode Header"
-              >
-                <p>Using light mode colors in light mode with black text</p>
+                <p>Text content with your chosen color scheme</p>
               </ContainerWithHeader>
             </div>
           </div>
@@ -173,24 +161,12 @@ export const DarkModePreview: React.FC<GradientPreviewProps> = ({
           <h4 className="mb-2.5 text-base font-medium">Container with Gradient Header:</h4>
           <div className="flex flex-col gap-5">
             <div className="flex-1">
-              <p className="text-sm font-semibold mb-2 text-left text-[#a0aec0]">Option 1: Swapped Colors</p>
               <ContainerWithHeader
                 gradientColors={adaptedLightModeColors} /* Use light mode colors in dark mode */
                 isDarkMode={isDarkMode}
-                title="Dark Mode Header"
+                title="Gradient Header Preview"
               >
-                <p>Using light mode colors in dark mode with white text</p>
-              </ContainerWithHeader>
-            </div>
-
-            <div className="flex-1">
-              <p className="text-sm font-semibold mb-2 text-left text-[#a0aec0]">Option 2: Matching Colors</p>
-              <ContainerWithHeader
-                gradientColors={adaptedDarkModeColors}
-                isDarkMode={isDarkMode}
-                title="Dark Mode Header"
-              >
-                <p>Using dark mode colors in dark mode with white text</p>
+                <p>Text content with your chosen color scheme</p>
               </ContainerWithHeader>
             </div>
           </div>
