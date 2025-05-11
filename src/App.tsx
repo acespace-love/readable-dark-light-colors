@@ -43,7 +43,7 @@ function App() {
           />
 
           <GradientBuilder gradientColors={gradientColors} setGradientColors={setGradientColors} />
-          <GradientBuilderScroll gradientColors={gradientColors} setGradientColors={setGradientColors} />
+          <GradientBuilderScroll gradientColors={gradientColors} setGradientColors={setGradientColors} setUserColor={setUserColor} />
           <ColorPresets setUserColor={setUserColor} setGradientColors={setGradientColors} />
         </div>
       </div>
