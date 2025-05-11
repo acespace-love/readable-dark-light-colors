@@ -1,54 +1,59 @@
 import tinycolor from 'tinycolor2';
 
 /**
- * Adapts a color for dark or light mode based on its brightness and saturation
+ * Adapts a color for dark or light mode based on its brightness and saturation,
+ * while preserving more of the original color's character
  */
 export const getAdaptedColor = (color: string, forDarkMode: boolean): string => {
   const colorObj = tinycolor(color);
   const brightness = colorObj.getBrightness();
   const hsl = colorObj.toHsl();
   const isDark = brightness < 128;
-  
+
   // Special case for colors that are very close to white or black
   if (brightness > 240) { // Very light colors (white or near-white)
-    return forDarkMode 
+    return forDarkMode
       ? color // Keep white as white in dark mode
-      : tinycolor({ h: hsl.h, s: hsl.s, l: 0.15 }).toString(); // Make it very dark in light mode
+      : tinycolor({ h: hsl.h, s: hsl.s, l: 0.25 }).toString(); // Make it dark but not too dark in light mode
   }
-  
+
   if (brightness < 30) { // Very dark colors (black or near-black)
     return forDarkMode
-      ? tinycolor({ h: hsl.h, s: hsl.s, l: 0.85 }).toString() // Make it very light in dark mode
+      ? tinycolor({ h: hsl.h, s: hsl.s, l: 0.75 }).toString() // Make it light but not too light in dark mode
       : color; // Keep black as black in light mode
   }
-  
+
   if (forDarkMode) {
     // For dark mode backgrounds
     if (isDark) {
-      // Dark colors need to be lightened for dark mode
-      // Make more saturated colors stand out in dark mode
-      if (hsl.s > 0.6) {
-        return tinycolor(color).lighten(25).saturate(5).toString();
-      } else {
-        return tinycolor(color).lighten(30).saturate(10).toString();
-      }
+      // Reduce the lightening intensity for dark colors
+      const lightenAmount = Math.min(18, (0.8 - hsl.l) * 35);
+      const saturateAmount = Math.min(5, 10 - (hsl.s * 8));
+
+      // Keep more of the original color character by using smaller adjustments
+      return tinycolor(color)
+        .lighten(lightenAmount)
+        .saturate(saturateAmount)
+        .toString();
     } else {
       // Light colors might need slight adjustment in dark mode
-      return tinycolor(color).lighten(5).saturate(5).toString();
+      return tinycolor(color).lighten(3).saturate(3).toString();
     }
   } else {
     // For light mode backgrounds
     if (!isDark) {
-      // Light colors need to be darkened for light mode
-      // Make more saturated colors stand out in light mode
-      if (hsl.s > 0.6) {
-        return tinycolor(color).darken(25).saturate(5).toString();
-      } else {
-        return tinycolor(color).darken(30).saturate(10).toString();
-      }
+      // Reduce the darkening intensity for light colors
+      const darkenAmount = Math.min(18, (hsl.l - 0.2) * 35);
+      const saturateAmount = Math.min(5, 10 - (hsl.s * 8));
+
+      // Keep more of the original color character by using smaller adjustments
+      return tinycolor(color)
+        .darken(darkenAmount)
+        .saturate(saturateAmount)
+        .toString();
     } else {
       // Dark colors might need slight adjustment in light mode
-      return tinycolor(color).darken(5).saturate(5).toString();
+      return tinycolor(color).darken(3).saturate(3).toString();
     }
   }
 };
