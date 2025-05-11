@@ -344,6 +344,25 @@ body {
   font-size: 0.95rem;
 }
 
+/* Header examples layout */
+.header-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header-option {
+  flex: 1;
+}
+
+.option-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
 .content-preview button {
   border: none;
   padding: 8px 16px;

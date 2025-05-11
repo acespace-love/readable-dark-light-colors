@@ -14,23 +14,11 @@ const ContainerWithHeader = ({
   title?: string,
   children?: React.ReactNode
 }) => {
-  // Calculate if a gradient is too dark or too light for text
-  const isGradientDark = (colors: string[]): boolean => {
-    // For multiple colors, check the average brightness
-    if (colors.length > 1) {
-      const avgBrightness = colors.reduce((sum, color) => {
-        return sum + tinycolor(color).getBrightness();
-      }, 0) / colors.length;
+  // No longer determining text color based on gradient brightness
 
-      return avgBrightness < 128;
-    }
-
-    // For a single color, just check its brightness
-    return tinycolor(colors[0]).getBrightness() < 128;
-  }
-
-  // Decide text color based on background gradient darkness
-  const textColor = isGradientDark(gradientColors) ? '#FFFFFF' : '#000000';
+  // Set text color based on the theme mode
+  // Light mode uses black text, dark mode uses white text
+  const textColor = isDarkMode ? '#FFFFFF' : '#000000';
 
   // Create gradient or solid background
   const headerBackground = gradientColors.length > 1
@@ -247,13 +235,29 @@ function App() {
 
             <div className="preview-section">
               <h4>Container with Gradient Header:</h4>
-              <ContainerWithHeader
-                gradientColors={lightModeGradientColors}
-                isDarkMode={false}
-                title="Light Mode Header"
-              >
-                <p>Container with a gradient header in light mode</p>
-              </ContainerWithHeader>
+              <div className="header-examples">
+                <div className="header-option">
+                  <p className="option-label">Option 1: Swapped Colors</p>
+                  <ContainerWithHeader
+                    gradientColors={darkModeGradientColors} /* Use dark mode colors in light mode */
+                    isDarkMode={false}
+                    title="Light Mode Header"
+                  >
+                    <p>Using dark mode colors in light mode with black text</p>
+                  </ContainerWithHeader>
+                </div>
+
+                <div className="header-option">
+                  <p className="option-label">Option 2: Matching Colors</p>
+                  <ContainerWithHeader
+                    gradientColors={lightModeGradientColors}
+                    isDarkMode={false}
+                    title="Light Mode Header"
+                  >
+                    <p>Using light mode colors in light mode with black text</p>
+                  </ContainerWithHeader>
+                </div>
+              </div>
             </div>
 
             <div className="color-swatch" style={{ backgroundColor: lightModeColor }}></div>
@@ -288,13 +292,29 @@ function App() {
 
             <div className="preview-section">
               <h4>Container with Gradient Header:</h4>
-              <ContainerWithHeader
-                gradientColors={darkModeGradientColors}
-                isDarkMode={true}
-                title="Dark Mode Header"
-              >
-                <p>Container with a gradient header in dark mode</p>
-              </ContainerWithHeader>
+              <div className="header-examples">
+                <div className="header-option">
+                  <p className="option-label">Option 1: Swapped Colors</p>
+                  <ContainerWithHeader
+                    gradientColors={lightModeGradientColors} /* Use light mode colors in dark mode */
+                    isDarkMode={true}
+                    title="Dark Mode Header"
+                  >
+                    <p>Using light mode colors in dark mode with white text</p>
+                  </ContainerWithHeader>
+                </div>
+
+                <div className="header-option">
+                  <p className="option-label">Option 2: Matching Colors</p>
+                  <ContainerWithHeader
+                    gradientColors={darkModeGradientColors}
+                    isDarkMode={true}
+                    title="Dark Mode Header"
+                  >
+                    <p>Using dark mode colors in dark mode with white text</p>
+                  </ContainerWithHeader>
+                </div>
+              </div>
             </div>
 
             <div className="color-swatch" style={{ backgroundColor: darkModeColor }}></div>
