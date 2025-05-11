@@ -1,21 +1,15 @@
 interface ThemeToggleProps {
   isDarkMode: boolean;
   setIsDarkMode: (value: boolean) => void;
-  currentThemeColor: string;
-  textColor: string;
 }
 
-function ThemeToggle({ isDarkMode, setIsDarkMode, currentThemeColor, textColor }: ThemeToggleProps) {
+function ThemeToggle({ isDarkMode, setIsDarkMode }: ThemeToggleProps) {
   return (
     <div className="flex items-center justify-end w-full gap-2 mb-4">
       <span className="text-xs font-medium text-dual-dark">{isDarkMode ? 'Dark' : 'Light'}</span>
       <button
         onClick={() => setIsDarkMode(!isDarkMode)}
-        className="w-10 h-10 flex items-center justify-center rounded-full cursor-pointer transition-all duration-300 ease-in-out hover:opacity-90"
-        style={{
-          backgroundColor: currentThemeColor,
-          color: textColor,
-        }}
+        className="w-10 h-10 text-dual-dark flex items-center justify-center rounded-full cursor-pointer transition-all duration-300 ease-in-out hover:opacity-90"
         aria-label={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
       >
         {isDarkMode ? (
@@ -31,6 +25,6 @@ function ThemeToggle({ isDarkMode, setIsDarkMode, currentThemeColor, textColor }
       </button>
     </div>
   );
-};
+}
 
 export default ThemeToggle;

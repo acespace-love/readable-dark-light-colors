@@ -4,9 +4,7 @@ interface GradientControlsProps {
   userColor: string;
   setUserColor: (value: string) => void;
   gradientColors: string[];
-  updateGradientColor: (index: number, newColor: string) => void;
-  addColorToGradient: () => void;
-  removeColorFromGradient: (index: number) => void;
+  setGradientColors: (value: string[]) => void;
   lightModeColor: string;
   darkModeColor: string;
   isDarkMode: boolean;
@@ -18,15 +16,34 @@ function GradientControls({
   userColor,
   setUserColor,
   gradientColors,
-  updateGradientColor,
-  addColorToGradient,
-  removeColorFromGradient,
+  setGradientColors,
   lightModeColor,
   darkModeColor,
   isDarkMode,
   darkModeGradientColors,
   lightModeGradientColors,
 }: GradientControlsProps) {
+  // Add color to gradient
+  const addColorToGradient = () => {
+    if (gradientColors.length < 6) {
+      setGradientColors([...gradientColors, userColor]);
+    }
+  };
+
+  // Remove color from gradient
+  const removeColorFromGradient = (indexToRemove: number) => {
+    if (gradientColors.length > 1) {
+      setGradientColors(gradientColors.filter((_, index) => index !== indexToRemove));
+    }
+  };
+
+  // Update a specific color in the gradient
+  const updateGradientColor = (index: number, newColor: string) => {
+    const newColors = [...gradientColors];
+    newColors[index] = newColor;
+    setGradientColors(newColors);
+  };
+
   return (
     <div className="bg-white dark:bg-zinc-800 p-5 rounded-lg my-4 border border-zinc-200 dark:border-zinc-700 shadow-md">
       <h3 className="text-lg font-semibold mb-2 text-dual-darkest">Gradient Colors (1-6)</h3>
@@ -93,7 +110,7 @@ function GradientControls({
 
       <div className="my-5">
         <div
-          className="h-10 rounded w-full border border-black/10"
+          className="h-10 rounded w-full"
           style={
             gradientColors.length > 1
               ? {
@@ -109,6 +126,6 @@ function GradientControls({
       </div>
     </div>
   );
-};
+}
 
 export default GradientControls;

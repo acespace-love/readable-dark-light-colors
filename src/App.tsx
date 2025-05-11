@@ -23,9 +23,6 @@ function App() {
   const darkModeColor = getAdaptedColor(userColor, 'dark');
   const lightModeColor = getAdaptedColor(userColor, 'light');
 
-  // Get the actual color to use based on current mode
-  const currentThemeColor = isDarkMode ? darkModeColor : lightModeColor;
-
   // Calculate text colors
   const darkModeTextColor = getTextColor(darkModeColor);
   const lightModeTextColor = getTextColor(lightModeColor);
@@ -40,40 +37,13 @@ function App() {
   const darkModeGradientColors = adaptGradientColors(gradientColors, 'dark');
   const lightModeGradientColors = adaptGradientColors(gradientColors, 'light');
 
-  // Add color to gradient
-  const addColorToGradient = () => {
-    if (gradientColors.length < 6) {
-      setGradientColors([...gradientColors, userColor]);
-    }
-  };
-
-  // Remove color from gradient
-  const removeColorFromGradient = (indexToRemove: number) => {
-    if (gradientColors.length > 1) {
-      setGradientColors(gradientColors.filter((_, index) => index !== indexToRemove));
-    }
-  };
-
-  // Update a specific color in the gradient
-  const updateGradientColor = (index: number, newColor: string) => {
-    const newColors = [...gradientColors];
-    newColors[index] = newColor;
-    setGradientColors(newColors);
-  };
-
   return (
     <div className={`${isDarkMode ? 'dark' : ''} min-h-screen`}>
       <div className={'bg-white dark:bg-zinc-900 min-h-screen'}>
         <div className={clsx('w-full max-w-[800px] mx-auto py-8 px-4')}>
           <h1 className="text-3xl font-bold mb-6 text-center text-dual-darkest">Theme Color Tester</h1>
 
-          <ThemeToggle
-            isDarkMode={isDarkMode}
-            setIsDarkMode={setIsDarkMode}
-            currentThemeColor={currentThemeColor}
-            textColor={isDarkMode ? darkModeTextColor : lightModeTextColor}
-          />
-
+          <ThemeToggle isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
           <UsernameInput username={username} setUsername={setUsername} />
 
           <div className="flex flex-wrap justify-center gap-3 my-3">
@@ -85,10 +55,8 @@ function App() {
           <GradientControls
             userColor={userColor}
             setUserColor={setUserColor}
+            setGradientColors={setGradientColors}
             gradientColors={gradientColors}
-            updateGradientColor={updateGradientColor}
-            addColorToGradient={addColorToGradient}
-            removeColorFromGradient={removeColorFromGradient}
             lightModeColor={lightModeColor}
             darkModeColor={darkModeColor}
             isDarkMode={isDarkMode}
