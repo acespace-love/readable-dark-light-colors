@@ -72,12 +72,8 @@ function App() {
   // Create a CSS gradient string from colors
   const createGradientString = (colors: string[]): string => {
     if (colors.length === 1) {
-      // For a single color, create a subtle gradient of the same color
-      const color = colors[0];
-      const colorObj = tinycolor(color);
-      const slightlyLighter = colorObj.clone().lighten(5).toString();
-      const slightlyDarker = colorObj.clone().darken(5).toString();
-      return `linear-gradient(to right, ${slightlyDarker}, ${color}, ${slightlyLighter})`;
+      // For a single color, just return the color itself (no gradient)
+      return colors[0];
     }
 
     const colorStops = colors.map((color, index) => {
@@ -178,15 +174,19 @@ function App() {
           <h3>Light Mode Preview</h3>
           <div className="content-preview">
             <div className="username-preview">
-              <span 
+              <span
                 className="gradient-username"
-                style={{ 
-                  backgroundImage: lightModeGradient,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  color: 'transparent'
-                }}
+                style={
+                  gradientColors.length > 1
+                  ? {
+                      backgroundImage: `linear-gradient(to right, ${lightModeGradientColors.join(', ')})`,
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      color: 'transparent'
+                    }
+                  : { color: lightModeGradientColors[0] }
+                }
               >
                 {username}
               </span>
@@ -203,15 +203,19 @@ function App() {
           <h3>Dark Mode Preview</h3>
           <div className="content-preview">
             <div className="username-preview">
-              <span 
+              <span
                 className="gradient-username"
-                style={{ 
-                  backgroundImage: darkModeGradient,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  color: 'transparent'
-                }}
+                style={
+                  gradientColors.length > 1
+                  ? {
+                      backgroundImage: `linear-gradient(to right, ${darkModeGradientColors.join(', ')})`,
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      color: 'transparent'
+                    }
+                  : { color: darkModeGradientColors[0] }
+                }
               >
                 {username}
               </span>
@@ -271,9 +275,19 @@ function App() {
         </div>
         
         <div className="gradient-preview">
-          <div 
+          <div
             className="gradient-bar"
-            style={{ backgroundImage: isDarkMode ? darkModeGradient : lightModeGradient }}
+            style={
+              gradientColors.length > 1
+              ? { backgroundImage: isDarkMode
+                  ? `linear-gradient(to right, ${darkModeGradientColors.join(', ')})`
+                  : `linear-gradient(to right, ${lightModeGradientColors.join(', ')})`
+                }
+              : { backgroundColor: isDarkMode
+                  ? darkModeGradientColors[0]
+                  : lightModeGradientColors[0]
+                }
+            }
           ></div>
         </div>
       </div>
