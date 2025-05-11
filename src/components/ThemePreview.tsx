@@ -22,8 +22,8 @@ const ThemePreview: React.FC<ThemePreviewProps> = ({
   const isDarkMode = mode === 'dark';
 
   // Calculate adapted colors based on the selected color
-  const darkModeColor = getAdaptedColor(selectedColor, true);
-  const lightModeColor = getAdaptedColor(selectedColor, false);
+  const darkModeColor = getAdaptedColor(selectedColor, 'dark');
+  const lightModeColor = getAdaptedColor(selectedColor, 'light');
 
   // Get the color for this preview based on mode
   const previewColor = isDarkMode ? darkModeColor : lightModeColor;
@@ -32,8 +32,8 @@ const ThemePreview: React.FC<ThemePreviewProps> = ({
   const previewTextColor = getTextColor(previewColor);
 
   // Calculate adapted gradient colors for both modes
-  const darkModeGradientColors = adaptGradientColors(gradientColors, true);
-  const lightModeGradientColors = adaptGradientColors(gradientColors, false);
+  const darkModeGradientColors = adaptGradientColors(gradientColors, 'dark');
+  const lightModeGradientColors = adaptGradientColors(gradientColors, 'light');
 
   // Use the current mode's gradient colors for the username
   const usernameColors = isDarkMode ? darkModeGradientColors : lightModeGradientColors;
@@ -78,6 +78,7 @@ const ThemePreview: React.FC<ThemePreviewProps> = ({
                 <ContainerWithHeader
                   gradientColors={headerColors}
                   isDarkMode={isDarkMode}
+                  theme={mode}
                   title="Gradient Header Preview"
                 >
                   <p>Text content with your chosen color scheme</p>

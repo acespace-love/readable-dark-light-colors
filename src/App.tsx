@@ -25,8 +25,8 @@ function App() {
   ]);
 
   // Calculate adapted colors for both modes
-  const darkModeColor = getAdaptedColor(userColor, true);
-  const lightModeColor = getAdaptedColor(userColor, false);
+  const darkModeColor = getAdaptedColor(userColor, 'dark');
+  const lightModeColor = getAdaptedColor(userColor, 'light');
 
   // Get the actual color to use based on current mode
   const currentThemeColor = isDarkMode ? darkModeColor : lightModeColor;
@@ -42,8 +42,8 @@ function App() {
   const isDarkModeWCAGCompliant = isWCAGCompliant(darkModeColor, darkModeTextColor);
 
   // Adapted gradient colors for both modes
-  const darkModeGradientColors = adaptGradientColors(gradientColors, true);
-  const lightModeGradientColors = adaptGradientColors(gradientColors, false);
+  const darkModeGradientColors = adaptGradientColors(gradientColors, 'dark');
+  const lightModeGradientColors = adaptGradientColors(gradientColors, 'light');
 
   // Add color to gradient
   const addColorToGradient = () => {

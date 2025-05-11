@@ -5,6 +5,7 @@ interface ContainerWithHeaderProps {
   isDarkMode: boolean;
   title?: string;
   children?: React.ReactNode;
+  theme?: 'dark' | 'light';
 }
 
 const ContainerWithHeader: React.FC<ContainerWithHeaderProps> = ({
@@ -12,9 +13,11 @@ const ContainerWithHeader: React.FC<ContainerWithHeaderProps> = ({
   isDarkMode,
   title = 'Container Title',
   children,
+  theme,
 }) => {
-  // Set text color based on the theme mode
-  const textColor = isDarkMode ? '#FFFFFF' : '#000000';
+  // Set text color based on the theme mode (use theme prop if provided, otherwise fall back to isDarkMode)
+  const effectiveTheme = theme || (isDarkMode ? 'dark' : 'light');
+  const textColor = effectiveTheme === 'dark' ? '#FFFFFF' : '#000000';
 
   // Create gradient or solid background
   const headerBackground =
@@ -24,13 +27,13 @@ const ContainerWithHeader: React.FC<ContainerWithHeaderProps> = ({
 
   // Container styles that can't be easily done with CSS variables
   const containerContentStyle = {
-    backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
-    color: isDarkMode ? '#e0e0e0' : '#333333',
+    backgroundColor: effectiveTheme === 'dark' ? '#1a1a1a' : '#ffffff',
+    color: effectiveTheme === 'dark' ? '#e0e0e0' : '#333333',
   };
 
   return (
     <div
-      className={`w-full rounded-md overflow-hidden shadow-md ${isDarkMode ? 'shadow-black/40' : 'shadow-black/10'}`}
+      className={`w-full rounded-md overflow-hidden shadow-md ${effectiveTheme === 'dark' ? 'shadow-black/40' : 'shadow-black/10'}`}
     >
       <div
         className="py-3 px-4 font-semibold text-base tracking-wide"

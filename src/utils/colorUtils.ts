@@ -4,7 +4,7 @@ import tinycolor from 'tinycolor2';
  * Adapts a color for dark or light mode based on its brightness and saturation,
  * while preserving more of the original color's character
  */
-export const getAdaptedColor = (color: string, forDarkMode: boolean): string => {
+export const getAdaptedColor = (color: string, theme: 'dark' | 'light'): string => {
   const colorObj = tinycolor(color);
   const brightness = colorObj.getBrightness();
   const hsl = colorObj.toHsl();
@@ -13,19 +13,19 @@ export const getAdaptedColor = (color: string, forDarkMode: boolean): string => 
   // Special case for colors that are very close to white or black
   if (brightness > 240) {
     // Very light colors (white or near-white)
-    return forDarkMode
+    return theme === 'dark'
       ? color // Keep white as white in dark mode
       : tinycolor({ h: hsl.h, s: hsl.s, l: 0.25 }).toString(); // Make it dark but not too dark in light mode
   }
 
   if (brightness < 30) {
     // Very dark colors (black or near-black)
-    return forDarkMode
+    return theme === 'dark'
       ? tinycolor({ h: hsl.h, s: hsl.s, l: 0.75 }).toString() // Make it light but not too light in dark mode
       : color; // Keep black as black in light mode
   }
 
-  if (forDarkMode) {
+  if (theme === 'dark') {
     // For dark mode backgrounds
     if (isDark) {
       // Reduce the lightening intensity for dark colors
@@ -57,8 +57,8 @@ export const getAdaptedColor = (color: string, forDarkMode: boolean): string => 
 /**
  * Adapts all gradient colors for the current mode
  */
-export const adaptGradientColors = (colors: string[], forDarkMode: boolean): string[] => {
-  return colors.map((color) => getAdaptedColor(color, forDarkMode));
+export const adaptGradientColors = (colors: string[], theme: 'dark' | 'light'): string[] => {
+  return colors.map((color) => getAdaptedColor(color, theme));
 };
 
 /**
