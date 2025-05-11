@@ -118,7 +118,6 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
         type="color"
         value={activeColorIndex !== null ? gradientColors[activeColorIndex] : '#ffffff'}
         onChange={handleColorChange}
-        onBlur={handleRemoveLastColor}
         className="sr-only"
       />
 
