@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useLocalStorage } from '@uidotdev/usehooks';
 import clsx from 'clsx';
 import {
@@ -22,11 +21,6 @@ function App() {
   const [userColor, setUserColor] = useLocalStorage<string>('theme-user-color', '#646cff');
   const [username, setUsername] = useLocalStorage<string>('theme-username', 'GradientUser123');
   const [gradientColors, setGradientColors] = useLocalStorage<string[]>('theme-gradient-colors', ['#646cff']);
-
-  useEffect(() => {
-    // Apply theme to root element
-    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
-  }, [isDarkMode]);
 
   // Calculate adapted colors for both modes
   const darkModeColor = getAdaptedColor(userColor, true);
@@ -71,7 +65,9 @@ function App() {
   };
 
   return (
-    <div className={clsx("w-full max-w-[800px] mx-auto", isDarkMode && "dark")}>
+      <div className={isDarkMode ? "dark" : ""}>
+          <div className={"bg-white dark:bg-black"}>
+    <div className={clsx("w-full max-w-[800px] mx-auto")}>
       <h1 className="text-2xl font-bold mb-4">Theme Color Tester</h1>
 
       <ThemeToggle 
@@ -123,6 +119,7 @@ function App() {
         isDarkModeWCAGCompliant={isDarkModeWCAGCompliant}
       />
     </div>
+      </div></div>
   );
 }
 
