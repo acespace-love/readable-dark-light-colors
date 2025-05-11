@@ -6,8 +6,7 @@ import ThemeToggle from './components/ThemeToggle';
 import UsernameInput from './components/UsernameInput';
 import ThemePreview from './components/ThemePreview';
 import GradientControls from './components/GradientControls';
-import GradientBuilder from './components/GradientBuilder';
-import GradientBuilderScroll from './components/GradientBuilderScroll';
+import GradientBuilderWithPresets from './components/GradientBuilderWithPresets';
 import ColorPresets from './components/ColorPresets';
 
 function App() {
@@ -42,8 +41,7 @@ function App() {
             mode={mode}
           />
 
-          <GradientBuilder gradientColors={gradientColors} setGradientColors={setGradientColors} />
-          <GradientBuilderScroll gradientColors={gradientColors} setGradientColors={setGradientColors} setUserColor={setUserColor} />
+          <GradientBuilderWithPresets gradientColors={gradientColors} setGradientColors={setGradientColors} setUserColor={setUserColor} />
           <ColorPresets setUserColor={setUserColor} setGradientColors={setGradientColors} />
         </div>
       </div>
