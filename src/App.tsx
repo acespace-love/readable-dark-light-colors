@@ -12,8 +12,7 @@ import {
 // Import components
 import ThemeToggle from './components/ThemeToggle';
 import UsernameInput from './components/UsernameInput';
-import LightModePreview from './components/LightModePreview';
-import DarkModePreview from './components/DarkModePreview';
+import ThemePreview from './components/ThemePreview';
 import GradientControls from './components/GradientControls';
 import ColorPresets from './components/ColorPresets';
 
@@ -85,7 +84,7 @@ function App() {
       <UsernameInput username={username} setUsername={setUsername} />
 
       <div className="flex flex-wrap justify-center gap-3 my-3">
-        <LightModePreview
+        <ThemePreview
           username={username}
           gradientColors={gradientColors}
           adaptedLightModeColors={lightModeGradientColors}
@@ -94,9 +93,10 @@ function App() {
           darkModeColor={darkModeColor}
           lightModeTextColor={lightModeTextColor}
           darkModeTextColor={darkModeTextColor}
+          mode="light"
         />
 
-        <DarkModePreview
+        <ThemePreview
           username={username}
           gradientColors={gradientColors}
           adaptedLightModeColors={lightModeGradientColors}
@@ -105,6 +105,7 @@ function App() {
           darkModeColor={darkModeColor}
           lightModeTextColor={lightModeTextColor}
           darkModeTextColor={darkModeTextColor}
+          mode="dark"
         />
       </div>
 
