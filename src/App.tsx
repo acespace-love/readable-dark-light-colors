@@ -1,8 +1,14 @@
-import { useState, useEffect } from 'react'
-import tinycolor from 'tinycolor2'
+import { useEffect } from 'react'
 import './App.css'
 import { LightModePreview, DarkModePreview } from './GradientPreview'
 import { useLocalStorage } from '@uidotdev/usehooks'
+import {
+  getAdaptedColor,
+  adaptGradientColors,
+  getTextColor,
+  getContrastRatio,
+  isWCAGCompliant
+} from './utils/colorUtils'
 
 // ContainerWithHeader component has been moved to GradientPreview.tsx
 
@@ -18,76 +24,7 @@ function App() {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light')
   }, [isDarkMode])
 
-  // Advanced color adaptation function using TinyColor
-  const getAdaptedColor = (color: string, forDarkMode: boolean): string => {
-    const colorObj = tinycolor(color)
-    const brightness = colorObj.getBrightness()
-    const hsl = colorObj.toHsl()
-    const isDark = brightness < 128
-    
-    // Special case for colors that are very close to white or black
-    if (brightness > 240) { // Very light colors (white or near-white)
-      return forDarkMode 
-        ? color // Keep white as white in dark mode
-        : tinycolor({ h: hsl.h, s: hsl.s, l: 0.15 }).toString() // Make it very dark in light mode
-    }
-    
-    if (brightness < 30) { // Very dark colors (black or near-black)
-      return forDarkMode
-        ? tinycolor({ h: hsl.h, s: hsl.s, l: 0.85 }).toString() // Make it very light in dark mode
-        : color // Keep black as black in light mode
-    }
-    
-    if (forDarkMode) {
-      // For dark mode backgrounds
-      if (isDark) {
-        // Dark colors need to be lightened for dark mode
-        // Make more saturated colors stand out in dark mode
-        if (hsl.s > 0.6) {
-          return tinycolor(color).lighten(25).saturate(5).toString()
-        } else {
-          return tinycolor(color).lighten(30).saturate(10).toString()
-        }
-      } else {
-        // Light colors might need slight adjustment in dark mode
-        return tinycolor(color).lighten(5).saturate(5).toString()
-      }
-    } else {
-      // For light mode backgrounds
-      if (!isDark) {
-        // Light colors need to be darkened for light mode
-        // Make more saturated colors stand out in light mode
-        if (hsl.s > 0.6) {
-          return tinycolor(color).darken(25).saturate(5).toString()
-        } else {
-          return tinycolor(color).darken(30).saturate(10).toString()
-        }
-      } else {
-        // Dark colors might need slight adjustment in light mode
-        return tinycolor(color).darken(5).saturate(5).toString()
-      }
-    }
-  }
-
-  // Adapt all gradient colors for the current mode
-  const adaptGradientColors = (colors: string[], forDarkMode: boolean): string[] => {
-    return colors.map(color => getAdaptedColor(color, forDarkMode))
-  }
-
-  // Create a CSS gradient string from colors
-  const createGradientString = (colors: string[]): string => {
-    if (colors.length === 1) {
-      // For a single color, just return the color itself (no gradient)
-      return colors[0];
-    }
-
-    const colorStops = colors.map((color, index) => {
-      const percentage = (index / (colors.length - 1)) * 100
-      return `${color} ${percentage}%`
-    }).join(', ')
-
-    return `linear-gradient(to right, ${colorStops})`
-  }
+  // Color manipulation functions are now imported from colorUtils.ts
 
   // Calculate adapted colors for both modes
   const darkModeColor = getAdaptedColor(userColor, true)
@@ -96,36 +33,22 @@ function App() {
   // Get the actual color to use based on current mode
   const currentThemeColor = isDarkMode ? darkModeColor : lightModeColor
 
-  // Calculate contrasting text colors based on WCAG guidelines
-  const getTextColor = (bgColor: string): string => {
-    const color = tinycolor(bgColor)
-    // Calculate contrast ratio with white and black
-    const contrastWithWhite = tinycolor.readability(color, "#ffffff")
-    const contrastWithBlack = tinycolor.readability(color, "#000000")
-    
-    // WCAG AA requires a contrast ratio of at least 4.5:1 for normal text
-    // Return the color with better contrast
-    return contrastWithWhite > contrastWithBlack ? "#ffffff" : "#000000"
-  }
+  // getTextColor function is now imported from colorUtils.ts
 
   const darkModeTextColor = getTextColor(darkModeColor)
   const lightModeTextColor = getTextColor(lightModeColor)
 
   // Calculate contrast ratios and WCAG compliance
-  const lightModeContrast = tinycolor.readability(lightModeColor, lightModeTextColor)
-  const darkModeContrast = tinycolor.readability(darkModeColor, darkModeTextColor)
-  
-  // WCAG AA standard requires a minimum contrast ratio of 4.5:1 for normal text
-  const isLightModeWCAGCompliant = lightModeContrast >= 4.5
-  const isDarkModeWCAGCompliant = darkModeContrast >= 4.5
+  const lightModeContrast = getContrastRatio(lightModeColor, lightModeTextColor)
+  const darkModeContrast = getContrastRatio(darkModeColor, darkModeTextColor)
+
+  // Check WCAG compliance using the utility function
+  const isLightModeWCAGCompliant = isWCAGCompliant(lightModeColor, lightModeTextColor)
+  const isDarkModeWCAGCompliant = isWCAGCompliant(darkModeColor, darkModeTextColor)
 
   // Adapted gradient colors for both modes
   const darkModeGradientColors = adaptGradientColors(gradientColors, true)
   const lightModeGradientColors = adaptGradientColors(gradientColors, false)
-  
-  // Create gradient strings for both modes
-  const darkModeGradient = createGradientString(darkModeGradientColors)
-  const lightModeGradient = createGradientString(lightModeGradientColors)
 
   // Add color to gradient
   const addColorToGradient = () => {

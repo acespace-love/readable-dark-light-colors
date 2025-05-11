@@ -1,5 +1,4 @@
 import React from 'react';
-import tinycolor from 'tinycolor2';
 
 interface ContainerWithHeaderProps {
   gradientColors: string[];
