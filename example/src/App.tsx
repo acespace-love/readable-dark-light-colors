@@ -7,8 +7,7 @@ import UsernameInput from './components/UsernameInput';
 import ThemePreview from './components/ThemePreview';
 import GradientControls from './components/GradientControls';
 import GradientBuilderWithPresets from './components/GradientBuilderWithPresets';
-import ColorPresets from './components/ColorPresets';
-import {DEFAULT_THEMES} from "../../src/constants";
+import {DEFAULT_THEMES} from "../../src";
 
 // Import constants
 const MAX_GRADIENT_COLORS = 6;
@@ -57,7 +56,6 @@ function App() {
             setUserColor={setUserColor}
             maximumColorCount={MAX_GRADIENT_COLORS}
           />
-          <ColorPresets setUserColor={setUserColor} setGradientColors={setGradientColors} />
         </div>
       </div>
     </div>
