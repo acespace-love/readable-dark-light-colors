@@ -2,6 +2,10 @@
 
 A lightweight utility library for color management with dark/light mode adaptations. This package provides tools for adapting colors between dark and light modes while maintaining their visual character, creating gradients, and ensuring WCAG accessibility compliance.
 
+**[View the interactive demo](https://acespace-love.github.io/readable-dark-light-colors/)**
+
+> **Note:** This library is used internally by [AceSpace](https://acespace.love) and may be subject to change at will without warning.
+
 ## Installation
 
 ```bash
