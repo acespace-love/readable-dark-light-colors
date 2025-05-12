@@ -72,16 +72,16 @@ export const getAdaptedColor = (color: string, theme: ThemeMode): string => {
 
     if (brightness > 240) {
       // Handle pure white and near-white colors
-      // Map 255→0.20 through 240→0.25
-      targetLightness = 0.20 + ((255 - brightness) / 15) * 0.05;
+      // Map 255→0.30 through 240→0.35
+      targetLightness = 0.30 + ((255 - brightness) / 15) * 0.05;
     } else if (brightness > 200) {
       // Handle very light colors
-      // Map 240→0.25 through 200→0.30
-      targetLightness = 0.25 + ((240 - brightness) / 40) * 0.05;
+      // Map 240→0.35 through 200→0.40
+      targetLightness = 0.35 + ((240 - brightness) / 40) * 0.05;
     } else if (brightness > 50) {
       // Handle most colors with smooth transition
-      // Map 200→0.30 through 50→0.50
-      targetLightness = 0.30 + ((200 - brightness) / 150) * 0.20;
+      // Map 200→0.40 through 50→0.55
+      targetLightness = 0.40 + ((200 - brightness) / 150) * 0.15;
     } else {
       // Keep very dark colors as they are
       return color;
