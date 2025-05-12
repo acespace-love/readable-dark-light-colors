@@ -9,12 +9,20 @@ import GradientControls from './components/GradientControls';
 import GradientBuilderWithPresets from './components/GradientBuilderWithPresets';
 import ColorPresets from './components/ColorPresets';
 
+// Import constants
+import {
+  DEFAULT_COLOR,
+  DEFAULT_USERNAME,
+  MAX_GRADIENT_COLORS,
+  STORAGE_KEYS
+} from './constants/themes';
+
 function App() {
   // Use localStorage to persist user preferences
-  const [isDarkMode, setIsDarkMode] = useLocalStorage<boolean>('theme-dark-mode', false);
-  const [userColor, setUserColor] = useLocalStorage<string>('theme-user-color', '#646cff');
-  const [username, setUsername] = useLocalStorage<string>('theme-username', 'GradientUser123');
-  const [gradientColors, setGradientColors] = useLocalStorage<string[]>('theme-gradient-colors', ['#646cff']);
+  const [isDarkMode, setIsDarkMode] = useLocalStorage<boolean>(STORAGE_KEYS.DARK_MODE, false);
+  const [userColor, setUserColor] = useLocalStorage<string>(STORAGE_KEYS.USER_COLOR, DEFAULT_COLOR);
+  const [username, setUsername] = useLocalStorage<string>(STORAGE_KEYS.USERNAME, DEFAULT_USERNAME);
+  const [gradientColors, setGradientColors] = useLocalStorage<string[]>(STORAGE_KEYS.GRADIENT_COLORS, [DEFAULT_COLOR]);
   const mode = isDarkMode ? 'dark' : 'light';
 
   return (
@@ -43,7 +51,7 @@ function App() {
             gradientColors={gradientColors}
             setGradientColors={setGradientColors}
             setUserColor={setUserColor}
-            maximumColorCount={5}
+            maximumColorCount={MAX_GRADIENT_COLORS}
           />
           <ColorPresets setUserColor={setUserColor} setGradientColors={setGradientColors} />
         </div>
