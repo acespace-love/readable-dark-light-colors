@@ -57,28 +57,31 @@ export const getAdaptedColor = (color: string, theme: ThemeMode): string => {
     // LIGHT MODE ADAPTATION
 
     // For light mode, we want:
-    // - White (#FFF, brightness=255) → Dark gray (lightness≈0.1)
-    // - Light colors (high brightness) → Darker colors
+    // - White (#FFF, brightness=255) → Medium-dark gray (not too dark)
+    // - Light colors (high brightness) → Moderately darker colors
     // - Mid-tone colors → Slight darkening
     // - Black and very dark colors → Stay as they are
 
-    // Calculate a smooth curve that:
-    // - Maps 255 brightness to 0.05 lightness (very dark)
-    // - Maps 200 brightness to 0.20 lightness (dark)
-    // - Maps 128 brightness to 0.40 lightness (slightly darker)
+    // Calculate a more gentle curve that:
+    // - Maps 255 brightness to 0.20 lightness (medium-dark gray)
+    // - Maps 200 brightness to 0.30 lightness (medium-dark)
+    // - Maps 128 brightness to 0.45 lightness (slightly darker)
     // - Maps 0 brightness to hsl.l (unchanged dark colors)
 
-    // Exponential curve that rapidly increases as brightness decreases
     let targetLightness;
 
-    if (brightness > 200) {
-      // Handle very light colors (white → dark gray)
-      // Map 255→0.05 through 200→0.2
-      targetLightness = 0.05 + ((255 - brightness) / 55) * 0.15;
+    if (brightness > 240) {
+      // Handle pure white and near-white colors
+      // Map 255→0.20 through 240→0.25
+      targetLightness = 0.20 + ((255 - brightness) / 15) * 0.05;
+    } else if (brightness > 200) {
+      // Handle very light colors
+      // Map 240→0.25 through 200→0.30
+      targetLightness = 0.25 + ((240 - brightness) / 40) * 0.05;
     } else if (brightness > 50) {
       // Handle most colors with smooth transition
-      // Map 200→0.20 through 50→0.45
-      targetLightness = 0.20 + ((200 - brightness) / 150) * 0.25;
+      // Map 200→0.30 through 50→0.50
+      targetLightness = 0.30 + ((200 - brightness) / 150) * 0.20;
     } else {
       // Keep very dark colors as they are
       return color;
