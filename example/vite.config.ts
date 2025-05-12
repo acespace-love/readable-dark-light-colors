@@ -4,6 +4,6 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(),],
-  base: './', // Using relative path for local development
+  plugins: [react(), tailwindcss()],
+  base: '/readable-dark-light-colors/', // Use repository name for GitHub Pages
 })

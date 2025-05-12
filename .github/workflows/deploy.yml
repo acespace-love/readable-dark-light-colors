@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master  # Change this to your main branch name if different (e.g., main)
+      - initial-commits  # Using your current branch from the git status
   workflow_dispatch: # Allow manual triggering
 
 permissions:
@@ -33,9 +33,11 @@ jobs:
       - name: Build example app
         run: |
           cd example
-          # Update base path for GitHub Pages
-          sed -i 's#base: \./#base: "/readable-dark-light-colors/"#' vite.config.ts
+          # Force the correct base path for GitHub Pages
+          sed -i 's|base:.*|base: "/readable-dark-light-colors/",|' vite.config.ts
+          cat vite.config.ts
           npm run build
+          ls -la dist
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
