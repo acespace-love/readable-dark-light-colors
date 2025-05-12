@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { displayNameThemes } from '../constants/themes';
+import { DEFAULT_THEMES } from '../constants/themes';
 import { createGradientString } from '../utils/colorUtils';
 
 interface GradientBuilderWithPresetsProps {
@@ -75,7 +75,7 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
       <div className="mb-6">
         {/* Color grid with flex-wrap */}
         <div className="flex flex-wrap gap-3 mb-4">
-          {Object.entries(displayNameThemes).map(([name, colors]) => {
+          {Object.entries(DEFAULT_THEMES).map(([name, colors]) => {
             return (
               <button
                 key={name}

@@ -10,12 +10,17 @@ import GradientBuilderWithPresets from './components/GradientBuilderWithPresets'
 import ColorPresets from './components/ColorPresets';
 
 // Import constants
-import {
-  DEFAULT_COLOR,
-  DEFAULT_USERNAME,
-  MAX_GRADIENT_COLORS,
-  STORAGE_KEYS
-} from './constants/themes';
+import { DEFAULT_THEMES } from './constants/themes';
+
+const MAX_GRADIENT_COLORS = 6;
+const DEFAULT_COLOR = DEFAULT_THEMES.DEFAULT[0];
+const DEFAULT_USERNAME = 'GradientUser123';
+const STORAGE_KEYS = {
+  DARK_MODE: 'theme-dark-mode',
+  USER_COLOR: 'theme-user-color',
+  USERNAME: 'theme-username',
+  GRADIENT_COLORS: 'theme-gradient-colors',
+};
 
 function App() {
   // Use localStorage to persist user preferences

@@ -1,4 +1,4 @@
-import { displayNameThemes } from '../constants/themes';
+import { DEFAULT_THEMES } from '../constants/themes';
 import { createGradientString } from '../utils/colorUtils';
 
 interface ColorPresetsProps {
@@ -10,7 +10,7 @@ function ColorPresets({ setUserColor, setGradientColors }: ColorPresetsProps) {
   // Add event handler type declaration for TypeScript
   type MouseMoveHandler = (e: MouseEvent) => void;
   const resetToDefaults = () => {
-    const defaultTheme = displayNameThemes.DEFAULT;
+    const defaultTheme = DEFAULT_THEMES.DEFAULT;
     setUserColor(defaultTheme[0]);
     setGradientColors(defaultTheme);
   };
@@ -99,7 +99,7 @@ function ColorPresets({ setUserColor, setGradientColors }: ColorPresetsProps) {
           }}
         >
           <div className="flex gap-3 px-4 mx-auto">
-            {Object.entries(displayNameThemes).map(([name, colors]) => {
+            {Object.entries(DEFAULT_THEMES).map(([name, colors]) => {
               return (
                 <button
                   key={name}

@@ -1,26 +1,71 @@
 {
   "name": "dark-light-colours",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "A React library for color management with dark/light mode adaptations",
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/dark-light-colours.git"
+  },
+  "keywords": [
+    "react",
+    "colors",
+    "dark-mode",
+    "light-mode",
+    "gradient",
+    "tailwindcss",
+    "themes",
+    "accessibility",
+    "wcag"
+  ],
   "type": "module",
+  "sideEffects": false,
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./styles": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:lib": "vite build --config vite.lib.config.ts && tsc --project tsconfig.lib.json",
     "lint": "eslint .",
     "preview": "vite preview",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css}\""
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css}\"",
+    "prepublishOnly": "npm run build:lib"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "tailwindcss": "^3.0.0 || ^4.0.0"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.6",
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
     "tinycolor2": "^1.6.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.1.6",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@types/tinycolor2": "^1.4.6",
@@ -30,9 +75,12 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "prettier": "3.5.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.6",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^3.9.0"
   }
 }
