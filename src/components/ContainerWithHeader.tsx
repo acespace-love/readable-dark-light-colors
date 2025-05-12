@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 interface ContainerWithHeaderProps {
   gradientColors: string[];
@@ -38,6 +38,6 @@ function ContainerWithHeader({ gradientColors, isDarkMode, title = 'Container Ti
       </div>
     </div>
   );
-};
+}
 
 export default ContainerWithHeader;
