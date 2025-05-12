@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { createGradientString } from '../utils/colorUtils';
-import type { ThemeMode } from '../constants/themes.ts';
+import type { ThemeMode } from '../../../src/constants.ts';
+import { createGradientString } from '../../../src/utils.ts';
 
 interface ContainerWithHeaderProps {
   gradientColors: string[];

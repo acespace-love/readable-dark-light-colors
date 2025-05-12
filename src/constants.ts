@@ -20,9 +20,5 @@ export const DEFAULT_THEMES: Record<string, string[]> = {
   RAINBOW_V2: ['#FF0000', '#FFA500', '#FFFF00', '#00FF00', '#0066FF'], // bright rainbow with 5 colors (red, orange, yellow, green, blue)
 };
 
-/**
- * Theme modes available in the application.
- */
 export type ThemeMode = 'dark' | 'light';
 
-// createGradientString moved to colorUtils.ts

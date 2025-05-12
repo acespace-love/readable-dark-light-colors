@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
-import { DEFAULT_THEMES } from '../constants/themes';
-import { createGradientString } from '../utils/colorUtils';
+import { DEFAULT_THEMES } from '../../../src/constants.ts';
+import { createGradientString } from '../../../src/utils.ts';
 
 interface GradientBuilderWithPresetsProps {
   gradientColors: string[];

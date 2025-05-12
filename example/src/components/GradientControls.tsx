@@ -1,4 +1,4 @@
-import { getTextColor, getContrastRatio, isWCAGCompliant, getAdaptedColor, adaptGradientColors, createGradientString } from '../utils/colorUtils';
+import { getTextColor, getContrastRatio, isWCAGCompliant, getAdaptedColor, adaptGradientColors, createGradientString } from '../../../src/utils.ts';
 
 interface GradientControlsProps {
   userColor: string;

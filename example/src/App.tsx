@@ -8,10 +8,9 @@ import ThemePreview from './components/ThemePreview';
 import GradientControls from './components/GradientControls';
 import GradientBuilderWithPresets from './components/GradientBuilderWithPresets';
 import ColorPresets from './components/ColorPresets';
+import {DEFAULT_THEMES} from "../../src/constants";
 
 // Import constants
-import { DEFAULT_THEMES } from './constants/themes';
-
 const MAX_GRADIENT_COLORS = 6;
 const DEFAULT_COLOR = DEFAULT_THEMES.DEFAULT[0];
 const DEFAULT_USERNAME = 'GradientUser123';
