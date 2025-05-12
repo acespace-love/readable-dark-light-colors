@@ -31,8 +31,12 @@ export const getAdaptedColor = (color: string, theme: ThemeMode): string => {
     // Exponential curve that rapidly decreases as brightness increases
     let targetLightness;
 
-    if (brightness < 50) {
-      // Handle very dark colors (black → white)
+    if (brightness < 10) {
+      // Handle pure black or very close to black
+      // Map 0→1.0 (pure white) through 10→0.9
+      targetLightness = 1.0 - (brightness / 10) * 0.1;
+    } else if (brightness < 50) {
+      // Handle very dark colors
       targetLightness = 0.95 - (normalizedBrightness * 2) * 0.4;
     } else if (brightness < 200) {
       // Handle most colors with smooth transition
@@ -70,18 +74,22 @@ export const getAdaptedColor = (color: string, theme: ThemeMode): string => {
 
     let targetLightness;
 
-    if (brightness > 240) {
-      // Handle pure white and near-white colors
-      // Map 255→0.30 through 240→0.35
-      targetLightness = 0.30 + ((255 - brightness) / 15) * 0.05;
+    if (brightness > 250) {
+      // Handle pure white or very close to white
+      // Map 255→0.05 (almost black) through 250→0.15
+      targetLightness = 0.05 + ((255 - brightness) / 5) * 0.10;
+    } else if (brightness > 240) {
+      // Handle near-white colors
+      // Map 250→0.15 through 240→0.25
+      targetLightness = 0.15 + ((250 - brightness) / 10) * 0.10;
     } else if (brightness > 200) {
       // Handle very light colors
-      // Map 240→0.35 through 200→0.40
-      targetLightness = 0.35 + ((240 - brightness) / 40) * 0.05;
+      // Map 240→0.25 through 200→0.35
+      targetLightness = 0.25 + ((240 - brightness) / 40) * 0.10;
     } else if (brightness > 50) {
       // Handle most colors with smooth transition
-      // Map 200→0.40 through 50→0.55
-      targetLightness = 0.40 + ((200 - brightness) / 150) * 0.15;
+      // Map 200→0.35 through 50→0.55
+      targetLightness = 0.35 + ((200 - brightness) / 150) * 0.20;
     } else {
       // Keep very dark colors as they are
       return color;
