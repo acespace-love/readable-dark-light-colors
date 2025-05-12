@@ -3,5 +3,5 @@
  *
  * @packageDocumentation
  */
-export { getAdaptedColor, adaptGradientColors, createGradientString, getTextColor, isWCAGCompliant, getContrastRatio } from './utils';
-export { DEFAULT_THEMES, type ThemeMode } from './constants';
+export { getAdaptedColor, adaptGradientColors, createGradientString, getTextColor, isWCAGCompliant, getContrastRatio } from './utils.js';
+export { DEFAULT_THEMES, type ThemeMode } from './constants.js';

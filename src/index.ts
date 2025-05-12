@@ -5,7 +5,7 @@
  */
 
 // Export utility functions
-export { getAdaptedColor, adaptGradientColors, createGradientString, getTextColor, isWCAGCompliant, getContrastRatio } from './utils';
+export { getAdaptedColor, adaptGradientColors, createGradientString, getTextColor, isWCAGCompliant, getContrastRatio } from './utils.js';
 
 // Export constants and types
-export { DEFAULT_THEMES, type ThemeMode } from './constants';
+export { DEFAULT_THEMES, type ThemeMode } from './constants.js';

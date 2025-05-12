@@ -1,5 +1,5 @@
 import tinycolor from 'tinycolor2';
-import type { ThemeMode } from './constants.ts';
+import type { ThemeMode } from './constants.js';
 
 /**
  * Adapts a color for dark or light mode based on its brightness and saturation,

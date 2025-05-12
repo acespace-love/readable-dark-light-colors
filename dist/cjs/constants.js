@@ -6,7 +6,7 @@ exports.DEFAULT_THEMES = void 0;
  * Each theme consists of one or more colors that can be used for gradients.
  */
 exports.DEFAULT_THEMES = {
-    DEFAULT: ['#FFFFFF'],
+    DEFAULT: [],
     RED: ['#EF4444'], // text-red-500
     PINK: ['#EC4899'], // text-pink-400
     ORANGE: ['#F97316'], // text-orange-400

@@ -1,4 +1,4 @@
-import type { ThemeMode } from './constants.ts';
+import type { ThemeMode } from './constants.js';
 /**
  * Adapts a color for dark or light mode based on its brightness and saturation,
  * while preserving more of the original color's character
