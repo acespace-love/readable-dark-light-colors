@@ -1,4 +1,4 @@
-import { getTextColor, getContrastRatio, isWCAGCompliant, getAdaptedColor, adaptGradientColors } from '../utils/colorUtils';
+import { getTextColor, getContrastRatio, isWCAGCompliant, getAdaptedColor, adaptGradientColors, createGradientString } from '../utils/colorUtils';
 
 interface GradientControlsProps {
   userColor: string;
@@ -117,14 +117,7 @@ function GradientControls({ userColor, setUserColor, gradientColors, setGradient
       </div>
 
       <div className="my-5">
-        <div
-          className="h-10 rounded w-full"
-          style={
-            gradientColors.length > 1
-              ? { backgroundImage: `linear-gradient(to right, ${adaptedGradientColors.join(', ')})` }
-              : { backgroundColor: adaptedGradientColors[0] }
-          }
-        ></div>
+        <div className="h-10 rounded w-full" style={{ background: createGradientString(adaptedGradientColors) }} />
 
         {/* Small WCAG explainer */}
         <div className="text-[10px] text-center text-dual-dark mt-1">

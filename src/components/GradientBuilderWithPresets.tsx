@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { displayNameThemes } from '../constants/themes';
+import { createGradientString } from '../utils/colorUtils';
 
 interface GradientBuilderWithPresetsProps {
   gradientColors: string[];
@@ -75,7 +76,6 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
         {/* Color grid with flex-wrap */}
         <div className="flex flex-wrap gap-3 mb-4">
           {Object.entries(displayNameThemes).map(([name, colors]) => {
-            const mainColor = colors ? colors[0] : '#646cff';
             return (
               <button
                 key={name}
@@ -89,16 +89,7 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
                 title={name.replace(/_/g, ' ')}
               >
                 <div className="w-7 h-7 rounded-md overflow-hidden shadow-sm">
-                  {colors && colors.length > 1 ? (
-                    <div
-                      className="w-full h-full"
-                      style={{
-                        background: `linear-gradient(to right, ${colors.join(', ')})`,
-                      }}
-                    ></div>
-                  ) : (
-                    <div className="w-full h-full" style={{ backgroundColor: mainColor }}></div>
-                  )}
+                  <div className="w-full h-full" style={{ background: createGradientString(colors) }}></div>
                 </div>
               </button>
             );

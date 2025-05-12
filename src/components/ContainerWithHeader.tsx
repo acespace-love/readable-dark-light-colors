@@ -1,20 +1,19 @@
 import type { ReactNode } from 'react';
+import { createGradientString } from '../utils/colorUtils';
+import type { ThemeMode } from '../constants/themes.ts';
 
 interface ContainerWithHeaderProps {
   gradientColors: string[];
   isDarkMode: boolean;
   title?: string;
   children?: ReactNode;
-  theme?: 'dark' | 'light';
+  theme?: ThemeMode;
 }
 
 function ContainerWithHeader({ gradientColors, isDarkMode, title = 'Container Title', children, theme }: ContainerWithHeaderProps) {
   // Set text color based on the theme mode (use theme prop if provided, otherwise fall back to isDarkMode)
   const effectiveTheme = theme || (isDarkMode ? 'dark' : 'light');
   const textColor = effectiveTheme === 'dark' ? '#FFFFFF' : '#000000';
-
-  // Create gradient or solid background
-  const headerBackground = gradientColors.length > 1 ? `linear-gradient(to right, ${gradientColors.join(', ')})` : gradientColors[0];
 
   // Container styles that can't be easily done with CSS variables
   const containerContentStyle = {
@@ -27,7 +26,7 @@ function ContainerWithHeader({ gradientColors, isDarkMode, title = 'Container Ti
       <div
         className="py-3 px-4 font-semibold text-base tracking-wide"
         style={{
-          background: headerBackground,
+          background: createGradientString(gradientColors),
           color: textColor,
         }}
       >

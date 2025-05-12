@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { createGradientString } from '../utils/colorUtils';
 
 interface GradientBuilderProps {
   gradientColors: string[];
@@ -54,9 +55,6 @@ function GradientBuilder({ gradientColors, setGradientColors }: GradientBuilderP
     }
   }, [showColorPicker, activeColorIndex]);
 
-  // Create the gradient background for preview
-  const gradientBackground = gradientColors.length > 1 ? `linear-gradient(to right, ${gradientColors.join(', ')})` : gradientColors[0];
-
   return (
     <div className="bg-white dark:bg-zinc-800 p-5 rounded-lg my-4 border border-zinc-200 dark:border-zinc-700 shadow-md">
       <div className="flex items-center justify-between mb-4">
@@ -65,7 +63,10 @@ function GradientBuilder({ gradientColors, setGradientColors }: GradientBuilderP
       </div>
 
       {/* Color preview */}
-      <div className="h-12 w-full rounded-md mb-4 border border-zinc-200 dark:border-zinc-600" style={{ background: gradientBackground }}></div>
+      <div
+        className="h-12 w-full rounded-md mb-4 border border-zinc-200 dark:border-zinc-600"
+        style={{ background: createGradientString(gradientColors) }}
+      ></div>
 
       {/* Hidden color picker */}
       <input

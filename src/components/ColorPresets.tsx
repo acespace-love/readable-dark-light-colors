@@ -1,4 +1,5 @@
 import { displayNameThemes } from '../constants/themes';
+import { createGradientString } from '../utils/colorUtils';
 
 interface ColorPresetsProps {
   setUserColor: (color: string) => void;
@@ -99,7 +100,6 @@ function ColorPresets({ setUserColor, setGradientColors }: ColorPresetsProps) {
         >
           <div className="flex gap-3 px-4 mx-auto">
             {Object.entries(displayNameThemes).map(([name, colors]) => {
-              const mainColor = colors ? colors[0] : '#646cff';
               return (
                 <button
                   key={name}
@@ -113,16 +113,12 @@ function ColorPresets({ setUserColor, setGradientColors }: ColorPresetsProps) {
                   title={name.replace(/_/g, ' ')}
                 >
                   <div className="w-14 h-10 rounded-md border border-gray-300 dark:border-gray-600 overflow-hidden shadow-sm">
-                    {colors && colors.length > 1 ? (
-                      <div
-                        className="w-full h-full"
-                        style={{
-                          background: `linear-gradient(to right, ${colors.join(', ')})`,
-                        }}
-                      ></div>
-                    ) : (
-                      <div className="w-full h-full" style={{ backgroundColor: mainColor }}></div>
-                    )}
+                    <div
+                      className="w-full h-full"
+                      style={{
+                        background: createGradientString(colors),
+                      }}
+                    ></div>
                   </div>
                   <span className="text-[10px] text-dual-dark whitespace-nowrap">{name.replace(/_/g, ' ').toLowerCase()}</span>
                 </button>

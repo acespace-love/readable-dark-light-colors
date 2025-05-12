@@ -1,5 +1,5 @@
 import ContainerWithHeader from './ContainerWithHeader';
-import { getAdaptedColor, adaptGradientColors, getTextColor } from '../utils/colorUtils';
+import { getAdaptedColor, adaptGradientColors, getTextColor, createGradientString } from '../utils/colorUtils';
 import clsx from 'clsx';
 
 type ThemeMode = 'light' | 'dark';
@@ -38,7 +38,7 @@ function ThemePreview({ username, selectedColor, gradientColors, mode }: ThemePr
               style={
                 gradientColors.length > 1
                   ? {
-                      backgroundImage: `linear-gradient(to right, ${usernameColors.join(', ')})`,
+                      backgroundImage: createGradientString(usernameColors),
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',

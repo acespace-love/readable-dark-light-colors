@@ -1,4 +1,5 @@
 import ContainerWithHeader from './ContainerWithHeader';
+import { createGradientString } from '../utils/colorUtils';
 
 interface PreviewProps {
   username: string;
@@ -32,7 +33,7 @@ function DarkModePreview({
             style={
               gradientColors.length > 1
                 ? {
-                    backgroundImage: `linear-gradient(to right, ${adaptedDarkModeColors.join(', ')})`,
+                    backgroundImage: createGradientString(adaptedDarkModeColors),
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',

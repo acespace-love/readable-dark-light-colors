@@ -49,3 +49,5 @@ export const STORAGE_KEYS = {
  * Theme modes available in the application.
  */
 export type ThemeMode = 'dark' | 'light';
+
+// createGradientString moved to colorUtils.ts

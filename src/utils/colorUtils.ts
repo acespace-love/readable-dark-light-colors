@@ -1,10 +1,11 @@
 import tinycolor from 'tinycolor2';
+import type { ThemeMode } from '../constants/themes.ts';
 
 /**
  * Adapts a color for dark or light mode based on its brightness and saturation,
  * while preserving more of the original color's character
  */
-export const getAdaptedColor = (color: string, theme: 'dark' | 'light'): string => {
+export const getAdaptedColor = (color: string, theme: ThemeMode): string => {
   const colorObj = tinycolor(color);
   const brightness = colorObj.getBrightness();
   const hsl = colorObj.toHsl();
@@ -57,7 +58,7 @@ export const getAdaptedColor = (color: string, theme: 'dark' | 'light'): string 
 /**
  * Adapts all gradient colors for the current mode
  */
-export const adaptGradientColors = (colors: string[], theme: 'dark' | 'light'): string[] => {
+export const adaptGradientColors = (colors: string[], theme: ThemeMode): string[] => {
   return colors.map((color) => getAdaptedColor(color, theme));
 };
 
