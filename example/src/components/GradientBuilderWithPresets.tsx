@@ -88,7 +88,7 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
                 className="flex flex-col items-center"
                 title={name.replace(/_/g, ' ')}
               >
-                <div className="w-7 h-7 rounded-md overflow-hidden shadow-sm">
+                <div className="w-7 h-7 rounded-md border-2 border-zinc-700 dark:border-zinc-600 overflow-hidden shadow-sm">
                   <div className="w-full h-full" style={{ background: createGradientString(colors) }}></div>
                 </div>
               </button>
@@ -114,7 +114,7 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
             <div
               key={index}
               onClick={() => handleColorClick(index)}
-              className="h-6 w-6 rounded-xl flex items-center gap-2 cursor-pointer hover:shadow-md transition-shadow duration-200"
+              className="h-6 w-6 border border-zinc-700 dark:border-zinc-600  rounded-xl flex items-center gap-2 cursor-pointer hover:shadow-md transition-shadow duration-200"
               style={{ background: color }}
             ></div>
           ))}
