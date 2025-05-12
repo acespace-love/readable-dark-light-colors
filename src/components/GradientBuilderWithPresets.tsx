@@ -107,13 +107,14 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
       />
 
       {/* Color pills list */}
-      <div className="flex flex-wrap items-center">
-        <div className="flex flex-wrap gap-2 flex-grow mb-2">
+      <div className="flex flex-wrap items-center gap-4 ">
+        <h4 className={'text-dual-dark font-bold'}>Palette:</h4>
+        <div className="flex flex-wrap gap-2 flex-grow">
           {gradientColors.map((color, index) => (
             <div
               key={index}
               onClick={() => handleColorClick(index)}
-              className="h-8 w-8 rounded-xl flex items-center gap-2 cursor-pointer hover:shadow-md transition-shadow duration-200"
+              className="h-6 w-6 rounded-xl flex items-center gap-2 cursor-pointer hover:shadow-md transition-shadow duration-200"
               style={{ background: color }}
             ></div>
           ))}
