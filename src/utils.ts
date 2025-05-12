@@ -21,9 +21,18 @@ export const getAdaptedColor = (color: string, theme: ThemeMode): string => {
 
   if (brightness < 30) {
     // Very dark colors (black or near-black)
-    return theme === 'dark'
-      ? tinycolor({ h: hsl.h, s: hsl.s, l: 0.75 }).toString() // Make it light but not too light in dark mode
-      : color; // Keep black as black in light mode
+    if (theme === 'dark') {
+      // For dark mode, calculate a dynamic lightness based on the original brightness
+      // This ensures very dark colors like black (#000000) become white (#FFFFFF)
+      const dynamicLightness = Math.max(0.95 - (brightness / 30) * 0.2, 0.75);
+      return tinycolor({
+        h: hsl.h,
+        s: hsl.s, // Preserve original saturation
+        l: dynamicLightness
+      }).toString();
+    } else {
+      return color; // Keep black as black in light mode
+    }
   }
 
   if (theme === 'dark') {
