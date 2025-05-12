@@ -19,17 +19,22 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
   // Handle clicking on a color pill
   const handleColorClick = (index: number) => {
     setActiveColorIndex(index);
+    setUserColor(gradientColors[index]); // Update the selected color
     newColorAddedRef.current = false; // Editing existing color
     showColourPicker();
   };
 
   // Handle adding a new color
   const handleAddColor = () => {
-    if (gradientColors.length < 6) {
-      // Use the last color as default for new color
-      const newColor = gradientColors[gradientColors.length - 1];
+    if (gradientColors.length < maximumColorCount) {
+      // Use the active color or the last color as default for new color
+      const newColor = activeColorIndex !== null
+        ? gradientColors[activeColorIndex]
+        : gradientColors[gradientColors.length - 1];
+
       setGradientColors([...gradientColors, newColor]);
       setActiveColorIndex(gradientColors.length);
+      setUserColor(newColor); // Update the currently selected color
       newColorAddedRef.current = true; // Mark as a newly added color
     }
   };
@@ -40,7 +45,11 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
       const newColors = [...gradientColors];
       newColors.pop(); // Remove the last color
       setGradientColors(newColors);
-      setActiveColorIndex(null);
+
+      // Update selected color to the new last color
+      const newLastIndex = newColors.length - 1;
+      setUserColor(newColors[newLastIndex]);
+      setActiveColorIndex(newLastIndex);
       newColorAddedRef.current = false;
     }
   };
@@ -48,9 +57,11 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
   // Handle color change
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (activeColorIndex !== null) {
+      const newColor = e.target.value;
       const newColors = [...gradientColors];
-      newColors[activeColorIndex] = e.target.value;
+      newColors[activeColorIndex] = newColor;
       setGradientColors(newColors);
+      setUserColor(newColor); // Update the current selected color
 
       // Once the color has been changed, it's no longer considered "new"
       if (newColorAddedRef.current) {
@@ -75,7 +86,7 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
   return (
     <div className="bg-white dark:bg-zinc-800 p-5 rounded-lg my-4 border border-zinc-200 dark:border-zinc-700 shadow-md">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-dual-darkest">Select a colour</h3>
+        <h3 className="text-lg font-semibold text-dual-darkest">Color Palette</h3>
         <div className="text-xs text-dual-dark">
           {gradientColors.length}/{maximumColorCount} colors
         </div>

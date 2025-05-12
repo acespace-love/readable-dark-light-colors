@@ -16,17 +16,13 @@ function GradientControls({ userColor, setUserColor, gradientColors, setGradient
   // Adapted gradient colors for both modes
   const adaptedGradientColors = adaptGradientColors(gradientColors, mode);
 
-  // Add color to gradient
-  const addColorToGradient = () => {
-    if (gradientColors.length < 6) {
-      setGradientColors([...gradientColors, userColor]);
-    }
-  };
-
   // Remove color from gradient
   const removeColorFromGradient = (indexToRemove: number) => {
     if (gradientColors.length > 1) {
-      setGradientColors(gradientColors.filter((_, index) => index !== indexToRemove));
+      const newColors = gradientColors.filter((_, index) => index !== indexToRemove);
+      setGradientColors(newColors);
+      // Update userColor to be the last color in the palette
+      setUserColor(newColors[newColors.length - 1]);
     }
   };
 
@@ -35,34 +31,26 @@ function GradientControls({ userColor, setUserColor, gradientColors, setGradient
     const newColors = [...gradientColors];
     newColors[index] = newColor;
     setGradientColors(newColors);
+    // Set the current color to the one that was just updated
+    setUserColor(newColor);
   };
 
   return (
     <div className="bg-white dark:bg-zinc-800 p-5 rounded-lg my-4 border border-zinc-200 dark:border-zinc-700 shadow-md">
-      <h3 className="text-lg font-semibold mb-2 text-dual-darkest">Gradient Colors (1-6)</h3>
-      <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
-        <label htmlFor="color-picker" className="text-sm text-dual-dark">
-          Color:{' '}
-        </label>
-        <input
-          type="color"
-          id="color-picker"
-          value={userColor}
-          onChange={(e) => setUserColor(e.target.value)}
-          className="w-[40px] h-[30px] border-none rounded cursor-pointer bg-transparent"
-        />
-        <code className="font-mono text-xs bg-black/5 dark:bg-white/5 px-1.5 py-0.5 rounded text-dual-darkest">{userColor}</code>
-        <button
-          className="ml-2 px-2 py-1 bg-blue-600 dark:bg-blue-500 text-white border-none rounded text-sm cursor-pointer font-medium transition-all duration-200 hover:opacity-90 disabled:bg-gray-400 disabled:opacity-70 disabled:cursor-not-allowed"
-          onClick={addColorToGradient}
-          disabled={gradientColors.length >= 6}
-        >
-          Add
-        </button>
-      </div>
+      <h3 className="text-lg font-semibold mb-2 text-dual-darkest">Current Color Preview</h3>
 
       {/* Light and Dark mode color variants */}
       <div className="flex flex-wrap justify-center items-center gap-3 mb-4 p-3 bg-black/5 dark:bg-white/5 rounded-lg">
+        <div className="flex flex-col gap-1.5 items-center">
+          <div className="flex items-center gap-1.5">
+            <span className="text-sm font-medium text-dual-dark">Selected Color</span>
+            <div className="w-5 h-5 rounded-full border border-black/10" style={{ backgroundColor: userColor }}></div>
+          </div>
+          <code className="font-mono text-xs bg-white/80 dark:bg-black/30 px-1.5 py-0.5 rounded text-dual-darkest">{userColor}</code>
+        </div>
+
+        <div className="border-l border-zinc-300 dark:border-zinc-600 h-12 mx-2"></div>
+
         <div className="flex flex-col gap-1.5 items-center">
           <div className="flex items-center gap-1.5">
             <span className="text-sm font-medium text-dual-dark">Light Mode</span>
@@ -102,7 +90,6 @@ function GradientControls({ userColor, setUserColor, gradientColors, setGradient
 
       <div className="flex flex-wrap justify-center gap-2 my-4">
         {gradientColors.map((color, index) => {
-          const contrast = getContrastRatio(color, getTextColor(color));
           const isWcagCompliant = isWCAGCompliant(color, getTextColor(color));
           const lightModeVariant = getAdaptedColor(color, 'light');
           const darkModeVariant = getAdaptedColor(color, 'dark');
