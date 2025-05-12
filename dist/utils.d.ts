@@ -1,7 +1,7 @@
 import type { ThemeMode } from './constants.js';
 /**
  * Adapts a color for dark or light mode based on its brightness and saturation,
- * while preserving more of the original color's character
+ * using a smooth curve without harsh transitions
  */
 export declare const getAdaptedColor: (color: string, theme: ThemeMode) => string;
 /**
@@ -10,6 +10,7 @@ export declare const getAdaptedColor: (color: string, theme: ThemeMode) => strin
 export declare const adaptGradientColors: (colors: string[], theme: ThemeMode) => string[];
 /**
  * Creates a CSS gradient string from an array of colors
+ * If only one color is provided, it will be duplicated to create a gradient
  */
 export declare const createGradientString: (colors: string[]) => string;
 /**

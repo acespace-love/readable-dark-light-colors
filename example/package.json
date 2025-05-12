@@ -1,6 +1,6 @@
 {
   "name": "dark-light-colours",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A React library for color management with dark/light mode adaptations",
   "author": "AceSpace",
   "license": "MIT",
