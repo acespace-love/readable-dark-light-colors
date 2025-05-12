@@ -64,11 +64,17 @@ export const adaptGradientColors = (colors: string[], theme: ThemeMode): string[
 
 /**
  * Creates a CSS gradient string from an array of colors
+ * If only one color is provided, it will be duplicated to create a gradient
  */
 export const createGradientString = (colors: string[]): string => {
+  // Ensure we have at least 2 colors for a gradient
+  if (colors.length === 0) {
+    return 'transparent';
+  }
+
   if (colors.length === 1) {
-    // For a single color, just return the color itself (no gradient)
-    return colors[0];
+    // For a single color, duplicate it to create a solid gradient
+    return `linear-gradient(to right, ${colors[0]}, ${colors[0]})`;
   }
 
   const colorStops = colors

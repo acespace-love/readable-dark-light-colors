@@ -1,5 +1,5 @@
 import ContainerWithHeader from './ContainerWithHeader';
-import { getAdaptedColor, adaptGradientColors, getTextColor, createGradientString } from '../../../src/utils.ts';
+import { getAdaptedColor, adaptGradientColors, getTextColor, createGradientString } from '../../../src/utils.js';
 import clsx from 'clsx';
 
 type ThemeMode = 'light' | 'dark';

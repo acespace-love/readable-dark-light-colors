@@ -1,4 +1,4 @@
-import { getTextColor, getContrastRatio, isWCAGCompliant, getAdaptedColor, adaptGradientColors, createGradientString } from '../../../src/utils.ts';
+import { getTextColor, getContrastRatio, isWCAGCompliant, getAdaptedColor, adaptGradientColors, createGradientString } from '../../../src/utils.js';
 
 interface GradientControlsProps {
   userColor: string;
@@ -52,27 +52,6 @@ function GradientControls({ userColor, setUserColor, gradientColors, setGradient
           className="w-[40px] h-[30px] border-none rounded cursor-pointer bg-transparent"
         />
         <code className="font-mono text-xs bg-black/5 dark:bg-white/5 px-1.5 py-0.5 rounded text-dual-darkest">{userColor}</code>
-        <div className="flex ml-2 text-xs gap-1 items-center">
-          <span className="text-dual-dark">Light:</span>
-          <div className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: lightModeColor }}></div>
-          <span
-            className={`inline-block w-2 h-2 mx-0.5 rounded-full ${isWCAGCompliant(lightModeColor, getTextColor(lightModeColor)) ? 'bg-green-500' : 'bg-red-500'}`}
-            title={`Contrast: ${getContrastRatio(lightModeColor, getTextColor(lightModeColor)).toFixed(1)}`}
-          ></span>
-          <span className="text-[10px] text-dual-dark" title="Contrast ratio">
-            {getContrastRatio(lightModeColor, getTextColor(lightModeColor)).toFixed(1)}
-          </span>
-
-          <span className="text-dual-dark ml-2">Dark:</span>
-          <div className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: darkModeColor }}></div>
-          <span
-            className={`inline-block w-2 h-2 mx-0.5 rounded-full ${isWCAGCompliant(darkModeColor, getTextColor(darkModeColor)) ? 'bg-green-500' : 'bg-red-500'}`}
-            title={`Contrast: ${getContrastRatio(darkModeColor, getTextColor(darkModeColor)).toFixed(1)}`}
-          ></span>
-          <span className="text-[10px] text-dual-dark" title="Contrast ratio">
-            {getContrastRatio(darkModeColor, getTextColor(darkModeColor)).toFixed(1)}
-          </span>
-        </div>
         <button
           className="ml-2 px-2 py-1 bg-blue-600 dark:bg-blue-500 text-white border-none rounded text-sm cursor-pointer font-medium transition-all duration-200 hover:opacity-90 disabled:bg-gray-400 disabled:opacity-70 disabled:cursor-not-allowed"
           onClick={addColorToGradient}
@@ -82,27 +61,82 @@ function GradientControls({ userColor, setUserColor, gradientColors, setGradient
         </button>
       </div>
 
+      {/* Light and Dark mode color variants */}
+      <div className="flex flex-wrap justify-center items-center gap-3 mb-4 p-3 bg-black/5 dark:bg-white/5 rounded-lg">
+        <div className="flex flex-col gap-1.5 items-center">
+          <div className="flex items-center gap-1.5">
+            <span className="text-sm font-medium text-dual-dark">Light Mode</span>
+            <div className="w-5 h-5 rounded-full border border-black/10" style={{ backgroundColor: lightModeColor }}></div>
+          </div>
+          <code className="font-mono text-xs bg-white/80 dark:bg-black/30 px-1.5 py-0.5 rounded text-dual-darkest">{lightModeColor}</code>
+          <div className="flex items-center gap-1">
+            <span
+              className={`inline-block w-2 h-2 rounded-full ${isWCAGCompliant(lightModeColor, getTextColor(lightModeColor)) ? 'bg-green-500' : 'bg-red-500'}`}
+              title={`Contrast: ${getContrastRatio(lightModeColor, getTextColor(lightModeColor)).toFixed(1)}`}
+            ></span>
+            <span className="text-[10px] text-dual-dark" title="Contrast ratio">
+              {getContrastRatio(lightModeColor, getTextColor(lightModeColor)).toFixed(1)}
+            </span>
+          </div>
+        </div>
+
+        <div className="border-l border-zinc-300 dark:border-zinc-600 h-12 mx-2"></div>
+
+        <div className="flex flex-col gap-1.5 items-center">
+          <div className="flex items-center gap-1.5">
+            <span className="text-sm font-medium text-dual-dark">Dark Mode</span>
+            <div className="w-5 h-5 rounded-full border border-black/10" style={{ backgroundColor: darkModeColor }}></div>
+          </div>
+          <code className="font-mono text-xs bg-white/80 dark:bg-black/30 px-1.5 py-0.5 rounded text-dual-darkest">{darkModeColor}</code>
+          <div className="flex items-center gap-1">
+            <span
+              className={`inline-block w-2 h-2 rounded-full ${isWCAGCompliant(darkModeColor, getTextColor(darkModeColor)) ? 'bg-green-500' : 'bg-red-500'}`}
+              title={`Contrast: ${getContrastRatio(darkModeColor, getTextColor(darkModeColor)).toFixed(1)}`}
+            ></span>
+            <span className="text-[10px] text-dual-dark" title="Contrast ratio">
+              {getContrastRatio(darkModeColor, getTextColor(darkModeColor)).toFixed(1)}
+            </span>
+          </div>
+        </div>
+      </div>
+
       <div className="flex flex-wrap justify-center gap-2 my-4">
         {gradientColors.map((color, index) => {
           const contrast = getContrastRatio(color, getTextColor(color));
           const isWcagCompliant = isWCAGCompliant(color, getTextColor(color));
+          const lightModeVariant = getAdaptedColor(color, 'light');
+          const darkModeVariant = getAdaptedColor(color, 'dark');
 
           return (
             <div key={index} className="flex items-center gap-1.5 bg-black/[0.03] dark:bg-white/[0.03] p-2 rounded relative text-xs">
-              <div className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: color }}></div>
-              <input
-                type="color"
-                value={color}
-                onChange={(e) => updateGradientColor(index, e.target.value)}
-                className="w-[24px] h-[24px] border-none bg-transparent cursor-pointer p-0"
-              />
+              <div className="flex flex-col items-center gap-0.5 mr-1">
+                <div className="w-5 h-5 rounded-full border border-black/10" style={{ backgroundColor: color }}></div>
+                <input
+                  type="color"
+                  value={color}
+                  onChange={(e) => updateGradientColor(index, e.target.value)}
+                  className="w-[20px] h-[20px] border-none bg-transparent cursor-pointer p-0"
+                />
+              </div>
+
               <div className="flex flex-col">
-                <code className="font-mono text-xs text-dual-darkest">{color}</code>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 mb-0.5">
+                  <code className="font-mono text-xs text-dual-darkest">{color}</code>
                   <span className={`inline-block w-2 h-2 rounded-full ${isWcagCompliant ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                  <span className="text-dual-dark text-[10px]">{contrast.toFixed(1)}</span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">
+                  <div className="flex items-center gap-1">
+                    <div className="w-3 h-3 rounded-full border border-black/10" style={{ backgroundColor: lightModeVariant }}></div>
+                    <span className="text-dual-dark text-[9px]">L</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-3 h-3 rounded-full border border-black/10" style={{ backgroundColor: darkModeVariant }}></div>
+                    <span className="text-dual-dark text-[9px]">D</span>
+                  </div>
                 </div>
               </div>
+
               {gradientColors.length > 1 && (
                 <button
                   className="w-5 h-5 rounded-full border-none bg-red-500 text-white text-xs flex items-center justify-center cursor-pointer ml-0.5 transition-all duration-200 hover:bg-red-600 hover:scale-110"

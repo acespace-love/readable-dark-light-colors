@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
-import { DEFAULT_THEMES } from '../../../src/constants.ts';
-import { createGradientString } from '../../../src/utils.ts';
+import { DEFAULT_THEMES } from '../../../src/constants.js';
+import { createGradientString, getAdaptedColor } from '../../../src/utils.js';
 
 interface GradientBuilderWithPresetsProps {
   gradientColors: string[];
@@ -11,6 +11,7 @@ interface GradientBuilderWithPresetsProps {
 
 function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUserColor, maximumColorCount = 1 }: GradientBuilderWithPresetsProps) {
   const [activeColorIndex, setActiveColorIndex] = useState<number | null>(null);
+  const [showColorDetails, setShowColorDetails] = useState<number | null>(null);
   const colorPickerRef = useRef<HTMLInputElement>(null);
   // Track if this was a new color added
   const newColorAddedRef = useRef<boolean>(false);
@@ -62,6 +63,15 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
     if (colorPickerRef.current) colorPickerRef.current.click();
   }
 
+  // Toggle showing color details
+  const toggleColorDetails = (index: number) => {
+    if (showColorDetails === index) {
+      setShowColorDetails(null);
+    } else {
+      setShowColorDetails(index);
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-zinc-800 p-5 rounded-lg my-4 border border-zinc-200 dark:border-zinc-700 shadow-md">
       <div className="flex items-center justify-between mb-4">
@@ -111,12 +121,45 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
         <h4 className={'text-dual-dark font-bold'}>Palette:</h4>
         <div className="flex flex-wrap gap-2 flex-grow">
           {gradientColors.map((color, index) => (
-            <div
-              key={index}
-              onClick={() => handleColorClick(index)}
-              className="h-6 w-6 border border-zinc-700 dark:border-zinc-600  rounded-xl flex items-center gap-2 cursor-pointer hover:shadow-md transition-shadow duration-200"
-              style={{ background: color }}
-            ></div>
+            <div key={index} className="relative">
+              <div
+                onClick={() => handleColorClick(index)}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  toggleColorDetails(index);
+                }}
+                className="h-6 w-6 border border-zinc-700 dark:border-zinc-600 rounded-xl flex items-center gap-2 cursor-pointer hover:shadow-md transition-shadow duration-200"
+                style={{ background: color }}
+                title="Click to edit color, right-click for color details"
+              ></div>
+
+              {/* Color details popup */}
+              {showColorDetails === index && (
+                <div className="absolute z-10 top-8 left-0 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-md shadow-lg p-2 min-w-[200px]">
+                  <div className="flex flex-col gap-1 text-xs">
+                    <div className="font-bold text-dual-darkest">Color Details</div>
+                    <div className="flex items-center gap-1">
+                      <span className="text-dual-dark">Original:</span>
+                      <div className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: color }}></div>
+                      <code className="font-mono text-[10px] bg-black/5 dark:bg-white/5 px-1 py-0.5 rounded text-dual-darkest">{color}</code>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="text-dual-dark">Light mode:</span>
+                      <div className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: getAdaptedColor(color, 'light') }}></div>
+                      <code className="font-mono text-[10px] bg-black/5 dark:bg-white/5 px-1 py-0.5 rounded text-dual-darkest">{getAdaptedColor(color, 'light')}</code>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="text-dual-dark">Dark mode:</span>
+                      <div className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: getAdaptedColor(color, 'dark') }}></div>
+                      <code className="font-mono text-[10px] bg-black/5 dark:bg-white/5 px-1 py-0.5 rounded text-dual-darkest">{getAdaptedColor(color, 'dark')}</code>
+                    </div>
+                    <div className="text-[10px] mt-1 text-dual-dark">
+                      Click outside or right-click again to close
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
         </div>
 
@@ -133,7 +176,6 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
           </button>
 
           {/* Add button */}
-
           <button
             onClick={handleAddColor}
             className="h-8 w-8 rounded-full bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center text-dual-dark hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-colors  disabled:opacity-40 disabled:cursor-not-allowed"
@@ -143,6 +185,11 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
             +
           </button>
         </div>
+      </div>
+
+      {/* Instructions */}
+      <div className="mt-3 text-xs text-center text-dual-dark">
+        Right-click on any color to view its dark/light mode adapted values
       </div>
     </div>
   );

@@ -42,6 +42,13 @@ function App() {
             <ThemePreview username={username} selectedColor={userColor} gradientColors={gradientColors} mode="dark" />
           </div>
 
+          <GradientBuilderWithPresets
+            gradientColors={gradientColors}
+            setGradientColors={setGradientColors}
+            setUserColor={setUserColor}
+            maximumColorCount={MAX_GRADIENT_COLORS}
+          />
+
           <GradientControls
             userColor={userColor}
             setUserColor={setUserColor}
@@ -50,12 +57,6 @@ function App() {
             mode={mode}
           />
 
-          <GradientBuilderWithPresets
-            gradientColors={gradientColors}
-            setGradientColors={setGradientColors}
-            setUserColor={setUserColor}
-            maximumColorCount={MAX_GRADIENT_COLORS}
-          />
         </div>
       </div>
     </div>
