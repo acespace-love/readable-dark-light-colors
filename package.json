@@ -1,8 +1,8 @@
 {
   "name": "dark-light-colours",
   "version": "0.1.0",
-  "description": "A utility library for color management with dark/light mode adaptations",
-  "author": "SpaceTea",
+  "description": "A utility library for color management with dark/light mode adaptations used internally by AceSpace",
+  "author": "SpaceTsundere",
   "license": "MIT",
   "repository": {
     "type": "git",
