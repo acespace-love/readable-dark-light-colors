@@ -28,7 +28,6 @@ function App() {
 
           <div className="flex flex-wrap justify-center gap-3 my-3">
             <ThemePreview username={username} selectedColor={userColor} gradientColors={gradientColors} mode="light" />
-
             <ThemePreview username={username} selectedColor={userColor} gradientColors={gradientColors} mode="dark" />
           </div>
 
@@ -40,7 +39,12 @@ function App() {
             mode={mode}
           />
 
-          <GradientBuilderWithPresets gradientColors={gradientColors} setGradientColors={setGradientColors} setUserColor={setUserColor} />
+          <GradientBuilderWithPresets
+            gradientColors={gradientColors}
+            setGradientColors={setGradientColors}
+            setUserColor={setUserColor}
+            maximumColorCount={5}
+          />
           <ColorPresets setUserColor={setUserColor} setGradientColors={setGradientColors} />
         </div>
       </div>

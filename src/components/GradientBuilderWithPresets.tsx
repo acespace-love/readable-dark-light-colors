@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 interface GradientBuilderWithPresetsProps {
   gradientColors: string[];
   setGradientColors: (colors: string[]) => void;
   setUserColor: (color: string) => void;
+  maximumColorCount?: number;
 }
 
 // Preset color themes - matches the config in ColorPresets.tsx
@@ -25,13 +26,16 @@ export const displayNameThemes: Record<string, readonly string[]> = {
   RAINBOW_V2: ['#FF0000', '#FFA500', '#FFFF00', '#00FF00', '#0066FF'], // bright rainbow with 5 colors (red, orange, yellow, green, blue)
 };
 
-function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUserColor }: GradientBuilderWithPresetsProps) {
+function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUserColor, maximumColorCount = 1 }: GradientBuilderWithPresetsProps) {
   const [activeColorIndex, setActiveColorIndex] = useState<number | null>(null);
   const colorPickerRef = useRef<HTMLInputElement>(null);
+  // Track if this was a new color added
+  const newColorAddedRef = useRef<boolean>(false);
 
   // Handle clicking on a color pill
   const handleColorClick = (index: number) => {
     setActiveColorIndex(index);
+    newColorAddedRef.current = false; // Editing existing color
     showColourPicker();
   };
 
@@ -42,7 +46,7 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
       const newColor = gradientColors[gradientColors.length - 1];
       setGradientColors([...gradientColors, newColor]);
       setActiveColorIndex(gradientColors.length);
-      showColourPicker();
+      newColorAddedRef.current = true; // Mark as a newly added color
     }
   };
 
@@ -53,6 +57,7 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
       newColors.pop(); // Remove the last color
       setGradientColors(newColors);
       setActiveColorIndex(null);
+      newColorAddedRef.current = false;
     }
   };
 
@@ -62,6 +67,11 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
       const newColors = [...gradientColors];
       newColors[activeColorIndex] = e.target.value;
       setGradientColors(newColors);
+
+      // Once the color has been changed, it's no longer considered "new"
+      if (newColorAddedRef.current) {
+        newColorAddedRef.current = false;
+      }
     }
   };
 
@@ -73,7 +83,9 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
     <div className="bg-white dark:bg-zinc-800 p-5 rounded-lg my-4 border border-zinc-200 dark:border-zinc-700 shadow-md">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-dual-darkest">Select a colour</h3>
-        <div className="text-xs text-dual-dark">{gradientColors.length}/6 colors</div>
+        <div className="text-xs text-dual-dark">
+          {gradientColors.length}/{maximumColorCount} colors
+        </div>
       </div>
 
       {/* Preset colors section */}
@@ -147,15 +159,15 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
           </button>
 
           {/* Add button */}
-          {gradientColors.length < 6 && (
-            <button
-              onClick={handleAddColor}
-              className="h-8 w-8 rounded-full bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center text-dual-dark hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-colors"
-              title="Add color"
-            >
-              +
-            </button>
-          )}
+
+          <button
+            onClick={handleAddColor}
+            className="h-8 w-8 rounded-full bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center text-dual-dark hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-colors  disabled:opacity-40 disabled:cursor-not-allowed"
+            title="Add color"
+            disabled={gradientColors.length >= maximumColorCount}
+          >
+            +
+          </button>
         </div>
       </div>
     </div>
