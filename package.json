@@ -2,11 +2,11 @@
   "name": "dark-light-colours",
   "version": "0.1.0",
   "description": "A utility library for color management with dark/light mode adaptations used internally by AceSpace",
-  "author": "SpaceTsundere",
+  "author": "AceSpace",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/dark-light-colours.git"
+    "url": "https://github.com/acespace-love/dark-light-colours.git"
   },
   "keywords": [
     "colors",
