@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getContrastRatio = exports.isWCAGCompliant = exports.getTextColor = exports.createGradientString = exports.adaptGradientColors = exports.getAdaptedColor = void 0;
+exports.getContrastRatio = exports.testColorsValid = exports.isWCAGCompliant = exports.getTextColor = exports.createGradientString = exports.adaptGradientColors = exports.getAdaptedColor = void 0;
 const tinycolor2_1 = __importDefault(require("tinycolor2"));
 /**
  * Adapts a color for dark or light mode based on its brightness and saturation,
@@ -156,6 +156,16 @@ const isWCAGCompliant = (backgroundColor, textColor) => {
     return contrastRatio >= 4.5;
 };
 exports.isWCAGCompliant = isWCAGCompliant;
+/**
+ * Tests if an array of colors contains only valid hex colors with 6 digits
+ * @param colors Array of color strings to validate
+ * @returns True if all colors are valid hex colors (format: #RRGGBB)
+ */
+const testColorsValid = (colors) => {
+    const hexColorRegex = /^#([0-9A-Fa-f]{6})$/;
+    return !!colors && colors.length > 0 && colors.filter(color => hexColorRegex.test(color)).length === colors.length;
+};
+exports.testColorsValid = testColorsValid;
 /**
  * Gets the contrast ratio between two colors
  */

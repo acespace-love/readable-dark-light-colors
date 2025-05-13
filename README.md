@@ -27,13 +27,14 @@ pnpm add dark-light-colours
 ## Usage
 
 ```typescript
-import { 
-  getAdaptedColor, 
+import {
+  getAdaptedColor,
   adaptGradientColors,
   createGradientString,
   getTextColor,
   isWCAGCompliant,
   getContrastRatio,
+  testColorsValid,
   DEFAULT_THEMES,
   type ThemeMode
 } from 'dark-light-colours';
@@ -53,6 +54,10 @@ const isAccessible = isWCAGCompliant('#3366FF', '#FFFFFF');
 // Get the contrast ratio between two colors
 const ratio = getContrastRatio('#3366FF', '#FFFFFF');
 
+// Validate an array of color strings (all must be 6-digit hex colors)
+const isValid = testColorsValid(['#FF0000', '#00FF00', '#0000FF']); // Returns true
+const isInvalid = testColorsValid(['#FF0000', 'invalid', 'rgb(0, 0, 0)']); // Returns false
+
 // Use preset color themes
 const sunsetGradient = DEFAULT_THEMES.SUNSET;
 ```
@@ -67,6 +72,7 @@ const sunsetGradient = DEFAULT_THEMES.SUNSET;
 - `getTextColor(bgColor: string): string`
 - `isWCAGCompliant(backgroundColor: string, textColor: string): boolean`
 - `getContrastRatio(color1: string, color2: string): number`
+- `testColorsValid(colors: string[]): boolean`
 
 ### Constants
 

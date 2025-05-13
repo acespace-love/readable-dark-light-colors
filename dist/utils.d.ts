@@ -23,6 +23,12 @@ export declare const getTextColor: (bgColor: string) => string;
  */
 export declare const isWCAGCompliant: (backgroundColor: string, textColor: string) => boolean;
 /**
+ * Tests if an array of colors contains only valid hex colors with 6 digits
+ * @param colors Array of color strings to validate
+ * @returns True if all colors are valid hex colors (format: #RRGGBB)
+ */
+export declare const testColorsValid: (colors: string[]) => boolean;
+/**
  * Gets the contrast ratio between two colors
  */
 export declare const getContrastRatio: (color1: string, color2: string) => number;

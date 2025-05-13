@@ -164,6 +164,16 @@ export const isWCAGCompliant = (backgroundColor: string, textColor: string): boo
 };
 
 /**
+ * Tests if an array of colors contains only valid hex colors with 6 digits
+ * @param colors Array of color strings to validate
+ * @returns True if all colors are valid hex colors (format: #RRGGBB)
+ */
+export const testColorsValid = (colors: string[]): boolean => {
+  const hexColorRegex = /^#([0-9A-Fa-f]{6})$/;
+  return !!colors && colors.length > 0 && colors.filter(color => hexColorRegex.test(color)).length === colors.length
+}
+
+/**
  * Gets the contrast ratio between two colors
  */
 export const getContrastRatio = (color1: string, color2: string): number => {
