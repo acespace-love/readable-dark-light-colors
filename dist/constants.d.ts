@@ -3,4 +3,6 @@
  * Each theme consists of one or more colors that can be used for gradients.
  */
 export declare const DEFAULT_THEMES: Record<string, string[]>;
-export type ThemeMode = 'dark' | 'light';
+export type Theme = 'dark' | 'light';
+export type Intensity = 'mild' | 'strong';
+export type ThemeMode = Theme;
