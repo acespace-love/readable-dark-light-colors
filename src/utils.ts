@@ -27,17 +27,21 @@ export const getAdaptedColor = (color: string, theme: Theme, intensity: Intensit
       // Brightness already calculated at the top of the function
 
       if (brightness > 220) {
-        // High luminosity colors in dark mode - actually darken them slightly
-        // This helps reduce the "too bright" effect in dark mode headers
-        newLightness = Math.max(0.6, hsl.l - 0.15);
+        // High luminosity colors in dark mode - darken them more for better text contrast
+        // This helps with readability for text on bright backgrounds in dark mode
+        newLightness = Math.max(0.45, hsl.l - 0.3);
       } else if (hsl.l < 0.15) {
         newLightness = hsl.l + 0.15; // Very dark colors get slightly more lightening
       } else if (hsl.l < 0.5) {
         newLightness = hsl.l + Math.max(0, 0.15 - hsl.l * 0.2); // Gradually decrease adjustment
       } else if (hsl.l < 0.7) {
         newLightness = hsl.l + 0.04; // Very minimal lightening for lighter mid-tones
+      } else if (hsl.l < 0.8) {
+        // Medium-bright colors - slight darkening in dark mode for better contrast
+        newLightness = hsl.l - 0.1;
       } else {
-        newLightness = hsl.l; // Light colors stay the same
+        // Very bright colors - more darkening for readability
+        newLightness = hsl.l - 0.2;
       }
     } else {
       // In light mode: very subtle darkening
