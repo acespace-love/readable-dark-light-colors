@@ -34,7 +34,7 @@ export const getAdaptedColor = (color: string, theme: Theme, intensity: Intensit
       // Define color adjustment curve parameters
       const darkPeak = 0.65;     // Max lightness for darkest colors
       const midPoint = 0.6;      // Transition point between lightening and darkening
-      const brightTrough = -0.25; // Max darkening for brightest colors
+      const brightTrough = -0.4; // Max darkening for brightest colors - increased for better white text contrast
 
       // Calculate a smooth curve using a blend of sigmoid and linear functions
 
@@ -42,8 +42,8 @@ export const getAdaptedColor = (color: string, theme: Theme, intensity: Intensit
       const darkEffect = darkPeak * (1 - Math.pow(normalizedLightness, 0.8));
 
       // For bright colors: smooth curve that increases darkening as brightness increases
-      // but only affects colors above certain lightness (midPoint)
-      const brightEffect = brightTrough * Math.max(0, Math.pow((normalizedLightness - midPoint) / (1 - midPoint), 2));
+      // Adjusted to darken high-luminosity colors more significantly for better white text contrast
+      const brightEffect = brightTrough * Math.max(0, Math.pow((normalizedLightness - midPoint) / (1 - midPoint), 1.7));
 
       // Blend the curves using a smooth transition
       let adjustment;
@@ -71,6 +71,13 @@ export const getAdaptedColor = (color: string, theme: Theme, intensity: Intensit
       if (brightness < 20) {
         const darkBoost = (1 - brightness / 40) * 0.1;
         newLightness = Math.min(0.7, newLightness + darkBoost);
+      }
+
+      // Apply additional darkening for very bright colors to ensure better text contrast
+      // Especially important for white text on light backgrounds in dark mode
+      if (brightness > 220) {
+        const brightReduction = ((brightness - 220) / 35) * 0.15;
+        newLightness = Math.max(0.3, newLightness - brightReduction);
       }
     } else {
       // In light mode: completely smooth curve across entire brightness range
