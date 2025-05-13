@@ -16,4 +16,4 @@ export {
 } from './utils.js';
 
 // Export constants and types
-export { DEFAULT_THEMES, type ThemeMode } from './constants.js';
+export { DEFAULT_THEMES, type ThemeMode, type Theme, type Intensity } from './constants.js';
