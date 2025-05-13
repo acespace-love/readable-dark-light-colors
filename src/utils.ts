@@ -1,5 +1,5 @@
 import tinycolor from 'tinycolor2';
-import type { ThemeMode } from './constants.js';
+import type { Theme, Intensity } from './constants.js';
 
 /**
  * Adapts a color for dark or light mode based on its brightness and saturation,
@@ -8,7 +8,7 @@ import type { ThemeMode } from './constants.js';
  * @param theme The theme mode ('dark' or 'light')
  * @param intensity The intensity of the adaptation ('strong' or 'mild', defaults to 'strong')
  */
-export const getAdaptedColor = (color: string, theme: ThemeMode, intensity: 'strong' | 'mild' = 'strong'): string => {
+export const getAdaptedColor = (color: string, theme: Theme, intensity: Intensity = 'strong'): string => {
   const colorObj = tinycolor(color);
   const brightness = colorObj.getBrightness(); // 0-255
   const hsl = colorObj.toHsl();
@@ -152,7 +152,7 @@ export const getAdaptedColor = (color: string, theme: ThemeMode, intensity: 'str
  * @param theme The theme mode ('dark' or 'light')
  * @param intensity The intensity of the adaptation ('strong' or 'mild', defaults to 'strong')
  */
-export const adaptGradientColors = (colors: string[], theme: ThemeMode, intensity: 'strong' | 'mild' = 'strong'): string[] => {
+export const adaptGradientColors = (colors: string[], theme: Theme, intensity: Intensity = 'strong'): string[] => {
   return colors.map((color) => getAdaptedColor(color, theme, intensity));
 };
 
