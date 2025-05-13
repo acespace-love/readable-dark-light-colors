@@ -23,7 +23,6 @@ export const getAdaptedColor = (color: string, theme: Theme, intensity: Intensit
 
       // Get normalized values for calculations
       const normalizedLightness = hsl.l;                   // 0-1 scale
-      const normalizedBrightness = brightness / 255;       // 0-1 scale
 
       // For dark mode, we need a smooth curve that:
       // - Makes very dark colors (black/near-black) significantly lighter (around 0.65-0.7)
@@ -79,13 +78,27 @@ export const getAdaptedColor = (color: string, theme: Theme, intensity: Intensit
         const brightReduction = ((brightness - 220) / 35) * 0.15;
         newLightness = Math.max(0.3, newLightness - brightReduction);
       }
+
+      // Special handling for yellow/yellow-green/yellow-orange colors, which often have poor contrast with white text
+      // Yellow and adjacent hues range from approximately 30-80 in HSL
+      if (hsl.h >= 30 && hsl.h <= 80) {
+        // For yellows, we want to darken more aggressively in dark mode for better text contrast
+        // Especially for mid-to-high brightness yellows
+
+        // Calculate how "yellow" the color is (peak at hue 60, taper off at edges)
+        const distanceFromPureYellow = Math.abs(hsl.h - 60);
+        const yellowness = Math.max(0, 1 - distanceFromPureYellow / 30);
+
+        // Apply stronger adjustment to colors closer to pure yellow (hue 60)
+        const yellowAdjustment = 0.25 * yellowness * Math.min(1, brightness / 200);
+        newLightness = Math.max(0.25, newLightness - yellowAdjustment);
+      }
     } else {
       // In light mode: completely smooth curve across entire brightness range
       // Use a continuous function instead of multiple conditions
 
       // Get normalized values for calculations
       const normalizedLightness = hsl.l;                   // 0-1 scale
-      const normalizedBrightness = brightness / 255;       // 0-1 scale
 
       // For light mode, we need a smooth curve that:
       // - Makes very dark colors (black/near-black) significantly lighter (around 0.6-0.7)
