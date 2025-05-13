@@ -4,7 +4,7 @@ A lightweight utility library for color management with dark/light mode adaptati
 
 **[View the interactive demo](https://acespace-love.github.io/readable-dark-light-colors/)**
 
-> **Note:** This library is used internally by [AceSpace](https://acespace.love) and may be subject to change at will without warning.
+> **Note:** This library is used internally by [AceSpace](https://acespace.love) and may be subject to change at will without warning. There's no guarantee of proper Semantic Versioning so I'd suggest forking or just reading if you intend to use the contained code
 
 ## Installation
 
