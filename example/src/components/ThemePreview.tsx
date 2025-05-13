@@ -13,7 +13,7 @@ interface ThemePreviewProps {
 
 function ThemePreview({ username, selectedColor, gradientColors, mode }: ThemePreviewProps) {
   // Get adapted colors directly for the current theme mode
-  const previewColor = getAdaptedColor(selectedColor, mode);
+  const previewColor = getAdaptedColor(selectedColor, mode, "mild");
   const previewTextColor = getTextColor(previewColor);
 
   // Get adapted gradient colors for the current theme
