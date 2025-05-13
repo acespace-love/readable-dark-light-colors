@@ -8,27 +8,75 @@ const tinycolor2_1 = __importDefault(require("tinycolor2"));
 /**
  * Adapts a color for dark or light mode based on its brightness and saturation,
  * using a smooth curve without harsh transitions
+ * @param color The color to adapt
+ * @param theme The theme mode ('dark' or 'light')
+ * @param intensity The intensity of the adaptation ('strong' or 'mild', defaults to 'strong')
  */
-const getAdaptedColor = (color, theme) => {
+const getAdaptedColor = (color, theme, intensity = 'strong') => {
     const colorObj = (0, tinycolor2_1.default)(color);
     const brightness = colorObj.getBrightness(); // 0-255
     const hsl = colorObj.toHsl();
+    // For mild intensity, apply very minimal adjustments across all colors
+    if (intensity === 'mild') {
+        let newLightness;
+        if (theme === 'dark') {
+            // In dark mode: very subtle lightening, with special case for high luminosity colors
+            // For very dark colors (l < 0.2): max 0.15 lightness increase
+            // For mid-tone colors (0.2 < l < 0.5): max 0.08 lightness increase
+            // For moderately light colors (0.5 < l < 0.7): very minimal change
+            // For high luminosity colors (l > 0.7): slight darkening to reduce brightness
+            // Brightness already calculated at the top of the function
+            if (brightness > 220) {
+                // High luminosity colors in dark mode - actually darken them slightly
+                // This helps reduce the "too bright" effect in dark mode headers
+                newLightness = Math.max(0.6, hsl.l - 0.15);
+            }
+            else if (hsl.l < 0.15) {
+                newLightness = hsl.l + 0.15; // Very dark colors get slightly more lightening
+            }
+            else if (hsl.l < 0.5) {
+                newLightness = hsl.l + Math.max(0, 0.15 - hsl.l * 0.2); // Gradually decrease adjustment
+            }
+            else if (hsl.l < 0.7) {
+                newLightness = hsl.l + 0.04; // Very minimal lightening for lighter mid-tones
+            }
+            else {
+                newLightness = hsl.l; // Light colors stay the same
+            }
+        }
+        else {
+            // In light mode: very subtle darkening
+            // Scale based on original lightness to keep color character
+            // For very light colors (l > 0.8): max 0.15 lightness decrease
+            // For mid-tone colors (0.3 < l < 0.8): max 0.08 lightness decrease
+            // For dark colors (l < 0.3): no change
+            if (hsl.l > 0.85) {
+                newLightness = hsl.l - 0.15; // Very light colors get slightly more darkening
+            }
+            else if (hsl.l > 0.3) {
+                newLightness = hsl.l - Math.max(0, 0.15 - (1 - hsl.l) * 0.15); // Gradually decrease adjustment
+            }
+            else {
+                newLightness = hsl.l; // Very dark colors stay the same
+            }
+        }
+        return (0, tinycolor2_1.default)({
+            h: hsl.h,
+            s: hsl.s, // Preserve original saturation
+            l: newLightness
+        }).toString();
+    }
     // Normalize brightness to 0-1 range
     const normalizedBrightness = brightness / 255;
     if (theme === 'dark') {
         // DARK MODE ADAPTATION
-        // For dark mode, we want:
+        // For dark mode with strong intensity, we want:
         // - Black (#000, brightness=0) → White (#FFF, lightness=1.0)
         // - Dark colors (low brightness) → Lighter colors
         // - Mid-tone colors → Slight lightening
         // - White and very light colors → Stay as they are
-        // Calculate a smooth curve that:
-        // - Maps 0 brightness to 0.95 lightness (almost white)
-        // - Maps 50 brightness to 0.60 lightness (lighter mid-tone)
-        // - Maps 128 brightness to 0.40 lightness (slightly lighter)
-        // - Maps 255 brightness to hsl.l (unchanged bright colors)
-        // Exponential curve that rapidly decreases as brightness increases
         let targetLightness;
+        // Only strong intensity goes through this path now
         if (brightness < 10) {
             // Handle pure black or very close to black
             // Map 0→1.0 (pure white) through 10→0.9
@@ -58,17 +106,13 @@ const getAdaptedColor = (color, theme) => {
     }
     else {
         // LIGHT MODE ADAPTATION
-        // For light mode, we want:
-        // - White (#FFF, brightness=255) → Medium-dark gray (not too dark)
+        // For light mode with strong intensity, we want:
+        // - White (#FFF, brightness=255) → Medium-dark gray
         // - Light colors (high brightness) → Moderately darker colors
         // - Mid-tone colors → Slight darkening
         // - Black and very dark colors → Stay as they are
-        // Calculate a more gentle curve that:
-        // - Maps 255 brightness to 0.20 lightness (medium-dark gray)
-        // - Maps 200 brightness to 0.30 lightness (medium-dark)
-        // - Maps 128 brightness to 0.45 lightness (slightly darker)
-        // - Maps 0 brightness to hsl.l (unchanged dark colors)
         let targetLightness;
+        // Only strong intensity goes through this path now
         if (brightness > 250) {
             // Handle pure white or very close to white
             // Map 255→0.05 (almost black) through 250→0.15
@@ -106,9 +150,12 @@ const getAdaptedColor = (color, theme) => {
 exports.getAdaptedColor = getAdaptedColor;
 /**
  * Adapts all gradient colors for the current mode
+ * @param colors Array of colors to adapt
+ * @param theme The theme mode ('dark' or 'light')
+ * @param intensity The intensity of the adaptation ('strong' or 'mild', defaults to 'strong')
  */
-const adaptGradientColors = (colors, theme) => {
-    return colors.map((color) => (0, exports.getAdaptedColor)(color, theme));
+const adaptGradientColors = (colors, theme, intensity = 'strong') => {
+    return colors.map((color) => (0, exports.getAdaptedColor)(color, theme, intensity));
 };
 exports.adaptGradientColors = adaptGradientColors;
 /**
