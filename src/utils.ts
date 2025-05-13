@@ -18,26 +18,37 @@ export const getAdaptedColor = (color: string, theme: Theme, intensity: Intensit
     let newLightness;
 
     if (theme === 'dark') {
-      // In dark mode: very subtle lightening, with special case for high luminosity colors
-      // For very dark colors (l < 0.2): max 0.15 lightness increase
-      // For mid-tone colors (0.2 < l < 0.5): max 0.08 lightness increase
-      // For moderately light colors (0.5 < l < 0.7): very minimal change
-      // For high luminosity colors (l > 0.7): slight darkening to reduce brightness
+      // In dark mode: improved contrast and readability
+      // For very dark colors: significant lightening to make them visible
+      // For mid-tone colors: moderate lightening
+      // For high luminosity colors: darkening for better contrast
 
       // Brightness already calculated at the top of the function
 
-      if (brightness > 220) {
-        // High luminosity colors in dark mode - darken them more for better text contrast
-        // This helps with readability for text on bright backgrounds in dark mode
+      if (brightness < 20) {
+        // Pure black or nearly black - make much lighter in dark mode
+        // This ensures dark backgrounds in dark mode are visible with good contrast
+        newLightness = 0.65; // Medium gray instead of black
+      } else if (brightness < 50) {
+        // Very dark colors - significant lightening for visibility
+        newLightness = 0.55;
+      } else if (hsl.l < 0.2) {
+        // Dark colors by lightness - substantial lightening
+        newLightness = hsl.l + 0.35;
+      } else if (hsl.l < 0.3) {
+        // Moderately dark colors - moderate lightening
+        newLightness = hsl.l + 0.25;
+      } else if (brightness > 220) {
+        // High luminosity colors - darken for better contrast
         newLightness = Math.max(0.45, hsl.l - 0.3);
-      } else if (hsl.l < 0.15) {
-        newLightness = hsl.l + 0.15; // Very dark colors get slightly more lightening
       } else if (hsl.l < 0.5) {
-        newLightness = hsl.l + Math.max(0, 0.15 - hsl.l * 0.2); // Gradually decrease adjustment
+        // Mid-dark colors - modest lightening
+        newLightness = hsl.l + 0.15;
       } else if (hsl.l < 0.7) {
-        newLightness = hsl.l + 0.04; // Very minimal lightening for lighter mid-tones
+        // Lighter mid-tones - slight lightening
+        newLightness = hsl.l + 0.05;
       } else if (hsl.l < 0.8) {
-        // Medium-bright colors - slight darkening in dark mode for better contrast
+        // Medium-bright colors - slight darkening
         newLightness = hsl.l - 0.1;
       } else {
         // Very bright colors - more darkening for readability
