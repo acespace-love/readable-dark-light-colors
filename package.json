@@ -1,6 +1,6 @@
 {
-  "name": "dark-light-colours",
-  "version": "0.1.9",
+  "name": "readable-dark-light-colours",
+  "version": "0.2.0",
   "description": "A utility library for color management with dark/light mode adaptations used internally by AceSpace",
   "author": "AceSpace",
   "license": "MIT",

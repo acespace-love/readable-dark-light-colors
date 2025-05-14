@@ -13,7 +13,7 @@ interface ThemePreviewProps {
 
 function ThemePreview({ username, selectedColor, gradientColors, mode }: ThemePreviewProps) {
   // Get adapted colors directly for the current theme mode
-  const previewColor = getAdaptedColor(selectedColor, mode, "mild");
+  const previewColor = getAdaptedColor(selectedColor, mode);
   const previewTextColor = getTextColor(previewColor);
 
   // Get adapted gradient colors for the current theme
@@ -23,7 +23,7 @@ function ThemePreview({ username, selectedColor, gradientColors, mode }: ThemePr
   const isDarkMode = mode === 'dark';
 
   // Use opposing mode gradient colors for the header (for contrast)
-  const headerColors = adaptGradientColors(gradientColors, isDarkMode ? 'dark': 'light', "mild");
+  const headerColors = adaptGradientColors(gradientColors, isDarkMode ? 'dark': 'light');
 
   // We use the dark class for the dark mode preview
   // For light mode preview in a dark mode context, we use the light variant
