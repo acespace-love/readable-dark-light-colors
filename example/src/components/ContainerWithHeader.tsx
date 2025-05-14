@@ -4,15 +4,14 @@ import { createGradientString } from '../../../src/utils.js';
 
 interface ContainerWithHeaderProps {
   gradientColors: string[];
-  isDarkMode: boolean;
-  title?: string;
+  title: string;
   children?: ReactNode;
-  theme?: Theme;
+  theme: Theme;
 }
 
-function ContainerWithHeader({ gradientColors, isDarkMode, title = 'Container Title', children, theme }: ContainerWithHeaderProps) {
+function ContainerWithHeader({ gradientColors, title = 'Container Title', children, theme }: ContainerWithHeaderProps) {
   // Set text color based on the theme mode (use theme prop if provided, otherwise fall back to isDarkMode)
-  const effectiveTheme = theme || (isDarkMode ? 'dark' : 'light');
+  const effectiveTheme = theme
   const textColor = effectiveTheme === 'dark' ? '#FFFFFF' : '#000000';
 
   // Container styles that can't be easily done with CSS variables
