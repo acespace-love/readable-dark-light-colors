@@ -218,3 +218,39 @@ export const testColorsValid = (colors: string[]): boolean => {
 export const getContrastRatio = (color1: string, color2: string): number => {
   return tinycolor.readability(color1, color2);
 };
+
+/**
+ * Lightens an array of colors by a specified amount
+ * @param colors Array of color strings to lighten
+ * @param amount Amount to lighten (0-1), where 0 is no change and 1 is maximum lightening
+ * @returns New array of lightened colors
+ */
+export const lightenColors = (colors: string[], amount: number): string[] => {
+  // Clamp amount between 0 and 1
+  const clampedAmount = Math.max(0, Math.min(1, amount));
+  
+  // Convert the 0-1 range to the 0-100 range that tinycolor.lighten() expects
+  const lightenAmount = clampedAmount * 100;
+  
+  return colors.map(color => {
+    return tinycolor(color).lighten(lightenAmount).toString();
+  });
+};
+
+/**
+ * Darkens an array of colors by a specified amount
+ * @param colors Array of color strings to darken
+ * @param amount Amount to darken (0-1), where 0 is no change and 1 is maximum darkening
+ * @returns New array of darkened colors
+ */
+export const darkenColors = (colors: string[], amount: number): string[] => {
+  // Clamp amount between 0 and 1
+  const clampedAmount = Math.max(0, Math.min(1, amount));
+  
+  // Convert the 0-1 range to the 0-100 range that tinycolor.darken() expects
+  const darkenAmount = clampedAmount * 100;
+  
+  return colors.map(color => {
+    return tinycolor(color).darken(darkenAmount).toString();
+  });
+};

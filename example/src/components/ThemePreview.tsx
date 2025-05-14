@@ -1,5 +1,11 @@
 import ContainerWithHeader from './ContainerWithHeader';
-import { getAdaptedColor, adaptGradientColors, getTextColor, createGradientString } from '../../../src/utils.js';
+import {
+  getAdaptedColor,
+  adaptGradientColors,
+  getTextColor,
+  createGradientString,
+  lightenColors
+} from '../../../src/utils.js';
 import clsx from 'clsx';
 
 import { type Theme } from '../../../src/constants.js';
@@ -56,7 +62,7 @@ function ThemePreview({ username, selectedColor, gradientColors, mode }: ThemePr
             <h4 className="mb-2.5 text-base font-medium">Container with Gradient Header:</h4>
             <div className="flex flex-col gap-5">
               <div className="flex-1">
-                <ContainerWithHeader backgroundColor={createGradientString(headerColors)} textColor={"black"}/>
+                <ContainerWithHeader backgroundColor={createGradientString(lightenColors(headerColors, 0.15))} textColor={"black"}/>
               </div>
             </div>
           </div>

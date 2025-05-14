@@ -12,7 +12,9 @@ export {
   getTextColor,
   isWCAGCompliant,
   getContrastRatio,
-  testColorsValid
+  testColorsValid,
+  lightenColors,
+  darkenColors
 } from './utils.js';
 
 // Export constants and types

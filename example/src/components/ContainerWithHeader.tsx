@@ -19,7 +19,7 @@ function ContainerWithHeader({ backgroundColor, textColor, isTextGradient=false 
                       backgroundClip: 'text',
                       color: 'transparent',
                     }
-                  : { }
+                  : { color: textColor}
               }
             >
 
