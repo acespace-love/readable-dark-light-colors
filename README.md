@@ -22,6 +22,8 @@ pnpm add dark-light-colours
 - Create gradient strings from color arrays
 - Check WCAG contrast compliance
 - Get appropriate text colors for backgrounds
+- Lighten or darken sets of colors easily
+- Support for colors that work in both light and dark themes
 - Pre-defined color themes and palettes
 
 ## Usage
@@ -35,12 +37,17 @@ import {
   isWCAGCompliant,
   getContrastRatio,
   testColorsValid,
+  lightenColors,
+  darkenColors,
   DEFAULT_THEMES,
   type Theme
 } from 'dark-light-colours';
 
 // Adapt a color for dark mode
 const adaptedColor = getAdaptedColor('#3366FF', 'dark');
+
+// Adapt a color for both light and dark modes (compatible with both backgrounds)
+const adaptedForBoth = getAdaptedColor('#3366FF', 'both');
 
 // Create a gradient string
 const gradient = createGradientString(['#FF0000', '#00FF00', '#0000FF']);
@@ -58,6 +65,12 @@ const ratio = getContrastRatio('#3366FF', '#FFFFFF');
 const isValid = testColorsValid(['#FF0000', '#00FF00', '#0000FF']); // Returns true
 const isInvalid = testColorsValid(['#FF0000', 'invalid', 'rgb(0, 0, 0)']); // Returns false
 
+// Lighten an array of colors by a specified amount (0-1)
+const lightenedColors = lightenColors(['#FF0000', '#00FF00', '#0000FF'], 0.3);
+
+// Darken an array of colors by a specified amount (0-1)
+const darkenedColors = darkenColors(['#FF0000', '#00FF00', '#0000FF'], 0.4);
+
 // Use preset color themes
 const sunsetGradient = DEFAULT_THEMES.SUNSET;
 ```
@@ -73,6 +86,8 @@ const sunsetGradient = DEFAULT_THEMES.SUNSET;
 - `isWCAGCompliant(backgroundColor: string, textColor: string): boolean`
 - `getContrastRatio(color1: string, color2: string): number`
 - `testColorsValid(colors: string[]): boolean`
+- `lightenColors(colors: string[], amount: number): string[]`
+- `darkenColors(colors: string[], amount: number): string[]`
 
 ### Constants
 
@@ -80,7 +95,7 @@ const sunsetGradient = DEFAULT_THEMES.SUNSET;
 
 ### Types
 
-- `Theme`: 'dark' | 'light'
+- `Theme`: 'dark' | 'light' | 'both'
 
 ## License
 
