@@ -7,11 +7,10 @@ import UsernameInput from './components/UsernameInput';
 import ThemePreview from './components/ThemePreview';
 import GradientControls from './components/GradientControls';
 import GradientBuilderWithPresets from './components/GradientBuilderWithPresets';
-import {DEFAULT_THEMES} from "../../src";
 
 // Import constants
 const MAX_GRADIENT_COLORS = 6;
-const DEFAULT_COLOR = DEFAULT_THEMES.DEFAULT[0];
+const DEFAULT_COLOR = '#000000';
 const DEFAULT_USERNAME = 'GradientUser123';
 const STORAGE_KEYS = {
   DARK_MODE: 'theme-dark-mode',
