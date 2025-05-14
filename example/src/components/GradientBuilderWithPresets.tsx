@@ -97,6 +97,8 @@ function GradientBuilderWithPresets({ gradientColors, setGradientColors, setUser
         {/* Color grid with flex-wrap */}
         <div className="flex flex-wrap gap-3 mb-4">
           {Object.entries(DEFAULT_THEMES).map(([name, colors]) => {
+            colors = colors.length === 0 ? ['#000000'] : colors
+
             return (
               <button
                 key={name}
