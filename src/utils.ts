@@ -5,7 +5,7 @@ import type { Theme } from './constants.js';
  * Adapts a color for dark or light mode based on its brightness and saturation,
  * using a smooth curve without harsh transitions
  * @param color The color to adapt
- * @param theme The theme mode ('dark' or 'light')
+ * @param theme The theme mode ('dark', 'light', or 'both')
  */
 export const getAdaptedColor = (color: string, theme: Theme): string => {
   const colorObj = tinycolor(color);
@@ -15,7 +15,56 @@ export const getAdaptedColor = (color: string, theme: Theme): string => {
   // Normalize brightness to 0-1 range
   const normalizedBrightness = brightness / 255;
 
-  if (theme === 'dark') {
+  // For 'both' theme, we need to find a middle ground that works in both modes
+  if (theme === 'both') {
+    // For 'both' mode, we want to avoid extremes - no very dark or very light colors
+    // Target the middle range that will have enough contrast in both light and dark contexts
+    
+    // Check if the color is already in a good range for both themes
+    const contrastWithWhite = tinycolor.readability(colorObj, '#ffffff');
+    const contrastWithBlack = tinycolor.readability(colorObj, '#000000');
+    
+    // If the color already has good contrast with both white and black (at least 4.5:1 WCAG AA),
+    // we can use it as is
+    if (contrastWithWhite >= 4.5 && contrastWithBlack >= 4.5) {
+      return color;
+    }
+    
+    // Otherwise, adjust the color to improve its contrast with both backgrounds
+    let targetLightness;
+    
+    // Very dark colors: brighten to mid-tones
+    if (brightness < 50) {
+      // Mid-dark range (around 40-50% lightness)
+      targetLightness = 0.4 + ((50 - brightness) / 50) * 0.1;
+    } 
+    // Very light colors: darken to mid-tones
+    else if (brightness > 200) {
+      // Mid-light range (around 50-60% lightness)
+      targetLightness = 0.6 - ((brightness - 200) / 55) * 0.1;
+    }
+    // Mid-tone colors: adjust slightly toward middle range (45-55% lightness)
+    else {
+      // If already in mid range, make minimal adjustments
+      const midPoint = 0.5; // Target middle lightness
+      const currentDistance = Math.abs(hsl.l - midPoint);
+      const adjustmentFactor = Math.min(currentDistance, 0.15); // Max 15% adjustment
+      
+      targetLightness = hsl.l > midPoint 
+        ? hsl.l - adjustmentFactor // Darken slightly if light
+        : hsl.l + adjustmentFactor; // Brighten slightly if dark
+    }
+    
+    // Ensure targetLightness is in the 0.4-0.6 range for optimal visibility in both modes
+    targetLightness = Math.max(0.4, Math.min(0.6, targetLightness));
+    
+    return tinycolor({
+      h: hsl.h,
+      s: Math.min(hsl.s, 0.8), // Slightly reduce saturation for better readability
+      l: targetLightness
+    }).toString();
+  } 
+  else if (theme === 'dark') {
     // DARK MODE ADAPTATION
 
     // For dark mode, we want:
@@ -98,7 +147,7 @@ export const getAdaptedColor = (color: string, theme: Theme): string => {
 /**
  * Adapts all gradient colors for the current mode
  * @param colors Array of colors to adapt
- * @param theme The theme mode ('dark' or 'light')
+ * @param theme The theme mode ('dark', 'light', or 'both')
  */
 export const adaptGradientColors = (colors: string[], theme: Theme): string[] => {
   return colors.map((color) => getAdaptedColor(color, theme));

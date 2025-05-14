@@ -1,38 +1,33 @@
-import type { ReactNode } from 'react';
-import type { Theme } from '../../../src/constants.js';
-import { createGradientString } from '../../../src/utils.js';
-
 interface ContainerWithHeaderProps {
-  gradientColors: string[];
-  title: string;
-  children?: ReactNode;
-  theme: Theme;
+  backgroundColor: string;
+  textColor: string;
+  isTextGradient?: boolean;
 }
 
-function ContainerWithHeader({ gradientColors, title = 'Container Title', children, theme }: ContainerWithHeaderProps) {
-  // Set text color based on the theme mode (use theme prop if provided, otherwise fall back to isDarkMode)
-  const effectiveTheme = theme
-  const textColor = effectiveTheme === 'dark' ? '#FFFFFF' : '#000000';
-
-  // Container styles that can't be easily done with CSS variables
-  const containerContentStyle = {
-    backgroundColor: effectiveTheme === 'dark' ? '#1a1a1a' : '#ffffff',
-    color: effectiveTheme === 'dark' ? '#e0e0e0' : '#333333',
-  };
-
+function ContainerWithHeader({ backgroundColor, textColor, isTextGradient=false }: ContainerWithHeaderProps) {
   return (
-    <div className={`w-full rounded-md overflow-hidden shadow-md ${effectiveTheme === 'dark' ? 'shadow-black/40' : 'shadow-black/10'}`}>
-      <div
-        className="py-3 px-4 font-semibold text-base tracking-wide"
-        style={{
-          background: createGradientString(gradientColors),
-          color: textColor,
-        }}
-      >
-        {title}
+    <div className={`w-full rounded-md overflow-hidden border dark:border-zinc-800 light:border-zinc-200`}>
+      <div className="py-3 px-4 font-semibold text-xl tracking-wide" style={{background: backgroundColor}}>
+          <span
+              className="text-lg font-bold rounded tracking-wide inline-block"
+              style={
+                isTextGradient
+                  ? {
+                      backgroundImage: textColor,
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      color: 'transparent',
+                    }
+                  : { }
+              }
+            >
+
+        Gradient Header Preview
+            </span>
       </div>
-      <div className="p-4 text-[15px] transition-colors duration-300" style={containerContentStyle}>
-        {children || 'Container content goes here'}
+      <div className="p-4 text-base">
+        <p>Text content with your chosen color scheme</p>
       </div>
     </div>
   );

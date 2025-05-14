@@ -19,7 +19,8 @@ function ThemePreview({ username, selectedColor, gradientColors, mode }: ThemePr
   // Get adapted gradient colors for the current theme
   const usernameColors = adaptGradientColors(gradientColors, mode);
   // Use opposing mode gradient colors for the header (for contrast)
-  const headerColors = adaptGradientColors(gradientColors, mode);
+  const headerColors = adaptGradientColors(gradientColors, "both");
+  const headerTextColors = adaptGradientColors(gradientColors, mode);
 
   // Determine if we're in dark mode
   const isDarkMode = mode === 'dark';
@@ -55,9 +56,16 @@ function ThemePreview({ username, selectedColor, gradientColors, mode }: ThemePr
             <h4 className="mb-2.5 text-base font-medium">Container with Gradient Header:</h4>
             <div className="flex flex-col gap-5">
               <div className="flex-1">
-                <ContainerWithHeader gradientColors={headerColors} theme={mode} title="Gradient Header Preview">
-                  <p>Text content with your chosen color scheme</p>
-                </ContainerWithHeader>
+                <ContainerWithHeader backgroundColor={createGradientString(headerColors)} textColor={"black"}/>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full my-5">
+            <h4 className="mb-2.5 text-base font-medium">Container with Gradient Text:</h4>
+            <div className="flex flex-col gap-5">
+              <div className="flex-1">
+                <ContainerWithHeader backgroundColor={mode === "dark" ? "oklch(27.4% 0.006 286.033)" : "oklch(92% 0.004 286.32)"} textColor={createGradientString(headerTextColors)} isTextGradient/>
               </div>
             </div>
           </div>

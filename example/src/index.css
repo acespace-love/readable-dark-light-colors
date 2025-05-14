@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@plugin "@designbycode/tailwindcss-text-stroke";
+
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant light (&:where(.light, .light *));
 
