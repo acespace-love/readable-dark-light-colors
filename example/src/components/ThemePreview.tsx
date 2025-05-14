@@ -8,7 +8,7 @@ interface ThemePreviewProps {
   username: string;
   selectedColor: string;
   gradientColors: string[];
-  mode: Theme;
+  mode: Exclude<Theme, 'both'>;
 }
 
 function ThemePreview({ username, selectedColor, gradientColors, mode }: ThemePreviewProps) {
