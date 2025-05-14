@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react';
-import type { ThemeMode } from '../../../src/constants.ts';
-import { createGradientString } from '../../../src/utils.ts';
+import type { Theme } from '../../../src/constants.js';
+import { createGradientString } from '../../../src/utils.js';
 
 interface ContainerWithHeaderProps {
   gradientColors: string[];
   isDarkMode: boolean;
   title?: string;
   children?: ReactNode;
-  theme?: ThemeMode;
+  theme?: Theme;
 }
 
 function ContainerWithHeader({ gradientColors, isDarkMode, title = 'Container Title', children, theme }: ContainerWithHeaderProps) {

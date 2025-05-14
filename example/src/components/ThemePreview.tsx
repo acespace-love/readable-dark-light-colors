@@ -2,13 +2,13 @@ import ContainerWithHeader from './ContainerWithHeader';
 import { getAdaptedColor, adaptGradientColors, getTextColor, createGradientString } from '../../../src/utils.js';
 import clsx from 'clsx';
 
-type ThemeMode = 'light' | 'dark';
+import { type Theme } from '../../../src/constants.js';
 
 interface ThemePreviewProps {
   username: string;
   selectedColor: string;
   gradientColors: string[];
-  mode: ThemeMode;
+  mode: Theme;
 }
 
 function ThemePreview({ username, selectedColor, gradientColors, mode }: ThemePreviewProps) {

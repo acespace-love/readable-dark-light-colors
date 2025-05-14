@@ -36,7 +36,7 @@ import {
   getContrastRatio,
   testColorsValid,
   DEFAULT_THEMES,
-  type ThemeMode
+  type Theme
 } from 'dark-light-colours';
 
 // Adapt a color for dark mode
@@ -66,8 +66,8 @@ const sunsetGradient = DEFAULT_THEMES.SUNSET;
 
 ### Functions
 
-- `getAdaptedColor(color: string, theme: ThemeMode): string`
-- `adaptGradientColors(colors: string[], theme: ThemeMode): string[]`
+- `getAdaptedColor(color: string, theme: Theme): string`
+- `adaptGradientColors(colors: string[], theme: Theme): string[]`
 - `createGradientString(colors: string[]): string`
 - `getTextColor(bgColor: string): string`
 - `isWCAGCompliant(backgroundColor: string, textColor: string): boolean`
@@ -80,7 +80,7 @@ const sunsetGradient = DEFAULT_THEMES.SUNSET;
 
 ### Types
 
-- `ThemeMode`: 'dark' | 'light'
+- `Theme`: 'dark' | 'light'
 
 ## License
 

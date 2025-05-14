@@ -5,4 +5,3 @@
 export declare const DEFAULT_THEMES: Record<string, string[]>;
 export type Theme = 'dark' | 'light';
 export type Intensity = 'mild' | 'strong';
-export type ThemeMode = Theme;
